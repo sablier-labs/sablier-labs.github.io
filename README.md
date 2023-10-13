@@ -1,7 +1,7 @@
-# Sablier File Hosting
+![Sablier Branding](/banner-files.png)
 
-Sablier uses this GitHub Pages site to host various files, such as the Sablier logo, the Terms of Service, and the
-Privacy Policy.
+Sablier uses this GitHub Pages site to host various files, such as the Sablier logo, chain and token icons, the Terms of
+Service, and the Privacy Policy.
 
 ## Domain
 
@@ -14,3 +14,8 @@ the build process, such as files and folders that start with a dot (`.`) or an u
 
 For guidance on how to exclude more files, see my
 [conversation with ChatGPT](https://chat.openai.com/share/ebb35efe-114f-4924-a15e-d68db3733163).
+
+## Branding Notice
+
+For branding assets to be used in marketing materials head over to the
+[`sablier-labs/branding`](github.com/sablier-labs/branding) repository.
