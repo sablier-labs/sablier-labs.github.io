@@ -2,6 +2,7 @@ import type { IImage } from "@sablier/v2-types";
 import IconArbitrum from "./arbitrum.webp";
 import IconAvalanche from "./avalanche.webp";
 import IconBase from "./base.webp";
+import IconBaseSepolia from "./base-sepolia.webp";
 import IconBlast from "./blast.webp";
 import IconBinanceSmartChain from "./bsc.webp";
 import IconTestnet from "./ethereum-gray.webp";
@@ -28,6 +29,7 @@ import IconZkSync from "./zksync.webp";
 const CHAIN_ARBITRUM_ID = 42161;
 const CHAIN_AVALANCHE_ID = 43114;
 const CHAIN_BASE_ID = 8453;
+const CHAIN_BASE_SEPOLIA_ID = 84532;
 const CHAIN_BLAST_ID = 81457;
 const CHAIN_BSC_ID = 56;
 const CHAIN_ETHEREUM_ID = 1;
@@ -49,6 +51,7 @@ const chains: Record<number, IImage> = {
   [CHAIN_ARBITRUM_ID]: IconArbitrum,
   [CHAIN_AVALANCHE_ID]: IconAvalanche,
   [CHAIN_BASE_ID]: IconBase,
+  [CHAIN_BASE_SEPOLIA_ID]: IconBaseSepolia,
   [CHAIN_BSC_ID]: IconBinanceSmartChain,
   [CHAIN_BLAST_ID]: IconBlast,
   [CHAIN_ETHEREUM_ID]: IconEthereum,
