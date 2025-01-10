@@ -18,4 +18,4 @@ For guidance on how to exclude more files, see my
 ## Branding Notice
 
 For branding assets to be used in marketing materials head over to the
-[`sablier-labs/branding`](github.com/sablier-labs/branding) repository.
+[`sablier-labs/branding`](https://github.com/sablier-labs/branding) repository.
