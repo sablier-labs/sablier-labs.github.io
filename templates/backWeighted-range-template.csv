@@ -1,4 +1,4 @@
-Note: check out docs at https://docs.sablier.com/csv to learn more
+Note: check out the docs at https://docs.sablier.com/csv to learn more
 address,amount,start,years,unlocks
 0xf31b00e025584486f7c37Cf0AE0073c97c12c634,100,2026-01-12 16:15,4,10;20;30;40
 0xf31b00e025584486f7c37Cf0AE0073c97c12c634,422.85,2025-01-12 16:15,4,20;20;20;40
