@@ -1,4 +1,4 @@
-![Sablier Branding](/banner-files.png)
+![Sablier Branding](/banners/banner-files.png)
 
 Sablier uses this GitHub Pages site to host various files, such as the Sablier logo, chain and token icons, the Terms of
 Service, and the Privacy Policy.
