@@ -11,31 +11,6 @@
       Privacy Policy.
     </p>
     <ul id="fileList"></ul>
-    <script>
-      const owner = "sablier-labs";
-      const repo = "sablier-labs.github.io";
-
-      fetch(`https://api.github.com/repos/${owner}/${repo}/contents`)
-        .then((response) => response.json())
-        .then((data) => {
-          const list = document.getElementById("fileList");
-          data.forEach((file) => {
-            // Return early if the file name matches any of the specified names
-            if ([".prettierrc.yml", "CNAME", "README.md"].includes(file.name)) {
-              return; // Skip this file
-            }
-
-            // Proceed with adding the file to the list if it doesn't match the excluded names
-            const li = document.createElement("li");
-            const a = document.createElement("a");
-            a.setAttribute("href", `https://files.sablier.com/${file.name}`);
-            a.setAttribute("target", "_blank");
-            a.textContent = file.name;
-            li.appendChild(a);
-            list.appendChild(li);
-          });
-        })
-        .catch((error) => console.error("Error fetching repo contents:", error));
-    </script>
+    <script src="scripts/auto-listing.js"></script>
   </body>
 </html>
