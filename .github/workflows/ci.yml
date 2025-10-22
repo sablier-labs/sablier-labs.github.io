@@ -13,11 +13,11 @@ on:
 
 jobs:
   # ---------------------------------------------------------------------------- #
-  #                                VALIDATE SCHEMA                               #
+  #                                     TEST                                     #
   # ---------------------------------------------------------------------------- #
 
-  validate-schema:
-    name: Validate Schema
+  test:
+    name: Full Check & Test Suite
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
@@ -25,56 +25,11 @@ jobs:
         with:
           package-manager: bun
 
-      - name: Test token list schema
-        run: just test-schema
+      - name: Run full check
+        run: just full-check
 
-  # ---------------------------------------------------------------------------- #
-  #                               CHECK DUPLICATES                               #
-  # ---------------------------------------------------------------------------- #
-
-  check-duplicates:
-    name: Check for Duplicates
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v5
-      - uses: sablier-labs/devkit/actions/setup@main
-        with:
-          package-manager: bun
-
-      - name: Check for duplicate entries
-        run: just test-duplicates
-
-  # ---------------------------------------------------------------------------- #
-  #                               VERIFY CHECKSUMS                               #
-  # ---------------------------------------------------------------------------- #
-
-  verify-checksums:
-    name: Verify Address Checksums
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v5
-      - uses: sablier-labs/devkit/actions/setup@main
-        with:
-          package-manager: bun
-
-      - name: Verify address checksums
-        run: just test-checksums
-
-  # ---------------------------------------------------------------------------- #
-  #                               VALIDATE METADATA                              #
-  # ---------------------------------------------------------------------------- #
-
-  validate-metadata:
-    name: Validate Token Metadata
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v5
-      - uses: sablier-labs/devkit/actions/setup@main
-        with:
-          package-manager: bun
-
-      - name: Test token metadata
-        run: just test-metadata
+      - name: Run tests
+        run: just test
 
   # ---------------------------------------------------------------------------- #
   #                                     BUILD                                    #
@@ -82,6 +37,7 @@ jobs:
 
   build:
     name: Build Token List
+    needs: test
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
@@ -100,28 +56,12 @@ jobs:
           retention-days: 7
 
   # ---------------------------------------------------------------------------- #
-  #                                   RUN TESTS                                  #
-  # ---------------------------------------------------------------------------- #
-
-  run-tests:
-    name: Run Test Suite
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v5
-      - uses: sablier-labs/devkit/actions/setup@main
-        with:
-          package-manager: bun
-
-      - name: Run tests
-        run: just test
-
-  # ---------------------------------------------------------------------------- #
   #                               VALIDATE DECIMALS                              #
   # ---------------------------------------------------------------------------- #
 
   check-decimals:
     name: Validate Token Decimals via RPC
-    needs: [validate-schema, check-duplicates, verify-checksums, validate-metadata, build, run-tests]
+    needs: [test, build]
     uses: ./.github/workflows/ci-decimals.yml
     secrets:
       ROUTEMESH_API_KEY: ${{ secrets.ROUTEMESH_API_KEY }}
@@ -133,7 +73,7 @@ jobs:
   summary:
     name: Validation Summary
     runs-on: ubuntu-latest
-    needs: [validate-schema, check-duplicates, verify-checksums, validate-metadata, build, run-tests, check-decimals]
+    needs: [test, build, check-decimals]
     if: always()
     steps:
       - name: Check job results
@@ -142,21 +82,13 @@ jobs:
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "| Job | Status |" >> $GITHUB_STEP_SUMMARY
           echo "|-----|--------|" >> $GITHUB_STEP_SUMMARY
-          echo "| Schema Validation | ${{ needs.validate-schema.result }} |" >> $GITHUB_STEP_SUMMARY
-          echo "| Duplicate Check | ${{ needs.check-duplicates.result }} |" >> $GITHUB_STEP_SUMMARY
-          echo "| Checksum Verification | ${{ needs.verify-checksums.result }} |" >> $GITHUB_STEP_SUMMARY
-          echo "| Metadata Validation | ${{ needs.validate-metadata.result }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| Full Check & Test Suite | ${{ needs.test.result }} |" >> $GITHUB_STEP_SUMMARY
           echo "| Build | ${{ needs.build.result }} |" >> $GITHUB_STEP_SUMMARY
-          echo "| Test Suite | ${{ needs.run-tests.result }} |" >> $GITHUB_STEP_SUMMARY
           echo "| Decimals Check | ${{ needs.check-decimals.result }} |" >> $GITHUB_STEP_SUMMARY
 
       - name: Fail if any job failed
         if: | #shell
-          needs.validate-schema.result == 'failure' ||
-          needs.check-duplicates.result == 'failure' ||
-          needs.verify-checksums.result == 'failure' ||
-          needs.validate-metadata.result == 'failure' ||
+          needs.test.result == 'failure' ||
           needs.build.result == 'failure' ||
-          needs.run-tests.result == 'failure' ||
           needs.check-decimals.result == 'failure'
         run: exit 1
