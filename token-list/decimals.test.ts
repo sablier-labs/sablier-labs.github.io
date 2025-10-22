@@ -1,14 +1,14 @@
-import { readdir, readFile } from "node:fs/promises";
-import { basename, join } from "node:path";
-import type { TokenInfo } from "@uniswap/token-lists";
+import { readFile } from "node:fs/promises";
+import type { TokenInfo, TokenList } from "@uniswap/token-lists";
 import axios from "axios";
 import { config } from "dotenv";
+import { sablier } from "sablier";
 import { describe, expect, it } from "vitest";
 
 // Load environment variables from .env file
 config();
 
-const TOKENS_DIR = "token-list";
+const TOKEN_LIST_PATH = "token-list/evm.json";
 
 async function checkTokenDecimals(token: TokenInfo, rpcUrl: string): Promise<void> {
   const { address, decimals: tokenDecimal } = token;
@@ -44,11 +44,6 @@ async function checkTokenDecimals(token: TokenInfo, rpcUrl: string): Promise<voi
   expect(tokenDecimal).toBe(actualDecimals);
 }
 
-async function getTokenFiles(): Promise<string[]> {
-  const files = await readdir(TOKENS_DIR);
-  return files.filter((file) => file.endsWith(".json"));
-}
-
 describe("Token decimals validation", () => {
   it("should validate all token decimals against on-chain data", async () => {
     // Check if ROUTEMESH_API_KEY is set
@@ -57,35 +52,37 @@ describe("Token decimals validation", () => {
       return;
     }
 
-    const jsonFiles = await getTokenFiles();
+    // Read the consolidated token list
+    const content = await readFile(TOKEN_LIST_PATH, "utf-8");
+    const tokenList: TokenList = JSON.parse(content);
 
-    for (const file of jsonFiles) {
-      const filePath = join(TOKENS_DIR, file);
-      const content = await readFile(filePath, "utf-8");
-      const tokens: TokenInfo[] = JSON.parse(content);
+    // Group tokens by chainId
+    const tokensByChain = new Map<number, TokenInfo[]>();
+    for (const token of tokenList.tokens) {
+      const chainTokens = tokensByChain.get(token.chainId) ?? [];
+      chainTokens.push(token);
+      tokensByChain.set(token.chainId, chainTokens);
+    }
 
-      // Extract network name for display
-      const fileName = basename(filePath, ".json");
-      const network = fileName.replace(/-/g, "_").toUpperCase();
+    // Validate tokens for each chain
+    for (const [chainId, tokens] of tokensByChain) {
+      const chain = sablier.chains.get(chainId);
 
-      // Extract chainId from first token
-      const chainId = tokens[0]?.chainId;
-
-      if (!chainId) {
-        throw new Error(`Missing chainId in ${fileName}`);
+      if (!chain || !chain.rpc.routemesh) {
+        throw new Error(`Chain ${chainId} not supported by sablier package`);
       }
 
       // Generate RPC URL using RouteMesh
-      const rpcUrl = `https://lb.routeme.sh/rpc/${chainId}/${process.env.ROUTEMESH_API_KEY}`;
+      const rpcUrl = chain.rpc.routemesh(process.env.ROUTEMESH_API_KEY);
 
-      console.log(`Validating ${network} tokens (${tokens.length} tokens)...`);
+      console.log(`Validating ${chain.name} tokens (${tokens.length} tokens)...`);
 
       // Check decimals for each token
       for (const token of tokens) {
         await checkTokenDecimals(token, rpcUrl);
       }
 
-      console.log(`✓ ${network} validation complete`);
+      console.log(`✓ ${chain.name} validation complete`);
     }
   });
 });

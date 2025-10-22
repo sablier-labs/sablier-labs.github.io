@@ -18,50 +18,16 @@ nlx := require("nlx")
 default:
     just --list
 
+
+# Build token list
+@build:
+    na tsx scripts/token-list/write.ts > token-list/evm.json
+alias b := build
+alias build-token-list := build
+
 # Clean the generated files
 @clean globs="token-list/evm.json":
     nlx del-cli {{ globs }}
-
-# ---------------------------------------------------------------------------- #
-#                                     BUILD                                    #
-# ---------------------------------------------------------------------------- #
-
-# Build token list
-[group("build")]
-@build:
-    na tsx scripts/token-list/write.ts > token-list/evm.json
-
-# Build token list (alias)
-[group("build")]
-build-token-list: build
-
-# ---------------------------------------------------------------------------- #
-#                                     TESTS                                    #
-# ---------------------------------------------------------------------------- #
-
-# Test all addresses are valid and checksummed
-[group("test")]
-@test-checksums:
-    na vitest run -t 'all addresses are valid and checksummed'
-
-# Test no duplicate addresses, symbols, or names
-[group("test")]
-@test-duplicates:
-    na vitest run -t 'duplicate'
-
-# Test version matches package.json
-[group("test")]
-@test-metadata:
-    na vitest run -t 'version matches package.json'
-
-# Test token list schema
-[group("test")]
-@test-schema:
-    na vitest run -t 'validates token list'
-
-# ---------------------------------------------------------------------------- #
-#                                   UTILITIES                                  #
-# ---------------------------------------------------------------------------- #
 
 # Sort tokens alphabetically by symbol
 @sort-tokens:
