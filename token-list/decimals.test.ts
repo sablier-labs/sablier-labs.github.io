@@ -9,7 +9,7 @@ import { describe, expect, it } from "vitest";
 // Load environment variables from .env file
 config();
 
-const CHAIN_DIR = "token-list/chain";
+const CHAIN_DIR = "token-list/evm";
 
 async function checkTokenDecimals(token: TokenInfo, rpcUrl: string): Promise<void> {
   const { address, decimals: tokenDecimal } = token;

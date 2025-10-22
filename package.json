@@ -23,6 +23,6 @@
     "node": ">=18"
   },
   "dependencies": {
-    "sablier": "^1.4.0"
+    "sablier": "1.4.1"
   }
 }

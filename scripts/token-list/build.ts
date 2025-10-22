@@ -11,7 +11,7 @@ export default function buildList(): TokenList {
   const parsed = version.split(".");
 
   // Dynamically load all token list files
-  const tokenListDir = join(__dirname, "../../token-list/chain");
+  const tokenListDir = join(__dirname, "../../token-list/evm");
   const chainFiles = readdirSync(tokenListDir).filter((f) => f.endsWith(".json"));
 
   const tokens = chainFiles
