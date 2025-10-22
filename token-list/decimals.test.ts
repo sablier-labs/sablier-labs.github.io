@@ -15,6 +15,16 @@ const CHAIN_DIR = "token-list/evm";
 // Load chain files at module level for it.each()
 const chainFiles = readdirSync(CHAIN_DIR).filter((file) => file.endsWith(".json"));
 
+// Map chain files to test cases with chain names
+const chainTestCases = chainFiles.map((file) => {
+  const chainId = Number.parseInt(file.replace(".json", ""), 10);
+  const chain = sablier.chains.get(chainId);
+  return {
+    chainName: chain?.name ?? `Chain ${chainId}`,
+    file,
+  };
+});
+
 async function checkTokenDecimals(token: TokenInfo, rpcUrl: string): Promise<void> {
   const { address, decimals: tokenDecimal } = token;
 
@@ -50,34 +60,33 @@ async function checkTokenDecimals(token: TokenInfo, rpcUrl: string): Promise<voi
 }
 
 describe("Token decimals validation", () => {
-  it.each(chainFiles)("should validate %s tokens against on-chain data", async (file) => {
-    // Check if ROUTEMESH_API_KEY is set
-    if (!process.env.ROUTEMESH_API_KEY) {
-      console.warn("⚠️  ROUTEMESH_API_KEY not set, skipping decimals validation");
-      return;
-    }
+  it.each(chainTestCases)(
+    "should validate $chainName tokens against on-chain data",
+    async ({ file }) => {
+      // Check if ROUTEMESH_API_KEY is set
+      if (!process.env.ROUTEMESH_API_KEY) {
+        console.warn("⚠️  ROUTEMESH_API_KEY not set, skipping decimals validation");
+        return;
+      }
 
-    const chainId = Number.parseInt(file.replace(".json", ""), 10);
-    const filePath = join(CHAIN_DIR, file);
+      const chainId = Number.parseInt(file.replace(".json", ""), 10);
+      const filePath = join(CHAIN_DIR, file);
 
-    // Read tokens for this chain
-    const content = await readFile(filePath, "utf-8");
-    const tokens: TokenInfo[] = JSON.parse(content);
+      // Read tokens for this chain
+      const content = await readFile(filePath, "utf-8");
+      const tokens: TokenInfo[] = JSON.parse(content);
 
-    const chain = sablier.chains.get(chainId);
+      const chain = sablier.chains.get(chainId);
 
-    if (!chain) {
-      throw new Error(`Chain ${chainId} not supported by sablier package`);
-    }
+      if (!chain) {
+        throw new Error(`Chain ${chainId} not supported by sablier package`);
+      }
 
-    // Generate RPC URL using RouteMesh
-    const rpcUrl = chain.rpc.routemesh(process.env.ROUTEMESH_API_KEY);
+      // Generate RPC URL using RouteMesh
+      const rpcUrl = chain.rpc.routemesh(process.env.ROUTEMESH_API_KEY);
 
-    console.log(`Validating ${chain.name} tokens (${tokens.length} tokens)...`);
-
-    // Parallel token validation using Promise.all
-    await Promise.all(tokens.map((token) => checkTokenDecimals(token, rpcUrl)));
-
-    console.log(`✓ ${chain.name} validation complete`);
-  });
+      // Parallel token validation using Promise.all
+      await Promise.all(tokens.map((token) => checkTokenDecimals(token, rpcUrl)));
+    },
+  );
 });

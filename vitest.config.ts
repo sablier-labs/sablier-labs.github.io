@@ -13,7 +13,7 @@ export default defineConfig({
     exclude: ["node_modules", "token-list/evm.json"],
     globals: true,
     include: ["**/*.{test,spec}.{js,ts}"],
-    retry: process.env.CI ? 10 : 0,
+    retry: process.env.CI ? 20 : 5,
     testTimeout: process.env.CI ? 180_000 : 60_000, // 3 minutes in CI, 1 minute locally
   },
 });

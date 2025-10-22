@@ -27,7 +27,7 @@ describe("buildList", () => {
     // Only build if the file doesn't exist
     if (!fs.existsSync(tokenListPath)) {
       try {
-        execSync("bun run build", { stdio: "inherit" });
+        execSync("just build", { stdio: "inherit" });
       } catch (error) {
         throw new Error(`Failed to build token list: ${(error as Error).message}`);
       }
@@ -38,7 +38,7 @@ describe("buildList", () => {
       throw new Error("Token list not found after build");
     }
     defaultTokenList = JSON.parse(fs.readFileSync(tokenListPath, "utf8"));
-  }, 300000); // 300 seconds
+  }, 300_000); // 300 seconds
 
   it("validates token list", () => {
     const validated = validator(defaultTokenList);
