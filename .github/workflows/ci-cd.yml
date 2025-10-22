@@ -97,7 +97,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: tokenlist
-          path: lists/build/tokenlist.json
+          path: token-list/build.json
           retention-days: 7
 
   # ---------------------------------------------------------------------------- #
@@ -197,11 +197,11 @@ jobs:
 
       - name: Commit and push token list
         run: | #shell
-          git add lists/build/tokenlist.json
+          git add token-list/build.json
           if git diff --staged --quiet; then
             echo "No changes to commit"
           else
-            git commit -m "build: update tokenlist.json [skip ci]"
+            git commit -m "build: update build.json [skip ci]"
             git push
           fi
 
@@ -211,8 +211,8 @@ jobs:
           echo "✅ Passed" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "### Deployment Details" >> $GITHUB_STEP_SUMMARY
-          echo "- **URL**: https://files.sablier.com/lists/build/tokenlist.json" >> $GITHUB_STEP_SUMMARY
+          echo "- **URL**: https://files.sablier.com/token-list/build.json" >> $GITHUB_STEP_SUMMARY
           echo "- **Commit**: ${{ github.sha }}" >> $GITHUB_STEP_SUMMARY
-          echo "- **Total Tokens**: $(jq '.tokens | length' lists/build/tokenlist.json)" >> $GITHUB_STEP_SUMMARY
-          echo "- **Chains**: $(jq '[.tokens[].chainId] | unique | length' lists/build/tokenlist.json)" >> $GITHUB_STEP_SUMMARY
-          echo "- **Version**: $(jq -r '"\(.version.major).\(.version.minor).\(.version.patch)"' lists/build/tokenlist.json)" >> $GITHUB_STEP_SUMMARY
+          echo "- **Total Tokens**: $(jq '.tokens | length' token-list/build.json)" >> $GITHUB_STEP_SUMMARY
+          echo "- **Chains**: $(jq '[.tokens[].chainId] | unique | length' token-list/build.json)" >> $GITHUB_STEP_SUMMARY
+          echo "- **Version**: $(jq -r '"\(.version.major).\(.version.minor).\(.version.patch)"' token-list/build.json)" >> $GITHUB_STEP_SUMMARY

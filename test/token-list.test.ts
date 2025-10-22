@@ -22,7 +22,7 @@ let defaultTokenList: TokenList;
 
 describe("buildList", () => {
   beforeAll(async () => {
-    const tokenListPath = path.join(__dirname, "../lists/build/tokenlist.json");
+    const tokenListPath = path.join(__dirname, "../token-list/build.json");
 
     // Only build if the file doesn't exist
     if (!fs.existsSync(tokenListPath)) {

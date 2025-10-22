@@ -19,7 +19,7 @@ default:
     just --list
 
 # Clean the generated files
-@clean globs="lists/build":
+@clean globs="token-list/build.json":
     nlx del-cli {{ globs }}
 
 # ---------------------------------------------------------------------------- #
@@ -29,8 +29,7 @@ default:
 # Build token list
 [group("build")]
 @build:
-    mkdir -p lists/build
-    na tsx scripts/lists/write.ts > lists/build/tokenlist.json
+    na tsx scripts/token-list/write.ts > token-list/build.json
 
 # Build token list (alias)
 [group("build")]
@@ -48,7 +47,7 @@ build-token-list: build
 # Verify token decimals against on-chain data
 [group("test")]
 @test-decimals:
-    na tsx scripts/lists/check-decimals.ts
+    na tsx scripts/token-list/check-decimals.ts
 
 # Test no duplicate addresses, symbols, or names
 [group("test")]
@@ -71,7 +70,7 @@ build-token-list: build
 
 # Sort tokens alphabetically by symbol
 @sort-tokens:
-    na tsx scripts/lists/sort-tokens.ts
+    na tsx scripts/token-list/sort-tokens.ts
 
 # Run all tests
 [group("test")]

@@ -28,7 +28,7 @@ exclude:
   - .vscode/
 
   # Build artifacts
-  - lists/build/
+  - token-list/build.json
 
   # Documentation
   - README.md

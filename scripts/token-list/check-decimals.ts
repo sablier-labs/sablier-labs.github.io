@@ -7,7 +7,7 @@ import { config } from "dotenv";
 // Load environment variables from .env file
 config();
 
-const TOKENS_DIR = "lists";
+const TOKENS_DIR = "token-list";
 
 // ANSI color codes
 const GREEN = "\x1b[32m";

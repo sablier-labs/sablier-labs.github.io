@@ -2,7 +2,7 @@ import { readdir, readFile, writeFile } from "node:fs/promises";
 import { join } from "node:path";
 import type { TokenInfo } from "@uniswap/token-lists";
 
-const TOKENS_DIR = "src/tokens";
+const TOKENS_DIR = "token-list";
 
 async function sortTokenFile(filePath: string): Promise<number> {
   const content = await readFile(filePath, "utf-8");
