@@ -1,6 +1,12 @@
 {
   "editor.formatOnSave": true,
-  "[javascript][html][json][jsonc][svg]": {
+  "files.associations": {
+    "evm.json": "plaintext"
+  },
+  "[html][svg]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[javascript][json][jsonc][typescript]": {
+    "editor.defaultFormatter": "biomejs.biome"
   }
 }

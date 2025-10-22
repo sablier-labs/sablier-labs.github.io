@@ -1,1 +1,6 @@
+# directories
+.serena/
+
+# files
+token-list/evm.json
 .DS_Store

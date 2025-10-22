@@ -1,0 +1,127 @@
+name: CD
+
+# Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
+# However, do NOT cancel in-progress runs as we want to allow these production deployments to complete.
+concurrency:
+  cancel-in-progress: false
+  group: pages
+
+# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+on:
+  # Can be manually triggered by any member with Write permission
+  workflow_dispatch:
+  # Runs on pushes targeting the main branch
+  push:
+    branches: [main]
+
+jobs:
+  # ---------------------------------------------------------------------------- #
+  #                                   RUN TESTS                                  #
+  # ---------------------------------------------------------------------------- #
+
+  # Run all CI validation tests
+  validate:
+    uses: ./.github/workflows/ci.yml
+
+  # Run token decimals tests
+  check-decimals:
+    uses: ./.github/workflows/ci-decimals.yml
+    secrets:
+      ROUTEMESH_API_KEY: ${{ secrets.ROUTEMESH_API_KEY }}
+
+  # ---------------------------------------------------------------------------- #
+  #                                  DEPLOYMENT                                  #
+  # ---------------------------------------------------------------------------- #
+
+  deploy:
+    name: Deploy Token List
+    environment:
+      name: production
+      url: ${{ steps.pages-deployment.outputs.page_url }}
+    needs: [validate, check-decimals]
+    runs-on: ubuntu-latest
+
+    steps:
+      # ---------------------------------------------------------------------------- #
+      #                                 SETUP & BUILD                                #
+      # ---------------------------------------------------------------------------- #
+
+      - uses: actions/checkout@v5
+      - uses: sablier-labs/devkit/actions/setup@main
+        with:
+          package-manager: bun
+
+      - name: Build token list
+        run: just build
+
+      # ---------------------------------------------------------------------------- #
+      #                                 GITHUB PAGES                                 #
+      # ---------------------------------------------------------------------------- #
+
+      - name: Set up GitHub Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload site as artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: .
+
+      - name: Deploy to GitHub Pages
+        id: pages-deployment
+        uses: actions/deploy-pages@v4
+
+      # ---------------------------------------------------------------------------- #
+      #                                IPFS DEPLOYMENT                               #
+      # ---------------------------------------------------------------------------- #
+
+      - name: Deploy and pin bundle to IPFS
+        id: ipfs-deployment
+        uses: anantaramdas/ipfs-pinata-deploy-action@a551f37c17ec3961df7c3ad52e1cd266dfd3d7e7
+        with:
+          path: ./token-list/evm.json
+          pin-name: Sablier EVM Token List
+          pinata-api-key: ${{ secrets.PINATA_API_KEY }}
+          pinata-secret-api-key: ${{ secrets.PINATA_API_SECRET_KEY }}
+
+      - name: IPFS hash summary
+        run: | #shell
+          HASH="${{ steps.ipfs-deployment.outputs.hash }}"
+          URL="https://cloudflare-ipfs.com/ipfs/$HASH"
+          echo "## IPFS Deployment" >> $GITHUB_STEP_SUMMARY
+          echo "Successfully deployed on IPFS: [$HASH]($URL)" >> $GITHUB_STEP_SUMMARY
+
+      # ---------------------------------------------------------------------------- #
+      #                             CLOUDFLARE DEPLOYMENT                            #
+      # ---------------------------------------------------------------------------- #
+
+      - name: Deploy to Cloudflare Web3 Gateway
+        uses: Uniswap/cloudflare-update-web3-gateway@master
+        env:
+          CLOUDFLARE_GATEWAY_ID: ${{ secrets.CLOUDFLARE_GATEWAY_ID }}
+          CLOUDFLARE_TOKEN: ${{ secrets.CLOUDFLARE_TOKEN }}
+          CLOUDFLARE_ZONE_ID: ${{ secrets.CLOUDFLARE_ZONE_ID }}
+        with:
+          cid: ${{ steps.ipfs-deployment.outputs.hash }}
+
+      # ---------------------------------------------------------------------------- #
+      #                              Deployment Summary                              #
+      # ---------------------------------------------------------------------------- #
+
+      - name: Add deployment summary
+        run: | #shell
+          echo "## Continuous Deployment Result" >> $GITHUB_STEP_SUMMARY
+          echo "✅ Passed" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### Deployment Details" >> $GITHUB_STEP_SUMMARY
+          echo "- **GitHub Pages**: ${{ steps.pages-deployment.outputs.page_url }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **IPFS Hash**: \`${{ steps.ipfs-deployment.outputs.hash }}\`" >> $GITHUB_STEP_SUMMARY
+          echo "- **IPFS Gateway**: https://cloudflare-ipfs.com/ipfs/${{ steps.ipfs-deployment.outputs.hash }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Commit**: ${{ github.sha }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Total Tokens**: $(jq '.tokens | length' token-list/evm.json)" >> $GITHUB_STEP_SUMMARY
+          echo "- **Chains**: $(jq '[.tokens[].chainId] | unique | length' token-list/evm.json)" >> $GITHUB_STEP_SUMMARY
+          echo "- **Version**: $(jq -r '\"\\(.version.major).\\(.version.minor).\\(.version.patch)\"' token-list/evm.json)" >> $GITHUB_STEP_SUMMARY

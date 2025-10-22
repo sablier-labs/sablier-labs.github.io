@@ -1,0 +1,42 @@
+[
+  {
+    "address": "0x3355df6D4c9C3035724Fd0e3914dE96A5a83aaf4",
+    "chainId": 324,
+    "decimals": 6,
+    "logoURI": "https://files.sablier.com/tokens/USDC.png",
+    "name": "Bridged USDC",
+    "symbol": "USDC"
+  },
+  {
+    "address": "0xBBeB516fb02a01611cBBE0453Fe3c580D7281011",
+    "chainId": 324,
+    "decimals": 8,
+    "logoURI": "https://files.sablier.com/tokens/WBTC.png",
+    "name": "Wrapped Bitcoin",
+    "symbol": "WBTC"
+  },
+  {
+    "address": "0x5AEa5775959fBC2557Cc8789bC1bf90A239D9a91",
+    "chainId": 324,
+    "decimals": 18,
+    "logoURI": "https://ethereum-optimism.github.io/data/WETH/logo.png",
+    "name": "Wrapped Ether",
+    "symbol": "WETH"
+  },
+  {
+    "address": "0x5d0d7BCa050e2E98Fd4A5e8d3bA823B49f39868d",
+    "chainId": 324,
+    "decimals": 18,
+    "logoURI": "https://files.sablier.com/tokens/ZYFI.png",
+    "name": "Zyfi Token",
+    "symbol": "ZFI"
+  },
+  {
+    "address": "0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E",
+    "chainId": 324,
+    "decimals": 18,
+    "logoURI": "https://files.sablier.com/tokens/ZK.png",
+    "name": "zkSync",
+    "symbol": "ZK"
+  }
+]
