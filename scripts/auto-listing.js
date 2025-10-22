@@ -19,6 +19,7 @@ function initializeDirectoryListing() {
     },
     external: { showDirs: true },
     templates: { showDirs: true },
+    "token-list": { showDirs: false },
     tokens: { showDirs: false },
   };
 
