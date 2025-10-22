@@ -1,7 +1,8 @@
 import { readdir, readFile } from "node:fs/promises";
 import { basename, join } from "node:path";
-import { config } from "dotenv";
+import type { TokenInfo } from "@uniswap/token-lists";
 import axios from "axios";
+import { config } from "dotenv";
 
 // Load environment variables from .env file
 config();
@@ -14,22 +15,22 @@ const YELLOW = "\x1b[33m";
 const RED = "\x1b[31m";
 const RESET = "\x1b[0m";
 
-async function checkTokenDecimals(token, rpcUrl) {
+async function checkTokenDecimals(token: TokenInfo, rpcUrl: string): Promise<boolean> {
   const { address, decimals: tokenDecimal } = token;
 
   try {
     // Make RPC call to get decimals from contract
     const response = await axios.post(rpcUrl, {
+      id: 1,
       jsonrpc: "2.0",
       method: "eth_call",
       params: [
         {
-          to: address,
           data: "0x313ce567", // decimals() function selector
+          to: address,
         },
         "latest",
       ],
-      id: 1,
     });
 
     // Check if response has result
@@ -41,8 +42,10 @@ async function checkTokenDecimals(token, rpcUrl) {
     const actualDecimals = parseInt(response.data.result, 16);
 
     // Check for valid conversion
-    if (isNaN(actualDecimals)) {
-      console.log(`\n${YELLOW}🟡 Invalid for ${address}, could be an RPC issue, manual check is recommended.${RESET}`);
+    if (Number.isNaN(actualDecimals)) {
+      console.log(
+        `\n${YELLOW}🟡 Invalid for ${address}, could be an RPC issue, manual check is recommended.${RESET}`,
+      );
       return true; // Continue processing other tokens
     }
 
@@ -56,18 +59,20 @@ async function checkTokenDecimals(token, rpcUrl) {
 
     return true; // Success
   } catch (error) {
-    if (error.response?.data) {
+    if (axios.isAxiosError(error) && error.response?.data) {
       console.log(`\n${RED}🔴 ${JSON.stringify(error.response.data)}${RESET}`);
     } else {
-      console.log(`\n${YELLOW}🟡 Invalid for ${address}, could be an RPC issue, manual check is recommended.${RESET}`);
+      console.log(
+        `\n${YELLOW}🟡 Invalid for ${address}, could be an RPC issue, manual check is recommended.${RESET}`,
+      );
     }
     return true; // Continue processing other tokens
   }
 }
 
-async function checkTokenFile(filePath) {
+async function checkTokenFile(filePath: string): Promise<boolean> {
   const content = await readFile(filePath, "utf-8");
-  const tokens = JSON.parse(content);
+  const tokens: TokenInfo[] = JSON.parse(content);
 
   // Extract network name for display
   const fileName = basename(filePath, ".json");
@@ -108,7 +113,7 @@ async function checkTokenFile(filePath) {
   return true;
 }
 
-async function main() {
+async function main(): Promise<void> {
   const files = await readdir(TOKENS_DIR);
   const jsonFiles = files.filter((file) => file.endsWith(".json"));
 

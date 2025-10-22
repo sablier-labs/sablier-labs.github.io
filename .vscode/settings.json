@@ -3,7 +3,10 @@
   "files.associations": {
     "tokenlist.json": "plaintext"
   },
-  "[javascript][html][json][jsonc][svg]": {
+  "[html][svg]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[javascript][json][jsonc][typescript]": {
+    "editor.defaultFormatter": "biomejs.biome"
   }
 }

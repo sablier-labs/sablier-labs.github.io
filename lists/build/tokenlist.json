@@ -1,12 +1,9 @@
 {
-  "keywords": [
-    "sablier",
-    "default"
-  ],
+  "keywords": ["sablier", "default"],
   "logoURI": "https://files.sablier.com/icon-180x180.png",
   "name": "Sablier EVM Token List",
   "tags": {},
-  "timestamp": "2025-10-22T12:28:40.927Z",
+  "timestamp": "2025-10-22T14:02:17.520Z",
   "tokens": [
     {
       "address": "0xB6eD7644C69416d67B522e20bC294A9a9B405B31",

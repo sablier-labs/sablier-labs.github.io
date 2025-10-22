@@ -1,4 +1,4 @@
-import buildList from "./buildList.mjs";
+import buildList from "./buildList.js";
 
 try {
   const data = buildList();

@@ -5,13 +5,21 @@ function initializeDirectoryListing() {
 
   // Configuration for each directory
   const configs = {
+    ".": {
+      excludeFiles: [
+        ".prettierrc.yml",
+        ".gitignore",
+        ".vscode",
+        "CNAME",
+        "index.html",
+        "scripts",
+        "README.md",
+      ],
+      showDirs: true,
+    },
     external: { showDirs: true },
     templates: { showDirs: true },
     tokens: { showDirs: false },
-    ".": {
-      showDirs: true,
-      excludeFiles: [".prettierrc.yml", ".gitignore", ".vscode", "CNAME", "index.html", "scripts", "README.md"],
-    },
   };
 
   const config = configs[directory] || { showDirs: false };

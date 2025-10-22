@@ -1,0 +1,10 @@
+{
+  "$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
+  "extends": ["@sablier/devkit/biome"],
+  "files": {
+    "includes": ["**/*.{js,json,jsonc,ts}"]
+  },
+  "formatter": {
+    "lineWidth": 100
+  }
+}

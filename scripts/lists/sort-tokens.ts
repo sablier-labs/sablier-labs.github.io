@@ -1,11 +1,12 @@
 import { readdir, readFile, writeFile } from "node:fs/promises";
 import { join } from "node:path";
+import type { TokenInfo } from "@uniswap/token-lists";
 
 const TOKENS_DIR = "src/tokens";
 
-async function sortTokenFile(filePath) {
+async function sortTokenFile(filePath: string): Promise<number> {
   const content = await readFile(filePath, "utf-8");
-  const tokens = JSON.parse(content);
+  const tokens: TokenInfo[] = JSON.parse(content);
 
   // Sort tokens alphabetically by symbol (case-insensitive)
   tokens.sort((a, b) => a.symbol.toLowerCase().localeCompare(b.symbol.toLowerCase()));
@@ -16,7 +17,7 @@ async function sortTokenFile(filePath) {
   return tokens.length;
 }
 
-async function main() {
+async function main(): Promise<void> {
   const files = await readdir(TOKENS_DIR);
   const jsonFiles = files.filter((file) => file.endsWith(".json"));
 

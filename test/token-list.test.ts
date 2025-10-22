@@ -1,25 +1,27 @@
-const packageJson = require("../package.json");
-const schema = require("@uniswap/token-lists/src/tokenlist.schema.json");
-const { expect } = require("chai");
-const { getAddress } = require("@ethersproject/address");
-const Ajv = require("ajv");
-const addFormats = require("ajv-formats");
-const fs = require("node:fs");
-const path = require("node:path");
-const { execSync } = require("node:child_process");
+import { execSync } from "node:child_process";
+import fs from "node:fs";
+import path from "node:path";
+import { getAddress } from "@ethersproject/address";
+import type { TokenList } from "@uniswap/token-lists";
+import schema from "@uniswap/token-lists/src/tokenlist.schema.json" with { type: "json" };
+import { Ajv } from "ajv";
+import type { FormatsPlugin } from "ajv-formats";
+import * as addFormatsModule from "ajv-formats";
+import { beforeAll, describe, expect, it } from "vitest";
+import packageJson from "../package.json" with { type: "json" };
 
-// Fix: Create Ajv instance without format option and add formats explicitly
+// Handle CommonJS default export for ajv-formats
+const addFormats: FormatsPlugin = (addFormatsModule as unknown as { default: FormatsPlugin })
+  .default;
+
+// Create Ajv instance and add formats for date-time validation
 const ajv = new Ajv({ allErrors: true, verbose: true });
-// Fix: Add formats to support date-time
 addFormats(ajv);
 const validator = ajv.compile(schema);
-let defaultTokenList;
+let defaultTokenList: TokenList;
 
 describe("buildList", () => {
-  before(async function () {
-    // https://stackoverflow.com/questions/44149096
-    this.timeout(300000); // 300 seconds
-
+  beforeAll(async () => {
     const tokenListPath = path.join(__dirname, "../lists/build/tokenlist.json");
 
     // Only build if the file doesn't exist
@@ -27,7 +29,7 @@ describe("buildList", () => {
       try {
         execSync("bun run build", { stdio: "inherit" });
       } catch (error) {
-        throw new Error(`Failed to build token list: ${error.message}`);
+        throw new Error(`Failed to build token list: ${(error as Error).message}`);
       }
     }
 
@@ -36,21 +38,21 @@ describe("buildList", () => {
       throw new Error("Token list not found after build");
     }
     defaultTokenList = JSON.parse(fs.readFileSync(tokenListPath, "utf8"));
-  });
+  }, 300000); // 300 seconds
 
   it("validates token list", () => {
     const validated = validator(defaultTokenList);
     if (!validated) {
       console.error(validator.errors);
     }
-    expect(validated).to.equal(true);
+    expect(validated).toBe(true);
   });
 
   it("contains no duplicate addresses", () => {
-    const map = {};
+    const map: Record<string, boolean> = {};
     for (const token of defaultTokenList.tokens) {
       const key = `${token.chainId}-${token.address}`;
-      expect(typeof map[key]).to.equal("undefined", `duplicate address: ${token.address}`);
+      expect(map[key]).toBeUndefined();
       map[key] = true;
     }
   });
@@ -59,13 +61,13 @@ describe("buildList", () => {
     // manual override to approve certain tokens with duplicate symbols
     const approvedDuplicateSymbols = ["amp", "bank", "flx", "ichi", "rdnt", "slp", "usdc", "usds"];
 
-    const map = {};
+    const map: Record<string, boolean> = {};
     for (const token of defaultTokenList.tokens) {
       const symbol = token.symbol.toLowerCase();
       if (approvedDuplicateSymbols.includes(symbol)) {
       } else {
         const key = `${token.chainId}-${symbol}`;
-        expect(typeof map[key]).to.equal("undefined", `duplicate symbol: ${symbol} ${token.address}`);
+        expect(map[key]).toBeUndefined();
         map[key] = true;
       }
     }
@@ -75,12 +77,12 @@ describe("buildList", () => {
     // manual override to approve certain tokens with duplicate names
     const approvedDuplicateNames = ["Radiant", "USD Coin"];
 
-    const map = {};
+    const map: Record<string, boolean> = {};
     for (const token of defaultTokenList.tokens) {
       const name = token.name;
       if (approvedDuplicateNames.includes(name) === false) {
         const key = `${token.chainId}-${token.name.toLowerCase()}`;
-        expect(typeof map[key]).to.equal("undefined", `duplicate name: ${token.name}`);
+        expect(map[key]).toBeUndefined();
         map[key] = true;
       }
     }
@@ -88,13 +90,13 @@ describe("buildList", () => {
 
   it("all addresses are valid and checksummed", () => {
     for (const token of defaultTokenList.tokens) {
-      expect(getAddress(token.address).toLowerCase()).to.eq(token.address.toLowerCase());
+      expect(getAddress(token.address).toLowerCase()).toBe(token.address.toLowerCase());
     }
   });
 
   it("version matches package.json", () => {
-    expect(packageJson.version).to.match(/^\d+\.\d+\.\d+$/);
-    expect(packageJson.version).to.equal(
+    expect(packageJson.version).toMatch(/^\d+\.\d+\.\d+$/);
+    expect(packageJson.version).toBe(
       `${defaultTokenList.version.major}.${defaultTokenList.version.minor}.${defaultTokenList.version.patch}`,
     );
   });

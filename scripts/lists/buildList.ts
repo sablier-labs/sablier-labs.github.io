@@ -1,6 +1,7 @@
 import { readFileSync } from "node:fs";
-import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
+import { fileURLToPath } from "node:url";
+import type { TokenList } from "@uniswap/token-lists";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const packageJson = JSON.parse(readFileSync(join(__dirname, "../../package.json"), "utf-8"));
@@ -17,31 +18,31 @@ import bscMainnet from "../../lists/bsc-mainnet.json" with { type: "json" };
 import chilizMainnet from "../../lists/chiliz-mainnet.json" with { type: "json" };
 import ethereumMainnet from "../../lists/ethereum-mainnet.json" with { type: "json" };
 import ethereumSepolia from "../../lists/ethereum-sepolia.json" with { type: "json" };
+import formMainnet from "../../lists/form-mainnet.json" with { type: "json" };
 import gnosisMainnet from "../../lists/gnosis-mainnet.json" with { type: "json" };
 import hyperevmMainnet from "../../lists/hyperevm-mainnet.json" with { type: "json" };
-import formMainnet from "../../lists/form-mainnet.json" with { type: "json" };
 import iotexMainnet from "../../lists/iotex-mainnet.json" with { type: "json" };
-import optimismMainnet from "../../lists/optimism-mainnet.json" with { type: "json" };
 import lightlinkMainnet from "../../lists/lightlink-mainnet.json" with { type: "json" };
 import lineaMainnet from "../../lists/linea-mainnet.json" with { type: "json" };
-import morphMainnet from "../../lists/morph-mainnet.json" with { type: "json" };
 import modeMainnet from "../../lists/mode-mainnet.json" with { type: "json" };
+import morphMainnet from "../../lists/morph-mainnet.json" with { type: "json" };
+import optimismMainnet from "../../lists/optimism-mainnet.json" with { type: "json" };
 import polygonMainnet from "../../lists/polygon-mainnet.json" with { type: "json" };
 import roninMainnet from "../../lists/ronin-mainnet.json" with { type: "json" };
 import roninTestnet from "../../lists/ronin-testnet.json" with { type: "json" };
 import scrollMainnet from "../../lists/scroll-mainnet.json" with { type: "json" };
 import seiMainnet from "../../lists/sei-mainnet.json" with { type: "json" };
-import sophonMainnet from "../../lists/sophon-mainnet.json" with { type: "json" };
 import sonicMainnet from "../../lists/sonic-mainnet.json" with { type: "json" };
+import sophonMainnet from "../../lists/sophon-mainnet.json" with { type: "json" };
 import superseedMainnet from "../../lists/superseed-mainnet.json" with { type: "json" };
 import tangleMainnet from "../../lists/tangle-mainnet.json" with { type: "json" };
 import unichainMainnet from "../../lists/unichain-mainnet.json" with { type: "json" };
 import xdcMainnet from "../../lists/xdc-mainnet.json" with { type: "json" };
 import zksyncMainnet from "../../lists/zksync-mainnet.json" with { type: "json" };
 
-export default function buildList() {
+export default function buildList(): TokenList {
   const parsed = version.split(".");
-  const l1List = {
+  const l1List: TokenList = {
     keywords: ["sablier", "default"],
     logoURI: "https://files.sablier.com/icon-180x180.png",
     name: "Sablier EVM Token List",
