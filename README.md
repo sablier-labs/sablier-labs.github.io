@@ -1,21 +1,100 @@
 ![Sablier Branding](/banners/banner-files.png)
 
-Sablier uses this GitHub Pages site to host various files, such as the Sablier logo, chain and token icons, the Terms of
-Service, and the Privacy Policy.
+This repository serves as Sablier's static asset distribution hub and token list infrastructure, hosted at
+[files.sablier.com](https://files.sablier.com).
+
+## Contents
+
+- **Token List**: Comprehensive EVM token metadata for Sablier integrations (689 tokens across 32 chains)
+- **Static Assets**: Logos, icons, chain graphics, and legal documents
+- **Templates**: CSV templates for stream configurations (linear, exponential, cliff, etc.)
+
+## Token List
+
+The canonical token list is available at:
+
+```
+https://files.sablier.com/token-list/evm.json
+```
+
+This list is automatically built and validated via CI/CD, ensuring all token addresses are checksummed and metadata is
+accurate.
+
+### Development
+
+Prerequisites: Node.js >=18
+
+```bash
+# Install dependencies
+ni
+
+# Build token list
+just build
+
+# Run validation suite
+just test
+
+# Run specific tests
+just test-checksums
+just test-duplicates
+just test-schema
+just test-metadata
+
+# Clean generated files
+just clean
+```
+
+### Validation
+
+The CI pipeline automatically validates:
+
+- **Schema compliance**: Conforms to Uniswap token list standard
+- **Checksums**: All addresses are valid and checksummed
+- **Duplicates**: No duplicate addresses, symbols, or names
+- **Decimals**: Token decimals match on-chain data (via RouteMesh RPC)
+- **Metadata**: Version matches package.json
+
+## Static Assets
+
+### Branding
+
+- **Logo**: `logo.png`, `logo.svg`
+- **Icons**: `favicon.ico`, `icon-*.png`
+- **Banners**: `banners/`
+
+For marketing materials, see the [sablier-labs/branding](https://github.com/sablier-labs/branding) repository.
+
+### Chain Icons
+
+Located in `chains/`, available in both PNG and WebP formats for all supported networks.
+
+### Token Logos
+
+Located in `tokens/`, referenced in the token list via the `logoURI` field.
+
+### Legal Documents
+
+- Privacy Policy: `privacy-policy.pdf`
+- Terms of Service: `terms-of-service.pdf`
+- Risk Notice: `risk-notice.pdf`
+
+## Templates
+
+CSV templates for creating streams are available in `templates/`:
+
+- **Duration-based**: linear, exponential, cliff, stepper, timelock, etc.
+- **Range-based**: linear, exponential, monthly, etc.
+- **Airdrops**: Standard and Solana formats
+- **Airstreams**: Merkle airdrop streaming
+
+Organized by year for historical tracking.
 
 ## Domain
 
-The canonical domain name for this site is `files.sablier.com`, but you can also access it via `sablier-labs.github.io`.
+The canonical domain is [files.sablier.com](https://files.sablier.com), also accessible via
+[sablier-labs.github.io](https://sablier-labs.github.io).
 
 ## Jekyll
 
-GitHub Pages uses Jekyll for building websites from repository contents. By default, Jekyll excludes certain files from
-the build process, such as files and folders that start with a dot (`.`) or an underscore (`_`).
-
-For guidance on how to exclude more files, see my
-[conversation with ChatGPT](https://chat.openai.com/share/ebb35efe-114f-4924-a15e-d68db3733163).
-
-## Branding Notice
-
-For branding assets to be used in marketing materials head over to the
-[`sablier-labs/branding`](https://github.com/sablier-labs/branding) repository.
+GitHub Pages uses Jekyll for building. By default, Jekyll excludes files/folders starting with `.` or `_`. For
+customization, see the `_config.yml` file.
