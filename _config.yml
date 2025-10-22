@@ -1,0 +1,38 @@
+# Jekyll configuration for GitHub Pages
+# Exclude development and build files from the published site
+
+exclude:
+  # Node.js and package management
+  - node_modules/
+  - package.json
+  - package-lock.json
+  - bun.lock
+
+  # Development configuration files
+  - tsconfig.json
+  - vitest.config.ts
+  - biome.jsonc
+  - .prettierrc.cjs
+  - .env.example
+  - justfile
+
+  # Development directories
+  - scripts/
+  - test/
+  - templates/
+
+  # GitHub-specific
+  - .github/
+
+  # IDE settings
+  - .vscode/
+
+  # Build artifacts
+  - lists/build/
+
+  # Documentation
+  - README.md
+
+  # TypeScript source files
+  - "*.ts"
+  - "**/*.ts"
