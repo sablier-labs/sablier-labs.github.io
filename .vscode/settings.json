@@ -1,5 +1,8 @@
 {
   "editor.formatOnSave": true,
+  "files.associations": {
+    "tokenlist.json": "plaintext"
+  },
   "[javascript][html][json][jsonc][svg]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   }

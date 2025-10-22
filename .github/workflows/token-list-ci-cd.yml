@@ -1,0 +1,96 @@
+name: Token List CI/CD
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+  schedule:
+    - cron: "0 0 * * 0" # Weekly on Sunday
+  workflow_dispatch:
+
+jobs:
+  validate:
+    name: Validate Token List
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+      - run: bun install
+
+      - name: Validate schema
+        run: bun run validate:schema
+
+      - name: Check for duplicates
+        run: bun run validate:duplicates
+
+      - name: Verify checksums
+        run: bun run validate:checksums
+
+      - name: Run tests
+        run: bun test
+
+  check-decimals:
+    name: Validate Token Decimals via RPC
+    runs-on: ubuntu-latest
+    needs: validate
+    steps:
+      - uses: actions/checkout@v5
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+      - run: bun install
+
+      - name: Validate decimals
+        env: #shell
+          ROUTEMESH_API_KEY: ${{ secrets.ROUTEMESH_API_KEY }}
+        run: bash scripts/token-list/check-decimals.sh
+
+  deploy:
+    name: Build and Deploy Token List
+    runs-on: ubuntu-latest
+    needs: [validate, check-decimals]
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v5
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+      - run: bun install
+
+      - name: Build token list
+        run: bun run build
+
+      - name: Configure Git
+        run: | #shell
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Commit and push token list
+        run: | #shell
+          git add lists/build/tokenlist.json
+          if git diff --staged --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "build: update tokenlist.json [skip ci]"
+            git push
+          fi
+
+      - name: Deployment summary
+        run: | #shell
+          echo "# 🚀 Token List Deployment" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "## Deployment Details" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "- **Status**: ✅ Deployed to GitHub Pages" >> $GITHUB_STEP_SUMMARY
+          echo "- **URL**: https://files.sablier.com/lists/build/tokenlist.json" >> $GITHUB_STEP_SUMMARY
+          echo "- **Commit**: ${{ github.sha }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Total Tokens**: $(jq '.tokens | length' lists/build/tokenlist.json)" >> $GITHUB_STEP_SUMMARY
+          echo "- **Chains**: $(jq '[.tokens[].chainId] | unique | length' lists/build/tokenlist.json)" >> $GITHUB_STEP_SUMMARY
+          echo "- **Version**: $(jq -r '"\(.version.major).\(.version.minor).\(.version.patch)"' lists/build/tokenlist.json)" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "GitHub Pages will automatically deploy this change within a few minutes." >> $GITHUB_STEP_SUMMARY

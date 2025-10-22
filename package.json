@@ -1,0 +1,34 @@
+{
+  "name": "@sablier/files",
+  "version": "1.0.0",
+  "description": "Sablier static files repository with token lists",
+  "private": true,
+  "scripts": {
+    "build": "mkdir -p lists/build && node scripts/token-list/write.mjs > lists/build/tokenlist.json",
+    "build:token-list": "mkdir -p lists/build && node scripts/token-list/write.mjs > lists/build/tokenlist.json",
+    "check:decimals": "node scripts/token-list/check-decimals.mjs",
+    "format": "prettier --write .",
+    "lint": "biome check .",
+    "sort:tokens": "node scripts/token-list/sort-tokens.mjs",
+    "test": "mocha test/token-list.test.js",
+    "validate:checksums": "mocha test/token-list.test.js --grep 'all addresses are valid and checksummed'",
+    "validate:duplicates": "mocha test/token-list.test.js --grep 'duplicate'",
+    "validate:metadata": "mocha test/token-list.test.js --grep 'version matches package.json'",
+    "validate:schema": "mocha test/token-list.test.js --grep 'validates token list'"
+  },
+  "devDependencies": {
+    "axios": "^1.12.2",
+    "dotenv": "^17.2.3",
+    "@biomejs/biome": "^2.2.6",
+    "@ethersproject/address": "^5.8.0",
+    "@uniswap/token-lists": "^1.0.0-beta.34",
+    "ajv": "^8.17.0",
+    "ajv-formats": "^3.0.0",
+    "chai": "^5.2.0",
+    "mocha": "^11.1.0",
+    "prettier": "^3.5.0"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
