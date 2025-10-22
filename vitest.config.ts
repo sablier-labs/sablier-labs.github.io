@@ -10,7 +10,7 @@ export default defineConfig({
     },
   },
   test: {
-    exclude: ["node_modules", "token-list/build.json"],
+    exclude: ["node_modules", "token-list/evm.json"],
     globals: true,
     include: ["**/*.{test,spec}.{js,ts}"],
   },

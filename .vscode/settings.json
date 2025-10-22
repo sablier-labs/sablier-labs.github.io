@@ -1,7 +1,7 @@
 {
   "editor.formatOnSave": true,
   "files.associations": {
-    "build.json": "plaintext"
+    "evm.json": "plaintext"
   },
   "[html][svg]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"

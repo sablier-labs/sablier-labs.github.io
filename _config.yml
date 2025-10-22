@@ -21,6 +21,5 @@ exclude:
   - justfile
   - package-lock.json
   - package.json
-  - token-list/build.json
   - tsconfig.json
   - vitest.config.ts

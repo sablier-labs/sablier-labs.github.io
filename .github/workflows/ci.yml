@@ -1,4 +1,4 @@
-name: CI/CD
+name: CI
 
 concurrency:
   cancel-in-progress: true
@@ -8,8 +8,7 @@ on:
   push:
     branches: [main]
   pull_request:
-  schedule:
-    - cron: "0 0 * * 0" # Weekly on Sunday
+  workflow_call:
   workflow_dispatch:
 
 jobs:
@@ -97,7 +96,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: tokenlist
-          path: token-list/build.json
+          path: token-list/evm.json
           retention-days: 7
 
   # ---------------------------------------------------------------------------- #
@@ -122,18 +121,10 @@ jobs:
 
   check-decimals:
     name: Validate Token Decimals via RPC
-    runs-on: ubuntu-latest
     needs: [validate-schema, check-duplicates, verify-checksums, validate-metadata, build, run-tests]
-    steps:
-      - uses: actions/checkout@v5
-      - uses: sablier-labs/devkit/actions/setup@main
-        with:
-          package-manager: bun
-
-      - name: Test decimals
-        env:
-          ROUTEMESH_API_KEY: ${{ secrets.ROUTEMESH_API_KEY }}
-        run: just test-decimals
+    uses: ./.github/workflows/ci-decimals.yml
+    secrets:
+      ROUTEMESH_API_KEY: ${{ secrets.ROUTEMESH_API_KEY }}
 
   # ---------------------------------------------------------------------------- #
   #                              VALIDATION SUMMARY                              #
@@ -169,50 +160,3 @@ jobs:
           needs.run-tests.result == 'failure' ||
           needs.check-decimals.result == 'failure'
         run: exit 1
-
-  # ---------------------------------------------------------------------------- #
-  #                                    DEPLOY                                    #
-  # ---------------------------------------------------------------------------- #
-
-  deploy:
-    name: Build and Deploy Token List
-    runs-on: ubuntu-latest
-    needs: [validate-schema, check-duplicates, verify-checksums, validate-metadata, build, run-tests, check-decimals]
-    if: github.ref == 'refs/heads/main' && github.event_name == 'push' # run only on push to `main`
-    permissions:
-      contents: write
-    steps:
-      - uses: actions/checkout@v5
-      - uses: sablier-labs/devkit/actions/setup@main
-        with:
-          package-manager: bun
-
-      - name: Build token list
-        run: just build
-
-      - name: Configure Git
-        run: | #shell
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
-
-      - name: Commit and push token list
-        run: | #shell
-          git add token-list/build.json
-          if git diff --staged --quiet; then
-            echo "No changes to commit"
-          else
-            git commit -m "build: update build.json [skip ci]"
-            git push
-          fi
-
-      - name: Add deployment summary
-        run: | #shell
-          echo "## Deploy result" >> $GITHUB_STEP_SUMMARY
-          echo "✅ Passed" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "### Deployment Details" >> $GITHUB_STEP_SUMMARY
-          echo "- **URL**: https://files.sablier.com/token-list/build.json" >> $GITHUB_STEP_SUMMARY
-          echo "- **Commit**: ${{ github.sha }}" >> $GITHUB_STEP_SUMMARY
-          echo "- **Total Tokens**: $(jq '.tokens | length' token-list/build.json)" >> $GITHUB_STEP_SUMMARY
-          echo "- **Chains**: $(jq '[.tokens[].chainId] | unique | length' token-list/build.json)" >> $GITHUB_STEP_SUMMARY
-          echo "- **Version**: $(jq -r '"\(.version.major).\(.version.minor).\(.version.patch)"' token-list/build.json)" >> $GITHUB_STEP_SUMMARY

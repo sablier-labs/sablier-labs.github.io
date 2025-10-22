@@ -8,5 +8,5 @@
     }
   },
   "include": ["**/*.ts", "**/*.mts"],
-  "exclude": ["node_modules", "token-list/build.json"]
+  "exclude": ["node_modules", "token-list/evm.json"]
 }

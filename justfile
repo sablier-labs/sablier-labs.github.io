@@ -19,7 +19,7 @@ default:
     just --list
 
 # Clean the generated files
-@clean globs="token-list/build.json":
+@clean globs="token-list/evm.json":
     nlx del-cli {{ globs }}
 
 # ---------------------------------------------------------------------------- #
@@ -29,7 +29,7 @@ default:
 # Build token list
 [group("build")]
 @build:
-    na tsx scripts/token-list/write.ts > token-list/build.json
+    na tsx scripts/token-list/write.ts > token-list/evm.json
 
 # Build token list (alias)
 [group("build")]
