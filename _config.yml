@@ -7,8 +7,8 @@ exclude:
   - .vscode/
   - node_modules/
   - scripts/
-  - templates/
   - test/
+  - token-list/evm/
 
   # Files
   - .env.example
