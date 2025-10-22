@@ -48,10 +48,18 @@ jobs:
 
       - uses: actions/checkout@v5
       - uses: sablier-labs/devkit/actions/setup@main
+
+      - name: Restore build cache
+        id: build-cache
+        uses: actions/cache@v4
         with:
-          package-manager: bun
+          path: token-list/evm.json
+          key: tokenlist-${{ hashFiles('scripts/token-list/**', 'token-list/evm/**/*.json', 'package.json') }}
+          restore-keys: |
+            tokenlist-
 
       - name: Build token list
+        if: steps.build-cache.outputs.cache-hit != 'true'
         run: just build
 
       # ---------------------------------------------------------------------------- #
