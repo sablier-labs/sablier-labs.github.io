@@ -62,7 +62,7 @@ build-token-list: build
 # Test token list schema
 [group("test")]
 @test-schema:
-    na vitest run -t 'tests token list'
+    na vitest run -t 'validates token list'
 
 # ---------------------------------------------------------------------------- #
 #                                   UTILITIES                                  #

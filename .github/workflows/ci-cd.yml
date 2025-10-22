@@ -50,7 +50,7 @@ jobs:
   # ---------------------------------------------------------------------------- #
 
   verify-checksums:
-    name: Verify Logo Checksums
+    name: Verify Address Checksums
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
@@ -58,7 +58,7 @@ jobs:
         with:
           package-manager: bun
 
-      - name: Verify logo checksums
+      - name: Verify address checksums
         run: just test-checksums
 
   # ---------------------------------------------------------------------------- #
