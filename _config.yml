@@ -2,37 +2,25 @@
 # Exclude development and build files from the published site
 
 exclude:
-  # Node.js and package management
-  - node_modules/
-  - package.json
-  - package-lock.json
-  - bun.lock
-
-  # Development configuration files
-  - tsconfig.json
-  - vitest.config.ts
-  - biome.jsonc
-  - .prettierrc.cjs
-  - .env.example
-  - justfile
-
-  # Development directories
-  - scripts/
-  - test/
-  - templates/
-
-  # GitHub-specific
+  # Directories
   - .github/
-
-  # IDE settings
   - .vscode/
+  - node_modules/
+  - scripts/
+  - templates/
+  - test/
 
-  # Build artifacts
-  - token-list/build.json
-
-  # Documentation
-  - README.md
-
-  # TypeScript source files
+  # Files
+  - .env.example
+  - .prettierrc.cjs
   - "*.ts"
   - "**/*.ts"
+  - README.md
+  - biome.jsonc
+  - bun.lock
+  - justfile
+  - package-lock.json
+  - package.json
+  - token-list/build.json
+  - tsconfig.json
+  - vitest.config.ts
