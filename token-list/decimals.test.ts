@@ -1,4 +1,4 @@
-import { readdirSync } from "node:fs";
+import { readdirSync, readFileSync } from "node:fs";
 import { readFile } from "node:fs/promises";
 import { join } from "node:path";
 import type { TokenInfo } from "@uniswap/token-lists";
@@ -15,13 +15,16 @@ const CHAIN_DIR = "token-list/evm";
 // Load chain files at module level for it.each()
 const chainFiles = readdirSync(CHAIN_DIR).filter((file) => file.endsWith(".json"));
 
-// Map chain files to test cases with chain names
+// Map chain files to test cases with chain names and token counts
 const chainTestCases = chainFiles.map((file) => {
   const chainId = Number.parseInt(file.replace(".json", ""), 10);
   const chain = sablier.chains.get(chainId);
+  const filePath = join(CHAIN_DIR, file);
+  const tokens: TokenInfo[] = JSON.parse(readFileSync(filePath, "utf-8"));
   return {
     chainName: chain?.name ?? `Chain ${chainId}`,
     file,
+    tokenCount: tokens.length,
   };
 });
 
@@ -61,7 +64,7 @@ async function checkTokenDecimals(token: TokenInfo, rpcUrl: string): Promise<voi
 
 describe("Token decimals validation", () => {
   it.each(chainTestCases)(
-    "should validate $chainName tokens against on-chain data",
+    "should validate $chainName tokens ($tokenCount tokens) against on-chain data",
     async ({ file }) => {
       // Check if ROUTEMESH_API_KEY is set
       if (!process.env.ROUTEMESH_API_KEY) {
