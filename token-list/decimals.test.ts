@@ -1,5 +1,6 @@
-import { readFile } from "node:fs/promises";
-import type { TokenInfo, TokenList } from "@uniswap/token-lists";
+import { readdir, readFile } from "node:fs/promises";
+import { join } from "node:path";
+import type { TokenInfo } from "@uniswap/token-lists";
 import axios from "axios";
 import { config } from "dotenv";
 import { sablier } from "sablier";
@@ -8,7 +9,7 @@ import { describe, expect, it } from "vitest";
 // Load environment variables from .env file
 config();
 
-const TOKEN_LIST_PATH = "token-list/evm.json";
+const CHAIN_DIR = "token-list/chain";
 
 async function checkTokenDecimals(token: TokenInfo, rpcUrl: string): Promise<void> {
   const { address, decimals: tokenDecimal } = token;
@@ -52,20 +53,19 @@ describe("Token decimals validation", () => {
       return;
     }
 
-    // Read the consolidated token list
-    const content = await readFile(TOKEN_LIST_PATH, "utf-8");
-    const tokenList: TokenList = JSON.parse(content);
+    // Read all JSON files from chain directory
+    const files = await readdir(CHAIN_DIR);
+    const chainFiles = files.filter((file) => file.endsWith(".json"));
 
-    // Group tokens by chainId
-    const tokensByChain = new Map<number, TokenInfo[]>();
-    for (const token of tokenList.tokens) {
-      const chainTokens = tokensByChain.get(token.chainId) ?? [];
-      chainTokens.push(token);
-      tokensByChain.set(token.chainId, chainTokens);
-    }
+    // Validate tokens for each chain file
+    for (const file of chainFiles) {
+      const chainId = Number.parseInt(file.replace(".json", ""), 10);
+      const filePath = join(CHAIN_DIR, file);
 
-    // Validate tokens for each chain
-    for (const [chainId, tokens] of tokensByChain) {
+      // Read tokens for this chain
+      const content = await readFile(filePath, "utf-8");
+      const tokens: TokenInfo[] = JSON.parse(content);
+
       const chain = sablier.chains.get(chainId);
 
       if (!chain || !chain.rpc.routemesh) {
