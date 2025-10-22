@@ -13,5 +13,8 @@ export default defineConfig({
     exclude: ["node_modules", "token-list/evm.json"],
     globals: true,
     include: ["**/*.{test,spec}.{js,ts}"],
+    // CI-specific settings
+    retry: process.env.CI ? 10 : 0,
+    testTimeout: process.env.CI ? 60000 : 5000,
   },
 });

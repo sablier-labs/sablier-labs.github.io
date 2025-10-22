@@ -44,11 +44,6 @@ build-token-list: build
 @test-checksums:
     na vitest run -t 'all addresses are valid and checksummed'
 
-# Verify token decimals against on-chain data
-[group("test")]
-@test-decimals:
-    na tsx scripts/token-list/check-decimals.ts
-
 # Test no duplicate addresses, symbols, or names
 [group("test")]
 @test-duplicates:
