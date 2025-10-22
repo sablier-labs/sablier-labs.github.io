@@ -25,14 +25,9 @@ jobs:
   # ---------------------------------------------------------------------------- #
 
   # Run all CI validation tests
-  validate:
+  ci:
     uses: ./.github/workflows/ci.yml
-
-  # Run token decimals tests
-  check-decimals:
-    uses: ./.github/workflows/ci-decimals.yml
-    secrets:
-      ROUTEMESH_API_KEY: ${{ secrets.ROUTEMESH_API_KEY }}
+    secrets: inherit
 
   # ---------------------------------------------------------------------------- #
   #                                  DEPLOYMENT                                  #
@@ -43,7 +38,7 @@ jobs:
     environment:
       name: production
       url: ${{ steps.pages-deployment.outputs.page_url }}
-    needs: [validate, check-decimals]
+    needs: [ci]
     runs-on: ubuntu-latest
 
     steps:
