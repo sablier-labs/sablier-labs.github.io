@@ -13,11 +13,9 @@ permissions:
   id-token: write
 
 on:
-  # Can be manually triggered by any member with Write permission
-  workflow_dispatch:
-  # Runs on pushes targeting the main branch
   push:
     branches: [main]
+  workflow_dispatch:
 
 jobs:
   # ---------------------------------------------------------------------------- #

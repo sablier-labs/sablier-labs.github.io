@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>{{ page.title }}</title>
+    <link rel="shortcut icon" type="image/x-icon" href="{{ page.favicon_path | default: 'favicon.ico' }}" />
+    <meta name="theme-color" content="#f77423" />
+  </head>
+  <body>
+    <h1>{{ page.heading | default: page.title }}</h1>
+    {% if page.description %}
+    <p>{{ page.description }}</p>
+    {% endif %}
+    <ul>
+      {%- comment -%}
+      Filter static files for this directory
+      {%- endcomment -%}
+      {%- assign directory_path = page.directory | default: "" -%}
+      {%- assign exclude_files = page.exclude_files | default: "index.html" | split: "," -%}
+      {%- assign show_dirs = page.show_dirs | default: false -%}
+
+      {%- comment -%}
+      Collect files and directories in this path
+      {%- endcomment -%}
+      {%- assign all_items = site.static_files | where_exp: "item", "item.path contains directory_path" -%}
+
+      {%- comment -%}
+      Build directory list (only from files in subdirectories)
+      {%- endcomment -%}
+      {%- assign directories = "" | split: "" -%}
+      {%- for item in all_items -%}
+        {%- assign item_dir_path = item.path | remove_first: "/" | remove_first: directory_path | remove_first: "/" -%}
+        {%- assign item_depth = item_dir_path | split: "/" | size -%}
+        {%- if item_depth > 1 -%}
+          {%- assign item_dir = item_dir_path | split: "/" | first -%}
+          {%- unless directories contains item_dir -%}
+            {%- unless exclude_files contains item_dir -%}
+              {%- assign directories = directories | push: item_dir -%}
+            {%- endunless -%}
+          {%- endunless -%}
+        {%- endif -%}
+      {%- endfor -%}
+
+      {%- assign directories = directories | uniq | sort -%}
+
+      {%- comment -%}
+      List directories first if showDirs is true
+      {%- endcomment -%}
+      {%- if show_dirs -%}
+        {%- for dir in directories -%}
+      <li><a href="{{ dir }}/">{{ dir }}/</a></li>
+        {%- endfor -%}
+      {%- endif -%}
+
+      {%- comment -%}
+      List files in the current directory only (not subdirectories)
+      {%- endcomment -%}
+      {%- assign files = all_items | where_exp: "item", "item.extname != ''" -%}
+      {%- for file in files -%}
+        {%- assign rel_path = file.path | remove_first: "/" | remove_first: directory_path | remove_first: "/" -%}
+        {%- assign depth = rel_path | split: "/" | size -%}
+        {%- if depth == 1 -%}
+          {%- assign filename = file.name -%}
+          {%- unless exclude_files contains filename -%}
+            {%- if directory_path == "" -%}
+              {%- assign file_url = "https://files.sablier.com/" | append: filename -%}
+            {%- else -%}
+              {%- assign file_url = "https://files.sablier.com/" | append: directory_path | append: "/" | append: filename -%}
+            {%- endif -%}
+      <li><a href="{{ file_url }}" target="_blank">{{ filename }}</a></li>
+          {%- endunless -%}
+        {%- endif -%}
+      {%- endfor -%}
+    </ul>
+  </body>
+</html>
