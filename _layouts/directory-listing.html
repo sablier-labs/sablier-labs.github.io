@@ -28,7 +28,11 @@
       {%- endcomment -%}
       {%- assign directories = "" | split: "" -%}
       {%- for item in all_items -%}
-        {%- assign item_dir_path = item.path | remove_first: "/" | remove_first: directory_path | remove_first: "/" -%}
+        {%- if directory_path == "" -%}
+          {%- assign item_dir_path = item.path | remove_first: "/" -%}
+        {%- else -%}
+          {%- assign item_dir_path = item.path | remove_first: "/" | remove_first: directory_path | remove_first: "/" -%}
+        {%- endif -%}
         {%- assign item_depth = item_dir_path | split: "/" | size -%}
         {%- if item_depth > 1 -%}
           {%- assign item_dir = item_dir_path | split: "/" | first -%}
@@ -56,7 +60,11 @@
       {%- endcomment -%}
       {%- assign files = all_items | where_exp: "item", "item.extname != ''" -%}
       {%- for file in files -%}
-        {%- assign rel_path = file.path | remove_first: "/" | remove_first: directory_path | remove_first: "/" -%}
+        {%- if directory_path == "" -%}
+          {%- assign rel_path = file.path | remove_first: "/" -%}
+        {%- else -%}
+          {%- assign rel_path = file.path | remove_first: "/" | remove_first: directory_path | remove_first: "/" -%}
+        {%- endif -%}
         {%- assign depth = rel_path | split: "/" | size -%}
         {%- if depth == 1 -%}
           {%- assign filename = file.name -%}
