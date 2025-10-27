@@ -33,11 +33,11 @@ jobs:
 
   deploy:
     name: Deploy Token List
+    needs: [ci]
+    runs-on: ubuntu-latest
     environment:
       name: production
       url: ${{ steps.pages-deployment.outputs.page_url }}
-    needs: [ci]
-    runs-on: ubuntu-latest
 
     steps:
       # ---------------------------------------------------------------------------- #
@@ -51,12 +51,12 @@ jobs:
         id: build-cache
         uses: actions/cache@v4
         with:
-          path: token-list/evm.json
-          key: tokenlist-${{ hashFiles('scripts/token-list/**', 'token-list/evm/**/*.json', 'package.json') }}
+          path: token-list/*.json
+          key: token-lists-${{ hashFiles('scripts/token-list/**', 'token-list/evm/**/*.json', 'token-list/solana/**/*.json', 'package.json') }}
           restore-keys: |
-            tokenlist-
+            token-lists-
 
-      - name: Build token list
+      - name: Build token lists
         if: steps.build-cache.outputs.cache-hit != 'true'
         run: just build
 
@@ -83,44 +83,106 @@ jobs:
         uses: actions/deploy-pages@v4
 
       # ---------------------------------------------------------------------------- #
-      #                                IPFS DEPLOYMENT                               #
+      #                               UPLOAD ARTIFACTS                               #
       # ---------------------------------------------------------------------------- #
 
-      - name: Deploy and pin bundle to IPFS
+      - name: Upload EVM token list artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: evm-token-list
+          path: token-list/evm.json
+
+      - name: Upload Solana token list artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: solana-token-list
+          path: token-list/solana.json
+
+  # ---------------------------------------------------------------------------- #
+  #                              EVM DEPLOYMENT                                  #
+  # ---------------------------------------------------------------------------- #
+
+  deploy-evm:
+    name: Deploy EVM Token List
+    needs: [ci, deploy]
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Download EVM token list artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: evm-token-list
+
+      - name: Deploy and pin EVM list to IPFS
         id: ipfs-deployment
         uses: anantaramdas/ipfs-pinata-deploy-action@a551f37c17ec3961df7c3ad52e1cd266dfd3d7e7
         with:
-          path: ./token-list/evm.json
+          path: ./evm.json
           pin-name: Sablier EVM Token List
           pinata-api-key: ${{ secrets.PINATA_API_KEY }}
           pinata-secret-api-key: ${{ secrets.PINATA_API_SECRET_KEY }}
 
-      # ---------------------------------------------------------------------------- #
-      #                             CLOUDFLARE DEPLOYMENT                            #
-      # ---------------------------------------------------------------------------- #
-
       - name: Deploy to Cloudflare Web3 Gateway
         uses: Uniswap/cloudflare-update-web3-gateway@master
         env:
-          CLOUDFLARE_GATEWAY_ID: ${{ secrets.CLOUDFLARE_GATEWAY_ID }}
+          CLOUDFLARE_GATEWAY_ID: ${{ secrets.CLOUDFLARE_GATEWAY_ID_EVM }}
           CLOUDFLARE_TOKEN: ${{ secrets.CLOUDFLARE_TOKEN }}
           CLOUDFLARE_ZONE_ID: ${{ secrets.CLOUDFLARE_ZONE_ID }}
         with:
           cid: ${{ steps.ipfs-deployment.outputs.hash }}
 
-      # ---------------------------------------------------------------------------- #
-      #                              Deployment Summary                              #
-      # ---------------------------------------------------------------------------- #
-
-      - name: Add deployment summary
+      - name: Add EVM deployment summary
         run: | #shell
-          echo "## Continuous Deployment Result" >> $GITHUB_STEP_SUMMARY
+          echo "## EVM Token List Deployment" >> $GITHUB_STEP_SUMMARY
           echo "✅ Passed" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "### Deployment Details" >> $GITHUB_STEP_SUMMARY
-          echo "- **GitHub Pages**: ${{ steps.pages-deployment.outputs.page_url }}" >> $GITHUB_STEP_SUMMARY
           echo "- **IPFS Hash**: \`${{ steps.ipfs-deployment.outputs.hash }}\`" >> $GITHUB_STEP_SUMMARY
           echo "- **IPFS Gateway**: https://ipfs.io/ipfs/${{ steps.ipfs-deployment.outputs.hash }}" >> $GITHUB_STEP_SUMMARY
           echo "- **Commit**: ${{ github.sha }}" >> $GITHUB_STEP_SUMMARY
-          echo "- **Total Tokens**: $(jq '.tokens | length' token-list/evm.json)" >> $GITHUB_STEP_SUMMARY
-          echo "- **Chains**: $(jq '[.tokens[].chainId] | unique | length' token-list/evm.json)" >> $GITHUB_STEP_SUMMARY
+          echo "- **Total Tokens**: $(jq '.tokens | length' evm.json)" >> $GITHUB_STEP_SUMMARY
+          echo "- **Chains**: $(jq '[.tokens[].chainId] | unique | length' evm.json)" >> $GITHUB_STEP_SUMMARY
+
+  # ---------------------------------------------------------------------------- #
+  #                            SOLANA DEPLOYMENT                                 #
+  # ---------------------------------------------------------------------------- #
+
+  deploy-solana:
+    name: Deploy Solana Token List
+    needs: [ci, deploy]
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Download Solana token list artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: solana-token-list
+
+      - name: Deploy and pin Solana list to IPFS
+        id: ipfs-deployment
+        uses: anantaramdas/ipfs-pinata-deploy-action@a551f37c17ec3961df7c3ad52e1cd266dfd3d7e7
+        with:
+          path: ./solana.json
+          pin-name: Sablier Solana Token List
+          pinata-api-key: ${{ secrets.PINATA_API_KEY }}
+          pinata-secret-api-key: ${{ secrets.PINATA_API_SECRET_KEY }}
+
+      - name: Deploy to Cloudflare Web3 Gateway
+        uses: Uniswap/cloudflare-update-web3-gateway@master
+        env:
+          CLOUDFLARE_GATEWAY_ID: ${{ secrets.CLOUDFLARE_GATEWAY_ID_SOLANA }}
+          CLOUDFLARE_TOKEN: ${{ secrets.CLOUDFLARE_TOKEN }}
+          CLOUDFLARE_ZONE_ID: ${{ secrets.CLOUDFLARE_ZONE_ID }}
+        with:
+          cid: ${{ steps.ipfs-deployment.outputs.hash }}
+
+      - name: Add Solana deployment summary
+        run: | #shell
+          echo "## Solana Token List Deployment" >> $GITHUB_STEP_SUMMARY
+          echo "✅ Passed" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### Deployment Details" >> $GITHUB_STEP_SUMMARY
+          echo "- **IPFS Hash**: \`${{ steps.ipfs-deployment.outputs.hash }}\`" >> $GITHUB_STEP_SUMMARY
+          echo "- **IPFS Gateway**: https://ipfs.io/ipfs/${{ steps.ipfs-deployment.outputs.hash }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Commit**: ${{ github.sha }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Total Tokens**: $(jq '.tokens | length' solana.json)" >> $GITHUB_STEP_SUMMARY
