@@ -4,6 +4,7 @@
   "private": true,
   "type": "module",
   "version": "1.0.0",
+  "dependencies": {},
   "devDependencies": {
     "@biomejs/biome": "^2.2.6",
     "@ethersproject/address": "^5.8.0",
@@ -15,16 +16,13 @@
     "ajv": "^8.17.0",
     "ajv-formats": "^3.0.0",
     "axios": "^1.12.2",
-    "dotenv": "^17.2.3",
     "prettier": "^3.6.2",
+    "sablier": "1.4.2",
     "tsx": "^4.20.6",
     "typescript": "^5.9.3",
     "vitest": "^3.2.4"
   },
   "engines": {
-    "node": ">=18"
-  },
-  "dependencies": {
-    "sablier": "1.4.1"
+    "node": ">=20"
   }
 }

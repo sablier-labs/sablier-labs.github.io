@@ -3,12 +3,8 @@ import { readFile } from "node:fs/promises";
 import { join } from "node:path";
 import type { TokenInfo } from "@uniswap/token-lists";
 import axios from "axios";
-import { config } from "dotenv";
 import { sablier } from "sablier";
 import { describe, expect, it } from "vitest";
-
-// Load environment variables from .env file
-config({ quiet: true });
 
 const CHAIN_DIR = "token-list/evm";
 
@@ -66,9 +62,9 @@ describe.skipIf(process.env.CI !== "true")("Token decimals validation", () => {
   it.each(chainTestCases)(
     "should validate $chainName tokens ($tokenCount tokens) against on-chain data",
     async ({ file }) => {
-      // Check if ROUTEMESH_API_KEY is set
-      if (!process.env.ROUTEMESH_API_KEY) {
-        console.warn("⚠️  ROUTEMESH_API_KEY not set, skipping decimals validation");
+      // Check if VITE_ROUTEMESH_API_KEY is set
+      if (!process.env.VITE_ROUTEMESH_API_KEY) {
+        console.warn("⚠️  VITE_ROUTEMESH_API_KEY not set, skipping decimals validation");
         return;
       }
 
@@ -81,12 +77,12 @@ describe.skipIf(process.env.CI !== "true")("Token decimals validation", () => {
 
       const chain = sablier.chains.get(chainId);
 
-      if (!chain) {
+      if (!chain || !chain.rpc?.routemesh) {
         throw new Error(`Chain ${chainId} not supported by sablier package`);
       }
 
       // Generate RPC URL using RouteMesh
-      const rpcUrl = chain.rpc.routemesh(process.env.ROUTEMESH_API_KEY);
+      const rpcUrl = chain.rpc.routemesh(process.env.VITE_ROUTEMESH_API_KEY);
 
       // Parallel token validation using Promise.all
       await Promise.all(tokens.map((token) => checkTokenDecimals(token, rpcUrl)));

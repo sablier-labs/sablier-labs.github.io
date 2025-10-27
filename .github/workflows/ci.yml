@@ -11,10 +11,10 @@ on:
 
 jobs:
   # ---------------------------------------------------------------------------- #
-  #                                     TEST                                     #
+  #                                    CHECKS                                    #
   # ---------------------------------------------------------------------------- #
 
-  test:
+  checks:
     name: Full Check & Test Suite
     runs-on: ubuntu-latest
     steps:
@@ -26,7 +26,7 @@ jobs:
 
       - name: Run tests
         env:
-          ROUTEMESH_API_KEY: ${{ secrets.ROUTEMESH_API_KEY }}
+          VITE_ROUTEMESH_API_KEY: ${{ secrets.VITE_ROUTEMESH_API_KEY }}
         run: just test
 
   # ---------------------------------------------------------------------------- #
@@ -35,7 +35,7 @@ jobs:
 
   build:
     name: Build Token List
-    needs: test
+    needs: checks
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
@@ -68,7 +68,7 @@ jobs:
   summary:
     name: Validation Summary
     runs-on: ubuntu-latest
-    needs: [test, build]
+    needs: [checks, build]
     if: always()
     steps:
       - name: Check job results
@@ -77,11 +77,11 @@ jobs:
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "| Job | Status |" >> $GITHUB_STEP_SUMMARY
           echo "|-----|--------|" >> $GITHUB_STEP_SUMMARY
-          echo "| Full Check & Test Suite | ${{ needs.test.result }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| Full Check & Test Suite | ${{ needs.checks.result }} |" >> $GITHUB_STEP_SUMMARY
           echo "| Build | ${{ needs.build.result }} |" >> $GITHUB_STEP_SUMMARY
 
       - name: Fail if any job failed
         if: | #shell
-          needs.test.result == 'failure' ||
+          needs.checks.result == 'failure' ||
           needs.build.result == 'failure'
         run: exit 1
