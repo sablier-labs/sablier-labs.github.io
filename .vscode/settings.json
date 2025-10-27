@@ -3,7 +3,7 @@
   "files.associations": {
     "evm.json": "plaintext"
   },
-  "[html][svg]": {
+  "[html][md][svg][yaml]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "[javascript][json][jsonc][typescript]": {

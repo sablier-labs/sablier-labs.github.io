@@ -6,6 +6,7 @@ const baseConfig = require("@sablier/devkit/prettier");
  */
 const config = {
   ...baseConfig,
+  plugins: ["@prettier/plugin-xml"],
 };
 
 module.exports = config;
