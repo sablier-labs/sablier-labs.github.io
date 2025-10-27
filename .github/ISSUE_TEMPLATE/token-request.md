@@ -6,16 +6,45 @@ name: Token Request
 title: "Add {TOKEN_SYMBOL}: {TOKEN_NAME}"
 ---
 
-<!-- NOTE: native tokens (e.g. ETH) are not supported. If you want to use a native token with Sablier, you need to provide a Wrapped ERC-20 version of the token, e.g., WETH. -->
-
 <!-- Please provide the following information for your token. -->
 
-- Token Address (**MUST** be [checksummed](https://ethsum.netlify.app/). We do NOT support unchecksummed addresses):
-- Token Name (from contract):
-- Token Decimals (from contract, PLEASE DOUBLE CHECK):
-- Token Symbol (from contract):
-- Token Icon (**MUST** be in PNG, under 200x200. We do support JPG):
-- Etherscan / Basescan / ... link:
-- Chain:
-- Official project website:
-- CoinGecko/CoinMarketCap page:
+## Chain Type
+
+- [ ] EVM (Ethereum, Polygon, Arbitrum, Optimism, Base, BSC, Avalanche, Gnosis, etc.)
+- [ ] Solana (Mainnet, Devnet, Testnet)
+
+---
+
+## Token Information
+
+**IMPORTANT NOTES:**
+
+- **EVM chains**: Native tokens (e.g., ETH, MATIC, AVAX) are not supported. You must use a wrapped ERC-20 version (e.g.,
+  WETH, WMATIC, WAVAX).
+- **Solana**: Native SOL is not supported. You must use wrapped SOL (WSOL) or another SPL token.
+
+---
+
+### Required Fields
+
+- **Chain**: (e.g., Ethereum Mainnet, Polygon, Arbitrum, Solana Mainnet)
+
+- **Token Address**:
+  - _EVM_: **MUST** be [checksummed](https://ethsum.netlify.app/). We do NOT support non-checksummed addresses.
+  - _Solana_: **MUST** be a valid base58-encoded SPL token address.
+
+- **Token Name** (from contract):
+
+- **Token Decimals** (from contract, PLEASE DOUBLE CHECK):
+
+- **Token Symbol** (from contract):
+
+- **Token Icon** (**MUST** be in PNG format, under 200x200 pixels. We do NOT support JPG):
+
+- **Block Explorer Link**:
+  - _EVM_: Etherscan / Polygonscan / Arbiscan / etc.
+  - _Solana_: Solscan / Solana Explorer
+
+- **Official Project Website**:
+
+- **CoinGecko / CoinMarketCap Page** (if available):
