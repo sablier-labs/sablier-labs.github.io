@@ -10,8 +10,8 @@ title: "Add {TOKEN_SYMBOL}: {TOKEN_NAME}"
 
 ## Chain Type
 
-- [ ] EVM (Ethereum, Polygon, Arbitrum, Optimism, Base, BSC, Avalanche, Gnosis, etc.)
-- [ ] Solana (Mainnet, Devnet, Testnet)
+- [ ] EVM (Ethereum, Base, Polygon, etc.)
+- [ ] Solana (Mainnet, Devnet, etc.)
 
 ---
 
@@ -43,7 +43,7 @@ title: "Add {TOKEN_SYMBOL}: {TOKEN_NAME}"
 
 - **Block Explorer Link**:
   - _EVM_: Etherscan / Polygonscan / Arbiscan / etc.
-  - _Solana_: Solscan / Solana Explorer
+  - _Solana_: SolScan / Solana Explorer
 
 - **Official Project Website**:
 
