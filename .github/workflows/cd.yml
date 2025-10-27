@@ -95,13 +95,6 @@ jobs:
           pinata-api-key: ${{ secrets.PINATA_API_KEY }}
           pinata-secret-api-key: ${{ secrets.PINATA_API_SECRET_KEY }}
 
-      - name: IPFS hash summary
-        run: | #shell
-          HASH="${{ steps.ipfs-deployment.outputs.hash }}"
-          URL="https://cloudflare-ipfs.com/ipfs/$HASH"
-          echo "## IPFS Deployment" >> $GITHUB_STEP_SUMMARY
-          echo "Successfully deployed on IPFS: [$HASH]($URL)" >> $GITHUB_STEP_SUMMARY
-
       # ---------------------------------------------------------------------------- #
       #                             CLOUDFLARE DEPLOYMENT                            #
       # ---------------------------------------------------------------------------- #
@@ -127,8 +120,7 @@ jobs:
           echo "### Deployment Details" >> $GITHUB_STEP_SUMMARY
           echo "- **GitHub Pages**: ${{ steps.pages-deployment.outputs.page_url }}" >> $GITHUB_STEP_SUMMARY
           echo "- **IPFS Hash**: \`${{ steps.ipfs-deployment.outputs.hash }}\`" >> $GITHUB_STEP_SUMMARY
-          echo "- **IPFS Gateway**: https://cloudflare-ipfs.com/ipfs/${{ steps.ipfs-deployment.outputs.hash }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **IPFS Gateway**: https://ipfs.io/ipfs/${{ steps.ipfs-deployment.outputs.hash }}" >> $GITHUB_STEP_SUMMARY
           echo "- **Commit**: ${{ github.sha }}" >> $GITHUB_STEP_SUMMARY
           echo "- **Total Tokens**: $(jq '.tokens | length' token-list/evm.json)" >> $GITHUB_STEP_SUMMARY
           echo "- **Chains**: $(jq '[.tokens[].chainId] | unique | length' token-list/evm.json)" >> $GITHUB_STEP_SUMMARY
-          echo "- **Version**: $(jq -r '\"\\(.version.major).\\(.version.minor).\\(.version.patch)\"' token-list/evm.json)" >> $GITHUB_STEP_SUMMARY

@@ -26,19 +26,20 @@ export default function buildList(): TokenList {
       return t1.chainId < t2.chainId ? -1 : 1;
     });
 
-  const l1List: TokenList = {
-    keywords: ["sablier", "default"],
-    logoURI: "https://files.sablier.com/icon-180x180.png",
+  // biome-ignore assist/source/useSortedKeys: order matters for generated JSON
+  const list: TokenList = {
     name: "Sablier EVM Token List",
-    tags: {},
+    logoURI: "https://files.sablier.com/icon-180x180.png",
+    keywords: ["sablier", "default"],
     timestamp: new Date().toISOString(),
-    tokens,
+    tags: {},
     version: {
       major: +parsed[0],
       minor: +parsed[1],
       patch: +parsed[2],
     },
+    tokens,
   };
 
-  return l1List;
+  return list;
 }
