@@ -72,53 +72,25 @@
       <h1>{{ page.heading | default: page.title }}</h1>
       {% if page.description %}
       <p>{{ page.description }}</p>
-      {% endif %}
-      {%- comment -%} Filter static files for this directory {%- endcomment -%}
-      {%- assign directory_path = page.directory | default: "" -%}
-      {%- assign exclude_files = page.exclude_files | default: "index.html" | split: "," -%}
-      {%- comment -%} Collect files and directories in this path {%- endcomment -%}
-      {%- assign all_items = site.static_files | where_exp: "item", "item.path contains directory_path" -%}
-
-      {%- comment -%} Build directory list (only from files in subdirectories) {%- endcomment -%}
-      {%- assign directories = "" | split: "" -%}
-      {%- for item in all_items -%}
-        {%- if directory_path == "" -%}
-          {%- assign item_dir_path = item.path | remove_first: "/" -%}
-        {%- else -%}
-          {%- assign item_dir_path = item.path | remove_first: "/" | remove_first: directory_path | remove_first: "/" -%}
-        {%- endif -%}
-        {%- assign item_depth = item_dir_path | split: "/" | size -%}
-        {%- if item_depth > 1 -%}
-          {%- assign item_dir = item_dir_path | split: "/" | first -%}
-          {%- unless directories contains item_dir -%}
-            {%- unless exclude_files contains item_dir -%}
-              {%- assign directories = directories | push: item_dir -%}
-            {%- endunless -%}
-          {%- endunless -%}
-        {%- endif -%}
-      {%- endfor -%}
-      {%- assign directories = directories | uniq | sort -%}
-
-      {%- comment -%} Collect files in the current directory only {%- endcomment -%}
-      {%- assign current_files = "" | split: "" -%}
-      {%- assign files = all_items | where_exp: "item", "item.extname != ''" -%}
-      {%- for file in files -%}
-        {%- if directory_path == "" -%}
-          {%- assign rel_path = file.path | remove_first: "/" -%}
-        {%- else -%}
-          {%- assign rel_path = file.path | remove_first: "/" | remove_first: directory_path | remove_first: "/" -%}
-        {%- endif -%}
-        {%- assign depth = rel_path | split: "/" | size -%}
-        {%- if depth == 1 -%}
-          {%- assign filename = file.name -%}
-          {%- unless exclude_files contains filename -%}
-            {%- assign current_files = current_files | push: file -%}
-          {%- endunless -%}
-        {%- endif -%}
-      {%- endfor -%}
-
-      {%- comment -%} Display directories section {%- endcomment -%}
-      {%- if directories.size > 0 -%}
+      {% endif %} {%- comment -%} Filter static files for this directory {%- endcomment -%} {%- assign directory_path =
+      page.directory | default: "" -%} {%- assign exclude_files = page.exclude_files | default: "index.html" | split:
+      "," -%} {%- comment -%} Collect files and directories in this path {%- endcomment -%} {%- assign all_items =
+      site.static_files | where_exp: "item", "item.path contains directory_path" -%} {%- comment -%} Build directory
+      list (only from files in subdirectories) {%- endcomment -%} {%- assign directories = "" | split: "" -%} {%- for
+      item in all_items -%} {%- if directory_path == "" -%} {%- assign item_dir_path = item.path | remove_first: "/" -%}
+      {%- else -%} {%- assign item_dir_path = item.path | remove_first: "/" | remove_first: directory_path |
+      remove_first: "/" -%} {%- endif -%} {%- assign item_depth = item_dir_path | split: "/" | size -%} {%- if
+      item_depth > 1 -%} {%- assign item_dir = item_dir_path | split: "/" | first -%} {%- unless directories contains
+      item_dir -%} {%- unless exclude_files contains item_dir -%} {%- assign directories = directories | push: item_dir
+      -%} {%- endunless -%} {%- endunless -%} {%- endif -%} {%- endfor -%} {%- assign directories = directories | uniq |
+      sort -%} {%- comment -%} Collect files in the current directory only {%- endcomment -%} {%- assign current_files =
+      "" | split: "" -%} {%- assign files = all_items | where_exp: "item", "item.extname != ''" -%} {%- for file in
+      files -%} {%- if directory_path == "" -%} {%- assign rel_path = file.path | remove_first: "/" -%} {%- else -%} {%-
+      assign rel_path = file.path | remove_first: "/" | remove_first: directory_path | remove_first: "/" -%} {%- endif
+      -%} {%- assign depth = rel_path | split: "/" | size -%} {%- if depth == 1 -%} {%- assign filename = file.name -%}
+      {%- unless exclude_files contains filename -%} {%- assign current_files = current_files | push: file -%} {%-
+      endunless -%} {%- endif -%} {%- endfor -%} {%- comment -%} Display directories section {%- endcomment -%} {%- if
+      directories.size > 0 -%}
       <div class="file-list-container">
         <p>Directories:</p>
         <ul>
@@ -127,26 +99,21 @@
           {%- endfor -%}
         </ul>
       </div>
-      {%- endif -%}
-
-      {%- comment -%} Display files section {%- endcomment -%}
-      {%- if current_files.size > 0 -%}
+      {%- endif -%} {%- comment -%} Display files section {%- endcomment -%} {%- if current_files.size > 0 -%}
       <div class="file-list-container">
         <p>Files:</p>
         <ul>
-          {%- for file in current_files -%}
-            {%- assign filename = file.name -%}
-            {%- if directory_path == "" -%}
-              {%- assign file_url = "https://files.sablier.com/" | append: filename -%}
-            {%- else -%}
-              {%- assign file_url = "https://files.sablier.com/" | append: directory_path | append: "/" | append: filename -%}
-            {%- endif -%}
+          {%- for file in current_files -%} {%- assign filename = file.name -%} {%- if directory_path == "" -%} {%-
+          assign file_url = "https://files.sablier.com/" | append: filename -%} {%- else -%} {%- assign file_url =
+          "https://files.sablier.com/" | append: directory_path | append: "/" | append: filename -%} {%- endif -%}
           <li><a href="{{ file_url }}" target="_blank">{{ filename }}</a></li>
           {%- endfor -%}
         </ul>
       </div>
       {%- endif -%}
-      <div class="footer">Source code on <a href="https://github.com/sablier-labs/sablier-labs.github.io">GitHub</a></div>
+      <div class="footer">
+        Source code on <a href="https://github.com/sablier-labs/sablier-labs.github.io">GitHub</a>
+      </div>
     </div>
   </body>
 </html>

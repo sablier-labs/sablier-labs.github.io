@@ -50,3 +50,17 @@ alias b := build
 test *args:
     na vitest run {{ args }}
 alias t := test
+
+# ---------------------------------------------------------------------------- #
+#                                    CHECKS                                    #
+# ---------------------------------------------------------------------------- #
+
+# Check Prettier formatting
+[group("checks")]
+prettier-check +globs=GLOBS_PRETTIER:
+    na prettier --check --cache --no-error-on-unmatched-pattern {{ globs }}
+
+# Format using Prettier
+[group("checks")]
+prettier-write +globs=GLOBS_PRETTIER:
+    na prettier --write --cache --no-error-on-unmatched-pattern {{ globs }}
