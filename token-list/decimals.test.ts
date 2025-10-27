@@ -62,7 +62,7 @@ async function checkTokenDecimals(token: TokenInfo, rpcUrl: string): Promise<voi
   expect(tokenDecimal).toBe(actualDecimals);
 }
 
-describe("Token decimals validation", () => {
+describe.skipIf(process.env.CI !== "true")("Token decimals validation", () => {
   it.each(chainTestCases)(
     "should validate $chainName tokens ($tokenCount tokens) against on-chain data",
     async ({ file }) => {
