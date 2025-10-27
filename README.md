@@ -5,13 +5,17 @@ This repository serves as Sablier's static asset distribution hub and token list
 
 ## Contents
 
-- **Token List**: Comprehensive EVM token metadata for Sablier integrations (689 tokens across 32 chains)
+- **Token Lists**:
+  - EVM: Comprehensive EVM token metadata for Sablier integrations (689 tokens across 32 chains)
+  - Solana: Solana SPL token metadata for Sablier integrations (6 tokens across 2 clusters)
 - **Static Assets**: Logos, icons, chain graphics, and legal documents
 - **Templates**: CSV templates for stream configurations (linear, exponential, cliff, etc.)
 
-## Token List
+## Token Lists
 
-The canonical token list is available at:
+### EVM
+
+The canonical EVM token list is available at:
 
 ```
 https://files.sablier.com/token-list/evm.json
@@ -19,6 +23,16 @@ https://files.sablier.com/token-list/evm.json
 
 This list is automatically built and validated via CI/CD, ensuring all token addresses are checksummed and metadata is
 accurate.
+
+### Solana
+
+The canonical Solana token list is available at:
+
+```
+https://files.sablier.com/token-list/solana.json
+```
+
+This list includes SPL tokens across Solana clusters (mainnet-beta, devnet) and follows the Uniswap token list standard.
 
 ### Development
 
@@ -28,8 +42,14 @@ Prerequisites: Node.js >=18
 # Install dependencies
 ni
 
-# Build token list
+# Build all token lists (EVM and Solana)
 just build
+
+# Build EVM token list only
+just build-evm
+
+# Build Solana token list only
+just build-solana
 
 # Run validation suite
 just test

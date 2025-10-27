@@ -1,0 +1,42 @@
+[
+  {
+    "address": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+    "chainId": 900000010,
+    "cluster": "mainnet-beta",
+    "decimals": 6,
+    "logoURI": "https://files.sablier.com/tokens/USDC.png",
+    "name": "USD Coin",
+    "program": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+    "symbol": "USDC"
+  },
+  {
+    "address": "Es9vMFrzaCERmJfrF4H2FYD4KCoNkY11McCe8BenwNYB",
+    "chainId": 900000010,
+    "cluster": "mainnet-beta",
+    "decimals": 6,
+    "logoURI": "https://files.sablier.com/tokens/USDT.png",
+    "name": "USDT",
+    "program": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+    "symbol": "USDT"
+  },
+  {
+    "address": "So11111111111111111111111111111111111111112",
+    "chainId": 900000010,
+    "cluster": "mainnet-beta",
+    "decimals": 9,
+    "logoURI": "https://files.sablier.com/tokens/WSOL.png",
+    "name": "Wrapped SOL",
+    "program": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+    "symbol": "SOL"
+  },
+  {
+    "address": "2zMMhcVQEXDtdE6vsFS7S7D5oUodfJHE8vd1gnBouauv",
+    "chainId": 900000010,
+    "cluster": "mainnet-beta",
+    "decimals": 6,
+    "logoURI": "https://files.sablier.com/tokens/PENGU.png",
+    "name": "Pudgy Penguins",
+    "program": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+    "symbol": "PENGU"
+  }
+]

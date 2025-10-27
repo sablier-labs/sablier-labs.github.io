@@ -40,6 +40,13 @@ describe("buildList", () => {
     defaultTokenList = JSON.parse(fs.readFileSync(tokenListPath, "utf8"));
   }, 300_000); // 300 seconds
 
+  it("version matches package.json", () => {
+    expect(packageJson.version).toMatch(/^\d+\.\d+\.\d+$/);
+    expect(packageJson.version).toBe(
+      `${defaultTokenList.version.major}.${defaultTokenList.version.minor}.${defaultTokenList.version.patch}`,
+    );
+  });
+
   it("validates token list", () => {
     const validated = validator(defaultTokenList);
     if (!validated) {
@@ -92,12 +99,5 @@ describe("buildList", () => {
     for (const token of defaultTokenList.tokens) {
       expect(getAddress(token.address).toLowerCase()).toBe(token.address.toLowerCase());
     }
-  });
-
-  it("version matches package.json", () => {
-    expect(packageJson.version).toMatch(/^\d+\.\d+\.\d+$/);
-    expect(packageJson.version).toBe(
-      `${defaultTokenList.version.major}.${defaultTokenList.version.minor}.${defaultTokenList.version.patch}`,
-    );
   });
 });
