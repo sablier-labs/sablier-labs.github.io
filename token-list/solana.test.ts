@@ -1,4 +1,4 @@
-import { PublicKey } from "@solana/web3.js";
+import { assertIsAddress } from "@solana/kit";
 import type { TokenInfo } from "@uniswap/token-lists";
 import { describe, expect, it } from "vitest";
 import packageJson from "../package.json" with { type: "json" };
@@ -39,9 +39,7 @@ describe("Solana Token List", () => {
 
   it("all addresses are valid Solana addresses", () => {
     for (const token of tokenList.tokens) {
-      expect(() => {
-        new PublicKey(token.address);
-      }, `Invalid Solana address: ${token.address}`).not.toThrow();
+      expect(() => assertIsAddress(token.address)).to.not.throw();
     }
   });
 
