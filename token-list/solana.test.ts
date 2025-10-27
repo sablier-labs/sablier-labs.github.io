@@ -13,6 +13,20 @@ interface SolanaTokenInfo extends TokenInfo {
 describe("Solana Token List", () => {
   const tokenList = buildList();
 
+  it("version matches package.json", () => {
+    expect(packageJson.version).toMatch(/^\d+\.\d+\.\d+$/);
+    expect(packageJson.version).toBe(
+      `${tokenList.version.major}.${tokenList.version.minor}.${tokenList.version.patch}`,
+    );
+  });
+
+  it("has correct metadata", () => {
+    expect(tokenList.name).toBe("Sablier Solana Token List");
+    expect(tokenList.logoURI).toBe("https://files.sablier.com/icon-180x180.png");
+    expect(tokenList.keywords).toContain("sablier");
+    expect(tokenList.keywords).toContain("solana");
+  });
+
   it("contains no duplicate addresses per cluster", () => {
     const map = new Map<string, boolean>();
     for (const token of tokenList.tokens) {
@@ -29,20 +43,6 @@ describe("Solana Token List", () => {
         new PublicKey(token.address);
       }, `Invalid Solana address: ${token.address}`).not.toThrow();
     }
-  });
-
-  it("version matches package.json", () => {
-    expect(packageJson.version).toMatch(/^\d+\.\d+\.\d+$/);
-    expect(packageJson.version).toBe(
-      `${tokenList.version.major}.${tokenList.version.minor}.${tokenList.version.patch}`,
-    );
-  });
-
-  it("has correct metadata", () => {
-    expect(tokenList.name).toBe("Sablier Solana Token List");
-    expect(tokenList.logoURI).toBe("https://files.sablier.com/icon-180x180.png");
-    expect(tokenList.keywords).toContain("sablier");
-    expect(tokenList.keywords).toContain("solana");
   });
 
   it("tokens are sorted by cluster then symbol", () => {
