@@ -18,15 +18,22 @@ nlx := require("nlx")
 default:
     just --list
 
-
-# Build token list
+# Build all token lists (EVM and Solana)
 @build:
-    na tsx scripts/token-list/write.ts > token-list/evm.json
+    just build-evm
+    just build-solana
 alias b := build
-alias build-token-list := build
+
+# Build EVM token list
+@build-evm:
+    na tsx scripts/token-list/write.ts > token-list/evm.json
+
+# Build Solana token list
+@build-solana:
+    na tsx scripts/token-list/write-solana.ts > token-list/solana.json
 
 # Clean the generated files
-@clean globs="token-list/evm.json":
+@clean globs="token-list/evm.json token-list/solana.json":
     nlx del-cli {{ globs }}
 
 # Sort tokens alphabetically by symbol

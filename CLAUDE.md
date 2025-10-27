@@ -75,7 +75,9 @@ nlx package-name     # Execute package
 ### Development Workflow
 
 ```bash
-just build           # Build token list (generates token-list/evm.json)
+just build           # Build all token lists (generates evm.json and solana.json)
+just build-evm       # Build EVM token list only (generates token-list/evm.json)
+just build-solana    # Build Solana token list only (generates token-list/solana.json)
 just test            # Run all validation tests
 just clean           # Remove generated files
 just sort-tokens     # Sort tokens alphabetically by symbol
@@ -93,7 +95,11 @@ just tsc-check       # TypeScript type validation
 
 ## Repository Structure
 
-- **token-list/**: EVM chain-specific token data (source) and generated `evm.json`
+- **token-list/**: Token data and generated lists
+  - **evm/**: EVM chain-specific token data (source)
+  - **solana/**: Solana cluster-specific token data (source)
+  - **evm.json**: Generated EVM token list
+  - **solana.json**: Generated Solana token list
 - **scripts/**: Build and validation scripts
 - **tokens/**: Token logos
 - **chains/**: Chain icons
