@@ -36,9 +36,10 @@
         display: grid;
         gap: 1.5rem;
         margin: 1.5rem 0;
+        grid-template-columns: 1fr;
       }
       @media (min-width: 768px) {
-        .sections-wrapper {
+        .sections-wrapper:has(> .file-list-container:nth-child(2)) {
           grid-template-columns: 1fr 1fr;
         }
       }
