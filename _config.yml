@@ -9,8 +9,10 @@ exclude:
   - scripts/
   - test/
   - token-list/evm/
+  - token-list/solana/
 
   # Files
+  - .env
   - .env.example
   - .prettierrc.cjs
   - "*.ts"
