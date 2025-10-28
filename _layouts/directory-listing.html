@@ -32,12 +32,22 @@
       p {
         margin-bottom: 1.5rem;
       }
+      .sections-wrapper {
+        display: grid;
+        gap: 1.5rem;
+        margin: 1.5rem 0;
+      }
+      @media (min-width: 768px) {
+        .sections-wrapper {
+          grid-template-columns: 1fr 1fr;
+        }
+      }
       .file-list-container {
         background-color: #f7fafc;
         border-left: 4px solid #4299e1;
         padding: 1rem;
         border-radius: 4px;
-        margin: 1.5rem 0;
+        margin: 0;
       }
       .file-list-container p {
         margin: 0 0 0.75rem 0;
@@ -89,26 +99,30 @@
       assign rel_path = file.path | remove_first: "/" | remove_first: directory_path | remove_first: "/" -%} {%- endif
       -%} {%- assign depth = rel_path | split: "/" | size -%} {%- if depth == 1 -%} {%- assign filename = file.name -%}
       {%- unless exclude_files contains filename -%} {%- assign current_files = current_files | push: file -%} {%-
-      endunless -%} {%- endif -%} {%- endfor -%} {%- comment -%} Display directories section {%- endcomment -%} {%- if
-      directories.size > 0 -%}
-      <div class="file-list-container">
-        <p>Directories:</p>
-        <ul>
-          {%- for dir in directories -%}
-          <li><a href="{{ dir }}/">{{ dir }}/</a></li>
-          {%- endfor -%}
-        </ul>
-      </div>
-      {%- endif -%} {%- comment -%} Display files section {%- endcomment -%} {%- if current_files.size > 0 -%}
-      <div class="file-list-container">
-        <p>Files:</p>
-        <ul>
-          {%- for file in current_files -%} {%- assign filename = file.name -%} {%- if directory_path == "" -%} {%-
-          assign file_url = "https://files.sablier.com/" | append: filename -%} {%- else -%} {%- assign file_url =
-          "https://files.sablier.com/" | append: directory_path | append: "/" | append: filename -%} {%- endif -%}
-          <li><a href="{{ file_url }}" target="_blank">{{ filename }}</a></li>
-          {%- endfor -%}
-        </ul>
+      endunless -%} {%- endif -%} {%- endfor -%} {%- comment -%} Display directories and files sections {%- endcomment
+      -%} {%- if directories.size > 0 or current_files.size > 0 -%}
+      <div class="sections-wrapper">
+        {%- if directories.size > 0 -%}
+        <div class="file-list-container">
+          <p>Directories:</p>
+          <ul>
+            {%- for dir in directories -%}
+            <li><a href="{{ dir }}/">{{ dir }}/</a></li>
+            {%- endfor -%}
+          </ul>
+        </div>
+        {%- endif -%} {%- if current_files.size > 0 -%}
+        <div class="file-list-container">
+          <p>Files:</p>
+          <ul>
+            {%- for file in current_files -%} {%- assign filename = file.name -%} {%- if directory_path == "" -%} {%-
+            assign file_url = "https://files.sablier.com/" | append: filename -%} {%- else -%} {%- assign file_url =
+            "https://files.sablier.com/" | append: directory_path | append: "/" | append: filename -%} {%- endif -%}
+            <li><a href="{{ file_url }}" target="_blank">{{ filename }}</a></li>
+            {%- endfor -%}
+          </ul>
+        </div>
+        {%- endif -%}
       </div>
       {%- endif -%}
       <div class="footer">
