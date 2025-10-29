@@ -15,7 +15,7 @@ exclude:
   - .env
   - .env.example
   - .prettierrc.cjs
-  - "*.ts"
+  - "**/*.md"
   - "**/*.ts"
   - README.md
   - biome.jsonc
