@@ -1,0 +1,10 @@
+[
+  {
+    "address": "0x191e94fa59739e188dce837f7f6978d84727ad01",
+    "chainId": 1116,
+    "decimals": 18,
+    "logoURI": "https://files.sablier.com/tokens/WCORE.png",
+    "name": "Wrapped Core",
+    "symbol": "WCORE"
+  }
+]
