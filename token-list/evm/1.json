@@ -2518,5 +2518,13 @@
     "logoURI": "https://files.sablier.com/tokens/PAST.png",
     "name": "Punk Auction Strategy Token",
     "symbol": "PAST"
+  },
+  {
+    "address": "0x474Ed38C256A7Fa0f3b8C48496Ce1102aB0eA91E",
+    "chainId": 1,
+    "decimals": 18,
+    "logoURI": "https://files.sablier.com/tokens/EAGLE.png",
+    "name": "Eagle",
+    "symbol": "EAGLE"
   }
 ]
