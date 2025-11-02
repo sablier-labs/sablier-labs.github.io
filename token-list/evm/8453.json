@@ -550,5 +550,13 @@
     "logoURI": "https://files.sablier.com/tokens/ETHY.png",
     "name": "Ethy AI by Virtuals",
     "symbol": "ETHY"
+  },
+  {
+    "address": "0xc7c154A93127ad933844FE21b20358397edC0e8C",
+    "chainId": 8453,
+    "decimals": 18,
+    "logoURI": "https://files.sablier.com/tokens/EMMA.png",
+    "name": "Dr Emma Sage by Virtuals",
+    "symbol": "EMMA"
   }
 ]
