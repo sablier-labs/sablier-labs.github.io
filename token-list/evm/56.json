@@ -264,6 +264,14 @@
     "symbol": "RDNT"
   },
   {
+    "address": "0xdA7AD9dea9397cffdDAE2F8a052B82f1484252B3",
+    "chainId": 56,
+    "decimals": 18,
+    "logoURI": "https://files.sablier.com/tokens/RIVER.png",
+    "name": "River",
+    "symbol": "RIVER"
+  },
+  {
     "address": "0x7712da72127d5dD213B621497D6E4899d5989e5C",
     "chainId": 56,
     "decimals": 18,
