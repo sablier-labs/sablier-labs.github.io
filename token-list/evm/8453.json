@@ -558,5 +558,13 @@
     "logoURI": "https://files.sablier.com/tokens/EMMA.png",
     "name": "Dr Emma Sage by Virtuals",
     "symbol": "EMMA"
+  },
+  {
+    "address": "0x9d56c29e820Dd13b0580B185d0e0Dc301d27581d",
+    "chainId": 8453,
+    "decimals": 18,
+    "logoURI": "https://files.sablier.com/tokens/AUBRAI.png",
+    "name": "Aubrai by Bio",
+    "symbol": "AUBRAI"
   }
 ]
