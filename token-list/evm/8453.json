@@ -392,6 +392,14 @@
     "symbol": "REWARD"
   },
   {
+    "address": "0xdA7AD9dea9397cffdDAE2F8a052B82f1484252B3",
+    "chainId": 8453,
+    "decimals": 18,
+    "logoURI": "https://files.sablier.com/tokens/RIVER.png",
+    "name": "River",
+    "symbol": "RIVER"
+  },
+  {
     "address": "0xe0023E73aab4fE9a22f059a9d27E857E027eE3dc",
     "chainId": 8453,
     "decimals": 18,
