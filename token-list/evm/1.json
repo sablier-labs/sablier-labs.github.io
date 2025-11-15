@@ -1008,6 +1008,14 @@
     "symbol": "KIWI"
   },
   {
+    "address": "0xDEF1245F98FeDd2e0108Acc185eb3ECA2c106eF6",
+    "chainId": 1,
+    "decimals": 18,
+    "logoURI": "https://files.sablier.com/tokens/KIWISWAP.png",
+    "name": "Kiwi",
+    "symbol": "KIWI"
+  },
+  {
     "address": "0xe8D17542dfe79Ff4FBd4b850f2d39DC69c4489a2",
     "chainId": 1,
     "decimals": 9,

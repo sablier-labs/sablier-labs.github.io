@@ -66,7 +66,17 @@ describe("buildList", () => {
 
   it("contains no duplicate symbols", () => {
     // manual override to approve certain tokens with duplicate symbols
-    const approvedDuplicateSymbols = ["amp", "bank", "flx", "ichi", "rdnt", "slp", "usdc", "usds"];
+    const approvedDuplicateSymbols = [
+      "amp",
+      "bank",
+      "flx",
+      "ichi",
+      "rdnt",
+      "slp",
+      "usdc",
+      "usds",
+      "kiwi",
+    ];
 
     const map: Record<string, boolean> = {};
     for (const token of defaultTokenList.tokens) {
