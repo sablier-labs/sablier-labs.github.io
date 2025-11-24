@@ -1,0 +1,34 @@
+[
+  {
+    "address": "0x3bd359C1119dA7Da1D913D1C4D2B7c461115433A",
+    "chainId": 143,
+    "decimals": 18,
+    "logoURI": "https://files.sablier.com/tokens/MON.png",
+    "name": "Wrapped MON",
+    "symbol": "WMON"
+  },
+  {
+    "address": "0xEE8c0E9f1BFFb4Eb878d8f15f368A02a35481242",
+    "chainId": 143,
+    "decimals": 18,
+    "logoURI": "https://files.sablier.com/tokens/WETH.png",
+    "name": "Wrapped Ether",
+    "symbol": "WETH"
+  },
+  {
+    "address": "0x754704Bc059F8C67012fEd69BC8A327a5aafb603",
+    "chainId": 143,
+    "decimals": 6,
+    "logoURI": "https://files.sablier.com/tokens/USDC.png",
+    "name": "USD Coin",
+    "symbol": "USDC"
+  },
+  {
+    "address": "0x754704Bc059F8C67012fEd69BC8A327a5aafb603",
+    "chainId": 143,
+    "decimals": 6,
+    "logoURI": "https://files.sablier.com/tokens/USDT.png",
+    "name": "USDT0",
+    "symbol": "USDT0"
+  }
+]
