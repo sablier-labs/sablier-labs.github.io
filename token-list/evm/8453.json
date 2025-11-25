@@ -574,5 +574,13 @@
     "logoURI": "https://files.sablier.com/tokens/AUBRAI.png",
     "name": "Aubrai by Bio",
     "symbol": "AUBRAI"
+  },
+  {
+    "address": "0x9EadbE35F3Ee3bF3e28180070C429298a1b02F93",
+    "chainId": 8453,
+    "decimals": 18,
+    "logoURI": "https://files.sablier.com/tokens/LMTS.png",
+    "name": "Limitless",
+    "symbol": "LMTS"
   }
 ]
