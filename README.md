@@ -13,6 +13,8 @@ This repository serves as Sablier's static asset distribution hub and token list
 
 ## Token Lists
 
+File new token listing requests through the [dedicated issue templates](https://github.com/sablier-labs/sablier-labs.github.io/issues/new/choose) in this repository.
+
 ### EVM
 
 The canonical EVM token list is available at:
@@ -23,6 +25,10 @@ https://files.sablier.com/token-list/evm.json
 
 This list is automatically built and validated via CI/CD, ensuring all token addresses are checksummed and metadata is
 accurate.
+
+> [!IMPORTANT]
+>
+> Sablier supports any ERC-20 token that follows the standard interface. Tokens with custom mechanics, like rebasing assets (e.g. Aave’s aTokens) or fee-on-transfer tokens, are not recommended.
 
 ### Solana
 
