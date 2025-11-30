@@ -1,9 +1,10 @@
 ---
-about: Request Solana token listing in the Sablier UI
-assignees: "maxdesalle"
-labels: ["token-request", "solana"]
 name: Solana Token Request
-title: "Add {TOKEN_SYMBOL}: {TOKEN_NAME}"
+about: Request Solana token listing in the Sablier UI
+title: 'Add {TOKEN_SYMBOL}: {TOKEN_NAME}'
+labels: ''
+assignees: maxdesalle
+
 ---
 
 <!-- Please provide the following information for your Solana token. -->

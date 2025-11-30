@@ -1,17 +1,20 @@
 ---
-about: Request EVM token listing in the Sablier UI
-assignees: "maxdesalle"
-labels: ["token-request", "evm"]
 name: EVM Token Request
-title: "Add {TOKEN_SYMBOL}: {TOKEN_NAME}"
+about: Request EVM token listing in the Sablier UI
+title: 'Add {TOKEN_SYMBOL}: {TOKEN_NAME}'
+labels: ''
+assignees: maxdesalle
+
 ---
 
 <!-- Please provide the following information for your EVM token. -->
 
-## Important Note
+## Important Notes
 
 **Native tokens** (e.g., ETH, MATIC, AVAX) are not supported. You must use a **wrapped ERC-20 version** (e.g., WETH,
 WMATIC, WAVAX).
+
+Tokens with **custom mechanics** — like dynamic balances like Aave aTokens or fee-on-transfer tokens) — are not recommended.
 
 ---
 
