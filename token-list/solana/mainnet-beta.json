@@ -38,5 +38,15 @@
     "name": "Pudgy Penguins",
     "program": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
     "symbol": "PENGU"
+  },
+  {
+    "address": "pSo1f9nQXWgXibFtKf7NWYxb5enAM4qfP6UJSiXRQfL",
+    "chainId": 900000010,
+    "cluster": "mainnet-beta",
+    "decimals": 9,
+    "logoURI": "https://files.sablier.com/tokens/PSOL.png",
+    "name": "Phantom Staked SOL",
+    "program": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+    "symbol": "PSOL"
   }
 ]
