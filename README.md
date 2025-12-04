@@ -13,7 +13,9 @@ This repository serves as Sablier's static asset distribution hub and token list
 
 ## Token Lists
 
-File new token listing requests through the [dedicated issue templates](https://github.com/sablier-labs/sablier-labs.github.io/issues/new/choose) in this repository.
+File new token listing requests through the
+[dedicated issue templates](https://github.com/sablier-labs/sablier-labs.github.io/issues/new/choose) in this
+repository.
 
 ### EVM
 
@@ -28,7 +30,8 @@ accurate.
 
 > [!IMPORTANT]
 >
-> Sablier supports any ERC-20 token that follows the standard interface. Tokens with custom mechanics, like rebasing assets (e.g. Aave’s aTokens) or fee-on-transfer tokens, are not recommended.
+> Sablier supports any ERC-20 token that follows the standard interface. Tokens with custom mechanics, like rebasing
+> assets (e.g. Aave’s aTokens) or fee-on-transfer tokens, are not recommended.
 
 ### Solana
 
