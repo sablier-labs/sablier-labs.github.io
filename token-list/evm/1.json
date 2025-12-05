@@ -2542,5 +2542,13 @@
     "logoURI": "https://files.sablier.com/tokens/EAGLE.png",
     "name": "Eagle",
     "symbol": "EAGLE"
+  },
+  {
+    "address": "0xe485E2f1bab389C08721B291f6b59780feC83Fd7",
+    "chainId": 1,
+    "decimals": 18,
+    "logoURI": "https://files.sablier.com/tokens/SHU.png",
+    "name": "Shutter Token",
+    "symbol": "SHU"
   }
 ]
