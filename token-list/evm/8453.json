@@ -582,5 +582,13 @@
     "logoURI": "https://files.sablier.com/tokens/LMTS.png",
     "name": "Limitless",
     "symbol": "LMTS"
+  },
+  {
+    "address": "0xcb17C9Db87B595717C857a08468793f5bAb6445F",
+    "chainId": 8453,
+    "decimals": 8,
+    "logoURI": "https://files.sablier.com/tokens/cbLTC.png",
+    "name": "Coinbase Wrapped LTC",
+    "symbol": "cbLTC"
   }
 ]
