@@ -103,5 +103,6 @@ just tsc-check       # TypeScript type validation
 - **scripts/**: Build and validation scripts
 - **tokens/**: Token logos
 - **chains/**: Chain icons
-- **templates/**: CSV templates for streams
+- **template/**: CSV vesting templates (canonical, standardized naming)
+- **templates/**: CSV templates (legacy, kept for backward compatibility)
 - **banners/**: Branding assets

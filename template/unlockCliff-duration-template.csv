@@ -1,0 +1,5 @@
+Note: check out the docs at https://docs.sablier.com/csv to learn more
+address,amount,duration,cliffDuration,unlock,cliffAmount
+0xf31b00e025584486f7c37Cf0AE0073c97c12c634,100,2 years 20 days,1 years 45 days 6 hours,80, 10
+0xf31b00e025584486f7c37Cf0AE0073c97c12c634,422.85,2 years 20 days,1 years 45 days 6 hours,80, 10
+0xf31b00e025584486f7c37Cf0AE0073c97c12c634,1337,2 years 20 days,1 years 45 days 6 hours,80, 10

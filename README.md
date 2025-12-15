@@ -109,14 +109,26 @@ Located in `tokens/`, referenced in the token list via the `logoURI` field.
 
 ## Templates
 
-CSV templates for creating streams are available in `templates/`:
+CSV templates for creating streams are available in two locations:
 
-- **Duration-based**: linear, exponential, cliff, stepper, timelock, etc.
-- **Range-based**: linear, exponential, monthly, etc.
-- **Airdrops**: Standard and Solana formats
-- **Airstreams**: Merkle airdrop streaming
+### `template/` (Canonical)
 
-Organized by year for historical tracking.
+The primary location for vesting templates with standardized naming:
+
+```
+template/{shape}-{timing}-template.csv
+```
+
+Where `{shape}` matches the vesting shape exactly (e.g., `linear`, `cliffExponential`, `unlockCliff`) and `{timing}` is
+either `duration` or `range`.
+
+**Available shapes**: backweighted, cliff, cliffExponential, doubleUnlock, exponential, linear, monthly, stepper,
+timelock, unlockCliff, unlockLinear
+
+### `templates/` (Legacy)
+
+Kept for backward compatibility. Contains historical templates organized by year with varying naming conventions. New
+integrations should use the `template/` directory.
 
 ## Domain
 
