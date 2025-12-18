@@ -30,5 +30,13 @@
     "logoURI": "https://files.sablier.com/tokens/WHYPE.png",
     "name": "Wrapped HYPE",
     "symbol": "WHYPE"
+  },
+  {
+    "address": "0x58538e6A46E07434d7E7375Bc268D3cb839C0133",
+    "chainId": 999,
+    "decimals": 18,
+    "logoURI": "https://files.sablier.com/tokens/ENA.png",
+    "name": "ENA",
+    "symbol": "ENA"
   }
 ]

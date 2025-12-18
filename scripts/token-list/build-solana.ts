@@ -34,9 +34,9 @@ export default function buildList(): TokenList {
     timestamp: new Date().toISOString(),
     tags: {},
     version: {
-      major: +parsed[0],
-      minor: +parsed[1],
-      patch: +parsed[2],
+      major: Number(parsed[0]),
+      minor: Number(parsed[1]),
+      patch: Number(parsed[2]),
     },
     tokens,
   };

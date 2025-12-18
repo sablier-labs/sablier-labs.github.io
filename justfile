@@ -2,15 +2,6 @@
 import "./node_modules/@sablier/devkit/just/base.just"
 
 # ---------------------------------------------------------------------------- #
-#                                 DEPENDENCIES                                 #
-# ---------------------------------------------------------------------------- #
-
-# ni: https://github.com/antfu-collective/ni
-na := require("na")
-ni := require("ni")
-nlx := require("nlx")
-
-# ---------------------------------------------------------------------------- #
 #                                   CONSTANTS                                  #
 # ---------------------------------------------------------------------------- #
 
@@ -47,20 +38,6 @@ alias b := build
     na tsx scripts/token-list/sort-tokens.ts
 
 # Run all tests
-test *args:
+@test *args:
     na vitest run {{ args }}
 alias t := test
-
-# ---------------------------------------------------------------------------- #
-#                                    CHECKS                                    #
-# ---------------------------------------------------------------------------- #
-
-# Check Prettier formatting
-[group("checks")]
-prettier-check +globs=GLOBS_PRETTIER:
-    na prettier --check --cache --no-error-on-unmatched-pattern {{ globs }}
-
-# Format using Prettier
-[group("checks")]
-prettier-write +globs=GLOBS_PRETTIER:
-    na prettier --write --cache --no-error-on-unmatched-pattern {{ globs }}

@@ -59,33 +59,34 @@ async function checkTokenDecimals(token: TokenInfo, rpcUrl: string): Promise<voi
 }
 
 describe.skipIf(process.env.CI !== "true")("Token decimals validation", () => {
-  it.each(chainTestCases)(
-    "should validate $chainName tokens ($tokenCount tokens) against on-chain data",
-    async ({ file }) => {
-      // Check if VITE_ROUTEMESH_API_KEY is set
-      if (!process.env.VITE_ROUTEMESH_API_KEY) {
-        console.warn("⚠️  VITE_ROUTEMESH_API_KEY not set, skipping decimals validation");
-        return;
-      }
+  it.each(
+    chainTestCases,
+  )("should validate $chainName tokens ($tokenCount tokens) against on-chain data", async ({
+    file,
+  }) => {
+    // Check if VITE_ROUTEMESH_API_KEY is set
+    if (!process.env.VITE_ROUTEMESH_API_KEY) {
+      console.warn("⚠️  VITE_ROUTEMESH_API_KEY not set, skipping decimals validation");
+      return;
+    }
 
-      const chainId = Number.parseInt(file.replace(".json", ""), 10);
-      const filePath = join(CHAIN_DIR, file);
+    const chainId = Number.parseInt(file.replace(".json", ""), 10);
+    const filePath = join(CHAIN_DIR, file);
 
-      // Read tokens for this chain
-      const content = await readFile(filePath, "utf-8");
-      const tokens: TokenInfo[] = JSON.parse(content);
+    // Read tokens for this chain
+    const content = await readFile(filePath, "utf-8");
+    const tokens: TokenInfo[] = JSON.parse(content);
 
-      const chain = sablier.chains.get(chainId);
+    const chain = sablier.chains.get(chainId);
 
-      if (!chain || !chain.rpc?.routemesh) {
-        throw new Error(`Chain ${chainId} not supported by sablier package`);
-      }
+    if (!chain || !chain.rpc?.routemesh) {
+      throw new Error(`Chain ${chainId} not supported by sablier package`);
+    }
 
-      // Generate RPC URL using RouteMesh
-      const rpcUrl = chain.rpc.routemesh(process.env.VITE_ROUTEMESH_API_KEY);
+    // Generate RPC URL using RouteMesh
+    const rpcUrl = chain.rpc.routemesh(process.env.VITE_ROUTEMESH_API_KEY);
 
-      // Parallel token validation using Promise.all
-      await Promise.all(tokens.map((token) => checkTokenDecimals(token, rpcUrl)));
-    },
-  );
+    // Parallel token validation using Promise.all
+    await Promise.all(tokens.map((token) => checkTokenDecimals(token, rpcUrl)));
+  });
 });
