@@ -1,30 +1,35 @@
-import { readdirSync, readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
-import type { TokenList } from "@uniswap/token-lists";
+import type { TokenInfo, TokenList } from "@uniswap/token-lists";
+import { Effect } from "effect";
+import { TokenFileSystem } from "./services/TokenFileSystem.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const packageJson = JSON.parse(readFileSync(join(__dirname, "../../package.json"), "utf-8"));
-const { version } = packageJson;
 
-export default function buildList(): TokenList {
-  const parsed = version.split(".");
+export const buildList = Effect.gen(function* () {
+  const fs = yield* TokenFileSystem;
 
-  // Dynamically load all token list files
+  const pkg = yield* fs.readJsonFile<{ version: string }>(join(__dirname, "../../package.json"));
+  const parsed = pkg.version.split(".");
+
   const tokenListDir = join(__dirname, "../../token-list/evm");
-  const chainFiles = readdirSync(tokenListDir).filter((f) => f.endsWith(".json"));
+  const entries = yield* fs.readDirectory(tokenListDir);
+  const chainFiles = entries.filter((f) => f.endsWith(".json"));
 
-  const tokens = chainFiles
-    .flatMap((file) => {
-      const filePath = join(tokenListDir, file);
-      return JSON.parse(readFileSync(filePath, "utf-8"));
-    })
-    .sort((t1, t2) => {
-      if (t1.chainId === t2.chainId) {
-        return t1.symbol.toLowerCase() < t2.symbol.toLowerCase() ? -1 : 1;
-      }
-      return t1.chainId < t2.chainId ? -1 : 1;
-    });
+  const tokenArrays = yield* Effect.forEach(
+    chainFiles,
+    (file) => fs.readTokenFile(join(tokenListDir, file)),
+    {
+      concurrency: "unbounded",
+    },
+  );
+
+  const tokens: TokenInfo[] = tokenArrays.flat().sort((t1, t2) => {
+    if (t1.chainId === t2.chainId) {
+      return t1.symbol.toLowerCase().localeCompare(t2.symbol.toLowerCase());
+    }
+    return t1.chainId - t2.chainId;
+  });
 
   // biome-ignore assist/source/useSortedKeys: order matters for generated JSON
   const list: TokenList = {
@@ -42,4 +47,4 @@ export default function buildList(): TokenList {
   };
 
   return list;
-}
+});

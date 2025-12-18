@@ -1,38 +1,53 @@
-import { readdir, readFile, writeFile } from "node:fs/promises";
 import { join } from "node:path";
-import type { TokenInfo } from "@uniswap/token-lists";
+import { NodeRuntime } from "@effect/platform-node";
+import type { TokenInfo, TokenList } from "@uniswap/token-lists";
+import { Console, Effect } from "effect";
+import { TokenFileSystem } from "./services/TokenFileSystem.js";
+import type { SolanaToken } from "./types.js";
 
 const TOKENS_DIR = "token-list";
 
-async function sortTokenFile(filePath: string): Promise<number> {
-  const content = await readFile(filePath, "utf-8");
-  const tokens: TokenInfo[] = JSON.parse(content);
+const sortTokenFile = (filePath: string, isSolana: boolean) =>
+  Effect.gen(function* () {
+    const fs = yield* TokenFileSystem;
+    const tokenList = yield* fs.readJsonFile<TokenList>(filePath);
 
-  // Sort tokens alphabetically by symbol (case-insensitive)
-  tokens.sort((a, b) => a.symbol.toLowerCase().localeCompare(b.symbol.toLowerCase()));
+    const sortedTokens = isSolana
+      ? (tokenList.tokens as SolanaToken[]).sort((a, b) => {
+          if (a.cluster === b.cluster) {
+            return a.symbol.toLowerCase() < b.symbol.toLowerCase() ? -1 : 1;
+          }
+          return a.cluster.localeCompare(b.cluster);
+        })
+      : tokenList.tokens.sort((a: TokenInfo, b: TokenInfo) => {
+          if (a.chainId === b.chainId) {
+            return a.symbol.toLowerCase().localeCompare(b.symbol.toLowerCase());
+          }
+          return a.chainId < b.chainId ? -1 : 1;
+        });
 
-  // Write back with 2-space indentation and trailing newline
-  await writeFile(filePath, JSON.stringify(tokens, null, 2) + "\n", "utf-8");
+    const updatedList = { ...tokenList, tokens: sortedTokens };
+    const jsonContent = JSON.stringify(updatedList, null, 2) + "\n";
+    yield* fs.writeFile(filePath, jsonContent);
 
-  return tokens.length;
-}
+    return sortedTokens.length;
+  });
 
-async function main(): Promise<void> {
-  const files = await readdir(TOKENS_DIR);
-  const jsonFiles = files.filter((file) => file.endsWith(".json"));
+const program = Effect.gen(function* () {
+  const fs = yield* TokenFileSystem;
+  const files = yield* fs.readDirectory(TOKENS_DIR);
+  const jsonFiles = files.filter((f) => f.endsWith(".json"));
 
-  console.log(`Found ${jsonFiles.length} token files to sort...\n`);
+  yield* Console.log(`Found ${jsonFiles.length} token files to sort...\n`);
 
   for (const file of jsonFiles) {
     const filePath = join(TOKENS_DIR, file);
-    const count = await sortTokenFile(filePath);
-    console.log(`✓ Sorted ${count} tokens in ${file}`);
+    const isSolana = file.includes("solana");
+    const count = yield* sortTokenFile(filePath, isSolana);
+    yield* Console.log(`✓ Sorted ${count} tokens in ${file}`);
   }
 
-  console.log(`\n✓ All ${jsonFiles.length} files sorted successfully`);
-}
+  yield* Console.log(`\n✓ All ${jsonFiles.length} files sorted successfully`);
+}).pipe(Effect.provide(TokenFileSystem.Default));
 
-main().catch((error) => {
-  console.error("Error:", error.message);
-  process.exit(1);
-});
+NodeRuntime.runMain(program);

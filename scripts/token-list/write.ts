@@ -1,10 +1,15 @@
-import buildList from "./build.js";
+import { NodeRuntime } from "@effect/platform-node";
+import { Console, Effect } from "effect";
+import { buildList } from "./build.js";
+import { TokenFileSystem } from "./services/TokenFileSystem.js";
 
-try {
-  const data = buildList();
-  const formattedData = JSON.stringify(data, null, 2);
-  console.log(formattedData);
-} catch (error) {
-  console.error("Failed to build list:", error);
-  process.exit(1);
-}
+const program = Effect.gen(function* () {
+  const list = yield* buildList;
+  const json = JSON.stringify(list, null, 2);
+  yield* Console.log(json);
+}).pipe(
+  Effect.provide(TokenFileSystem.Default),
+  Effect.tapError((error) => Console.error("Failed to build list:", error)),
+);
+
+NodeRuntime.runMain(program);
