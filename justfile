@@ -43,3 +43,9 @@ alias b := build
 @test *args:
     na vitest run {{ args }}
 alias t := test
+
+# Run all tests as they run in CI (i.e. include CI-only tests)
+@test-all *args:
+    CI=true na vitest run {{ args }}
+alias ta := test-all
+alias ci := test-all
