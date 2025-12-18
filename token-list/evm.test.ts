@@ -1,13 +1,13 @@
 import { execSync } from "node:child_process";
 import fs from "node:fs";
 import path from "node:path";
+import { beforeAll, describe, expect, it } from "@effect/vitest";
 import { getAddress } from "@ethersproject/address";
 import type { TokenList } from "@uniswap/token-lists";
 import schema from "@uniswap/token-lists/src/tokenlist.schema.json" with { type: "json" };
 import { Ajv } from "ajv";
 import type { FormatsPlugin } from "ajv-formats";
 import * as addFormatsModule from "ajv-formats";
-import { beforeAll, describe, expect, it } from "vitest";
 import packageJson from "../package.json" with { type: "json" };
 
 // Handle CommonJS default export for ajv-formats
@@ -81,8 +81,7 @@ describe("buildList", () => {
     const map: Record<string, boolean> = {};
     for (const token of defaultTokenList.tokens) {
       const symbol = token.symbol.toLowerCase();
-      if (approvedDuplicateSymbols.includes(symbol)) {
-      } else {
+      if (!approvedDuplicateSymbols.includes(symbol)) {
         const key = `${token.chainId}-${symbol}`;
         expect(map[key]).toBeUndefined();
         map[key] = true;

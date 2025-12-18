@@ -1,8 +1,10 @@
+import { execSync } from "node:child_process";
+import fs from "node:fs";
+import path from "node:path";
+import { beforeAll, describe, expect, it } from "@effect/vitest";
 import { assertIsAddress } from "@solana/kit";
-import type { TokenInfo } from "@uniswap/token-lists";
-import { describe, expect, it } from "vitest";
+import type { TokenInfo, TokenList } from "@uniswap/token-lists";
 import packageJson from "../package.json" with { type: "json" };
-import buildList from "../scripts/token-list/build-solana.js";
 
 // Extend TokenInfo to include Solana-specific fields
 interface SolanaTokenInfo extends TokenInfo {
@@ -11,7 +13,26 @@ interface SolanaTokenInfo extends TokenInfo {
 }
 
 describe("Solana Token List", () => {
-  const tokenList = buildList();
+  let tokenList: TokenList;
+
+  beforeAll(async () => {
+    const tokenListPath = path.join(__dirname, "../token-list/solana.json");
+
+    // Only build if the file doesn't exist
+    if (!fs.existsSync(tokenListPath)) {
+      try {
+        execSync("just build-solana", { stdio: "inherit" });
+      } catch (error) {
+        throw new Error(`Failed to build token list: ${(error as Error).message}`);
+      }
+    }
+
+    // Load the built token list
+    if (!fs.existsSync(tokenListPath)) {
+      throw new Error("Token list not found after build");
+    }
+    tokenList = JSON.parse(fs.readFileSync(tokenListPath, "utf8"));
+  }, 300_000); // 300 seconds
 
   it("version matches package.json", () => {
     expect(packageJson.version).toMatch(/^\d+\.\d+\.\d+$/);
