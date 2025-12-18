@@ -1,5 +1,6 @@
 # directories
 .serena/
+node_modules/
 
 # files
 token-list/evm.json
