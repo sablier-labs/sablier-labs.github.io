@@ -39,7 +39,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
-      - uses: sablier-labs/devkit/actions/setup@main
+      - uses: sablier-labs/devkit/actions/setup@v1
 
       - name: Restore build cache
         id: build-cache
