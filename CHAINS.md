@@ -11,7 +11,6 @@
 | 137      | Polygon       |
 | 146      | Sonic         |
 | 324      | ZKsync Era    |
-| 478      | Form          |
 | 999      | HyperEVM      |
 | 1329     | Sei Network   |
 | 1890     | Lightlink     |

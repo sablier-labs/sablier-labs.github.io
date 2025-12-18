@@ -24,10 +24,12 @@ alias b := build
 # Build EVM token list
 @build-evm:
     na tsx scripts/token-list/write.ts > token-list/evm.json
+    echo '{{ GREEN }}✓ EVM token list built successfully'
 
 # Build Solana token list
 @build-solana:
     na tsx scripts/token-list/write-solana.ts > token-list/solana.json
+    echo '{{ GREEN }}✓ Solana token list built successfully'
 
 # Clean the generated files
 @clean globs="token-list/evm.json token-list/solana.json":
