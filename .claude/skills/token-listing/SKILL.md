@@ -1,15 +1,30 @@
 ---
-name: listing-solana-tokens
-description: Adds SPL tokens to the Sablier token list. Use when listing Solana tokens or adding SPL tokens.
+name: token-listing
+description: Adds tokens to the Sablier token list. Supports EVM (ERC-20) and Solana (SPL) tokens.
 ---
 
-# Listing Solana Tokens
+# Listing Tokens
 
 ## Overview
 
-Add SPL tokens to the Sablier token list by fetching metadata and inserting entries into cluster-specific JSON files.
+Add tokens to the Sablier token list by fetching metadata and inserting entries into network-specific JSON files.
 
-## Schema
+## Schemas
+
+### EVM (ERC-20)
+
+```json
+{
+  "address": "0x...",
+  "chainId": 1,
+  "decimals": 18,
+  "logoURI": "https://files.sablier.com/tokens/{SYMBOL}.{ext}",
+  "name": "Token Name",
+  "symbol": "SYMBOL"
+}
+```
+
+### Solana (SPL)
 
 ```json
 {
@@ -24,10 +39,21 @@ Add SPL tokens to the Sablier token list by fetching metadata and inserting entr
 }
 ```
 
+## Network-Specific Paths
+
+| Network | Source files                       | Build command       |
+| ------- | ---------------------------------- | ------------------- |
+| EVM     | `token-list/evm/{chainId}.json`    | `just build-evm`    |
+| Solana  | `token-list/solana/{cluster}.json` | `just build-solana` |
+
 ## Workflow
 
-1. **Check duplicates**: `grep -i "$ADDRESS" token-list/solana/*.json` — if found, report "Token already listed in
-   {file}" and **STOP**
+1. **Check duplicates**: Search for address in the appropriate directory
+   - EVM: `grep -i "$ADDRESS" token-list/evm/*.json`
+   - Solana: `grep -i "$ADDRESS" token-list/solana/*.json`
+
+   If found, report "Token already listed in {file}" and **STOP**
+
 2. **Search GitHub issues**:
 
    ```bash
@@ -41,18 +67,20 @@ Add SPL tokens to the Sablier token list by fetching metadata and inserting entr
 3. **Check CoinGecko** (if no issue or missing metadata): Use `coingecko-api` skill to fetch missing schema fields
 
 4. **Fallback**: If still missing metadata, ask user for missing fields. Do NOT improvise with RPC calls
+
 5. **Logo** (first available): GitHub issue image → CoinGecko logo → existing `tokens/{SYMBOL}.*`
+   - Use `image.thumb` from CoinGecko (25x25 px)
    - Download with `curl -L`, verify type with `file`, use correct extension (.jpg/.png)
    - JSON logoURI: `https://files.sablier.com/tokens/{SYMBOL}.{ext}`
-6. **Generate entry**: Create JSON matching schema above, save to `token-list/solana/{cluster}.json`
-7. **Insert**: Use jq to add entry (DO NOT read the entire file with Read tool):
-   ```bash
-   # Create temp file with new entry
-   echo '{...new entry...}' > /tmp/new_token.json
-   # Insert and sort alphabetically by symbol
-   jq --slurpfile new /tmp/new_token.json '. + $new | sort_by(.symbol | ascii_downcase)' token-list/solana/{cluster}.json > /tmp/out.json && mv /tmp/out.json token-list/solana/{cluster}.json
-   ```
-8. **Build**: Run `just build-solana` to regenerate combined token list
+
+6. **Generate entry**: Create JSON matching the appropriate schema above
+
+7. **Insert**: Read the target file, add the entry alphabetically by symbol (case-insensitive), and save
+
+8. **Build**: Run the appropriate build command from the table above
+
 9. **Quality checks**: Follow CLAUDE.md sequence for modified files
+
 10. **Validate**: Run `just test` to verify token entry is valid
+
 11. **Commit** (skip gitignored files): `list ${SYMBOL}` or `list ${SYMBOL} (closes #N)`

@@ -1,5 +1,5 @@
 ---
-argument-hint: "<network> <chain-or-cluster> <address>"
+argument-hint: "<chain-or-cluster> <address>"
 description: List a new token in the Sablier token list
 ---
 
@@ -11,51 +11,32 @@ description: List a new token in the Sablier token list
 
 ## Your Task
 
-Add a new token to the Sablier token list.
+Add a new token to the Sablier token list using the `list-token` skill.
 
 ### Syntax
 
-**EVM:**
-
 ```
-/list-token evm <chain> <address>
+/list-token <chain-or-cluster> <address>
 ```
-
-Where `<chain>` is a chain name from CHAINS.md (case-insensitive).
-
-**Solana:**
-
-```
-/list-token solana <cluster> <address>
-```
-
-Where `<cluster>` is a cluster name from CHAINS.md.
 
 ### Examples
 
 ```bash
 # EVM
-/list-token evm base 0xcb17C9Db87B595717C857a08468793f5bAb6445F
-/list-token evm arbitrum 0x912CE59144191C1204E64559FE8253a0e49E6548
+/list-token base 0xcb17C9Db87B595717C857a08468793f5bAb6445F
+/list-token arbitrum 0x912CE59144191C1204E64559FE8253a0e49E6548
 
 # Solana
-/list-token solana mainnet-beta EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v
+/list-token solana EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v
 ```
 
-### Mode Detection
+### Network Detection
 
-**If first arg is `evm`:**
+Auto-detect network from address format:
 
-- Activate the `listing-evm-tokens` skill
-- Parse: chain name (2nd arg) → lookup chain ID in CHAINS.md
-- Parse: address (3rd arg)
-
-**If first arg is `solana`:**
-
-- Activate the `listing-solana-tokens` skill
-- Parse: cluster name (2nd arg) → lookup cluster ID in CHAINS.md
-- Parse: address (3rd arg)
+- **EVM**: Address starts with `0x` → lookup chain ID in CHAINS.md
+- **Solana**: Base58 address (no `0x` prefix) → lookup cluster ID in CHAINS.md
 
 If chain/cluster name is not found, report error with available options from CHAINS.md.
 
-Follow the workflow defined in the activated skill.
+Follow the workflow defined in the `token-listing` skill.
