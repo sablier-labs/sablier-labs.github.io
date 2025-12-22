@@ -17,7 +17,6 @@ Use this endpoint to get the most up-to-date platform support information.
 | Ethereum          | `ethereum`            | `1`      |
 | Polygon           | `polygon-pos`         | `137`    |
 | Arbitrum One      | `arbitrum-one`        | `42161`  |
-| Arbitrum Nova     | `arbitrum-nova`       | `42170`  |
 | Optimism          | `optimistic-ethereum` | `10`     |
 | Base              | `base`                | `8453`   |
 | BNB Smart Chain   | `binance-smart-chain` | `56`     |
@@ -31,66 +30,31 @@ Use this endpoint to get the most up-to-date platform support information.
 
 ## Layer 2 & Rollups
 
-| Chain       | Platform ID       | Chain ID |
-| ----------- | ----------------- | -------- |
-| zkSync Era  | `zksync`          | `324`    |
-| Linea       | `linea`           | `59144`  |
-| Scroll      | `scroll`          | `534352` |
-| Blast       | `blast`           | `81457`  |
-| Mantle      | `mantle`          | `5000`   |
-| Mode        | `mode`            | `34443`  |
-| Metis       | `metis-andromeda` | `1088`   |
-| Boba        | `boba`            | `288`    |
-| Immutable X | `immutable`       | `13371`  |
+| Chain      | Platform ID       | Chain ID |
+| ---------- | ----------------- | -------- |
+| zkSync Era | `zksync`          | `324`    |
+| Linea      | `linea`           | `59144`  |
+| Scroll     | `scroll`          | `534352` |
+| Blast      | `blast`           | `81457`  |
+| Mantle     | `mantle`          | `5000`   |
+| Mode       | `mode`            | `34443`  |
+| Metis      | `metis-andromeda` | `1088`   |
 
 ## Other Chains
 
-| Chain     | Platform ID     | Chain ID |
-| --------- | --------------- | -------- |
-| Solana    | `solana`        | N/A      |
-| Tron      | `tron`          | N/A      |
-| Near      | `near-protocol` | N/A      |
-| Sui       | `sui`           | N/A      |
-| Aptos     | `aptos`         | N/A      |
-| Cosmos    | `cosmos`        | N/A      |
-| Osmosis   | `osmosis`       | N/A      |
-| Injective | `injective`     | N/A      |
-| Sei       | `sei-network`   | `1329`   |
-
-## Testnets
-
-Testnets are generally not supported in CoinGecko's token database. Use mainnet lookups only.
-
-## Chain ID to Platform ID Mapping
-
-For programmatic lookup, here's a mapping function:
-
-```bash
-get_platform_id() {
-  local chain_id=$1
-  case $chain_id in
-    1) echo "ethereum" ;;
-    137) echo "polygon-pos" ;;
-    42161) echo "arbitrum-one" ;;
-    10) echo "optimistic-ethereum" ;;
-    8453) echo "base" ;;
-    56) echo "binance-smart-chain" ;;
-    43114) echo "avalanche" ;;
-    100) echo "xdai" ;;
-    250) echo "fantom" ;;
-    324) echo "zksync" ;;
-    59144) echo "linea" ;;
-    534352) echo "scroll" ;;
-    81457) echo "blast" ;;
-    5000) echo "mantle" ;;
-    *) echo "" ;;
-  esac
-}
-```
+| Chain    | Platform ID     | Chain ID |
+| -------- | --------------- | -------- |
+| Solana   | `solana`        | N/A      |
+| Tron     | `tron`          | N/A      |
+| Near     | `near-protocol` | N/A      |
+| Sui      | `sui`           | N/A      |
+| Aptos    | `aptos`         | N/A      |
+| Sei      | `sei-network`   | `1329`   |
+| Starknet | `starknet`      | N/A      |
 
 ## Notes
 
 - Platform IDs are case-sensitive (always lowercase)
 - Not all tokens on a chain are indexed by CoinGecko
 - New tokens may take time to appear in the database
-- The Uniswap token list (`tokens.coingecko.com/uniswap/all.json`) may have different coverage than the API
+- Testnets are not supported

@@ -3,8 +3,7 @@
   "permissions": {
     "allow": [
       "Skill(coingecko-api)",
-      "Skill(listing-evm-tokens)",
-      "Skill(listing-solana-tokens)",
+      "Skill(token-listing)",
       "SlashCommand(/list-token:*)"
     ]
   }
