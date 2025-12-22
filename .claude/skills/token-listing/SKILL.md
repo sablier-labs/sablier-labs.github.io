@@ -69,7 +69,8 @@ Add tokens to the Sablier token list by fetching metadata and inserting entries 
 4. **Fallback**: If still missing metadata, ask user for missing fields. Do NOT improvise with RPC calls
 
 5. **Logo** (first available): GitHub issue image → CoinGecko logo → existing `tokens/{SYMBOL}.*`
-   - Use `image.thumb` from CoinGecko (25x25 px)
+   - All logos stored flat in `tokens/` directory (not chain-specific subdirectories)
+   - **IMPORTANT: Use `image.thumb` from CoinGecko (25x25 px) - NOT `large` or `small`**
    - Download with `curl -L`, verify type with `file`, use correct extension (.jpg/.png)
    - JSON logoURI: `https://files.sablier.com/tokens/{SYMBOL}.{ext}`
 
