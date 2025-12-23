@@ -18,7 +18,7 @@ Add tokens to the Sablier token list by fetching metadata and inserting entries 
   "address": "0x...",
   "chainId": 1,
   "decimals": 18,
-  "logoURI": "https://files.sablier.com/tokens/{SYMBOL}.{ext}",
+  "logoURI": "https://files.sablier.com/tokens/{SYMBOL}.png",
   "name": "Token Name",
   "symbol": "SYMBOL"
 }
@@ -32,7 +32,7 @@ Add tokens to the Sablier token list by fetching metadata and inserting entries 
   "chainId": 900000010,
   "cluster": "mainnet-beta",
   "decimals": 6,
-  "logoURI": "https://files.sablier.com/tokens/{SYMBOL}.{ext}",
+  "logoURI": "https://files.sablier.com/tokens/{SYMBOL}.png",
   "name": "Token Name",
   "program": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA", // Token-2022: TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb
   "symbol": "SYMBOL"
@@ -70,18 +70,20 @@ Add tokens to the Sablier token list by fetching metadata and inserting entries 
 
 5. **Logo** (first available): GitHub issue image → CoinGecko logo → existing `tokens/{SYMBOL}.*`
    - All logos stored flat in `tokens/` directory (not chain-specific subdirectories)
-   - **IMPORTANT: Use `image.thumb` from CoinGecko (25x25 px) - NOT `large` or `small`**
-   - Download with `curl -L`, verify type with `file`, use correct extension (.jpg/.png)
-   - JSON logoURI: `https://files.sablier.com/tokens/{SYMBOL}.{ext}`
+   - Download with `curl -L` to temp file, check format with `file`
+   - **Must be PNG**: if not PNG, convert it
+   - Save as `tokens/{SYMBOL}.png`, logoURI: `https://files.sablier.com/tokens/{SYMBOL}.png`
 
 6. **Generate entry**: Create JSON matching the appropriate schema above
 
-7. **Insert**: Read the target file, add the entry alphabetically by symbol (case-insensitive), and save
+7. **Insert**: Append the entry to the target file
 
-8. **Build**: Run the appropriate build command from the table above
+8. **Sort**: Run `just sort-tokens` to sort alphabetically by symbol
 
-9. **Quality checks**: Follow CLAUDE.md sequence for modified files
+9. **Build**: Run the appropriate build command from the table above
 
-10. **Validate**: Run `just test` to verify token entry is valid
+10. **Quality checks**: Follow CLAUDE.md sequence for modified files
 
-11. **Commit** (skip gitignored files): `list ${SYMBOL}` or `list ${SYMBOL} (closes #N)`
+11. **Validate**: Run `just test` to verify token entry is valid
+
+12. **Commit** (skip gitignored files): `list ${SYMBOL}` or `list ${SYMBOL} (closes #N)`
