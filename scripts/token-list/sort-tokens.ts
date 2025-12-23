@@ -7,24 +7,31 @@ import type { SolanaToken } from "./types.js";
 
 const TOKENS_DIR = "token-list";
 
-const sortTokenFile = (filePath: string, isSolana: boolean) =>
+const sortEvmTokens = (tokens: TokenInfo[]): TokenInfo[] =>
+  tokens.sort((a, b) => {
+    if (a.chainId === b.chainId) {
+      return a.symbol.toLowerCase().localeCompare(b.symbol.toLowerCase());
+    }
+    return a.chainId < b.chainId ? -1 : 1;
+  });
+
+const sortSolanaTokens = (tokens: SolanaToken[]): SolanaToken[] =>
+  tokens.sort((a, b) => {
+    if (a.cluster === b.cluster) {
+      return a.symbol.toLowerCase().localeCompare(b.symbol.toLowerCase());
+    }
+    return a.cluster.localeCompare(b.cluster);
+  });
+
+/** Sort generated token list files (evm.json, solana.json) */
+const sortGeneratedFile = (filePath: string, isSolana: boolean) =>
   Effect.gen(function* () {
     const fs = yield* TokenFileSystem;
     const tokenList = yield* fs.readJsonFile<TokenList>(filePath);
 
     const sortedTokens = isSolana
-      ? (tokenList.tokens as SolanaToken[]).sort((a, b) => {
-          if (a.cluster === b.cluster) {
-            return a.symbol.toLowerCase() < b.symbol.toLowerCase() ? -1 : 1;
-          }
-          return a.cluster.localeCompare(b.cluster);
-        })
-      : tokenList.tokens.sort((a: TokenInfo, b: TokenInfo) => {
-          if (a.chainId === b.chainId) {
-            return a.symbol.toLowerCase().localeCompare(b.symbol.toLowerCase());
-          }
-          return a.chainId < b.chainId ? -1 : 1;
-        });
+      ? sortSolanaTokens(tokenList.tokens as SolanaToken[])
+      : sortEvmTokens(tokenList.tokens);
 
     const updatedList = { ...tokenList, tokens: sortedTokens };
     const jsonContent = JSON.stringify(updatedList, null, 2) + "\n";
@@ -33,21 +40,54 @@ const sortTokenFile = (filePath: string, isSolana: boolean) =>
     return sortedTokens.length;
   });
 
+/** Sort source token files (evm/*.json, solana/*.json) */
+const sortSourceFile = (filePath: string, isSolana: boolean) =>
+  Effect.gen(function* () {
+    const fs = yield* TokenFileSystem;
+    const tokens = yield* fs.readJsonFile<TokenInfo[] | SolanaToken[]>(filePath);
+
+    const sortedTokens = isSolana
+      ? sortSolanaTokens(tokens as SolanaToken[])
+      : sortEvmTokens(tokens as TokenInfo[]);
+
+    const jsonContent = JSON.stringify(sortedTokens, null, 2) + "\n";
+    yield* fs.writeFile(filePath, jsonContent);
+
+    return sortedTokens.length;
+  });
+
 const program = Effect.gen(function* () {
   const fs = yield* TokenFileSystem;
+  let totalFiles = 0;
+
+  // Sort source files in evm/ and solana/ directories
+  for (const subdir of ["evm", "solana"]) {
+    const dirPath = join(TOKENS_DIR, subdir);
+    const files = yield* fs.readDirectory(dirPath);
+    const jsonFiles = files.filter((f) => f.endsWith(".json"));
+    const isSolana = subdir === "solana";
+
+    for (const file of jsonFiles) {
+      const filePath = join(dirPath, file);
+      const count = yield* sortSourceFile(filePath, isSolana);
+      yield* Console.log(`✓ Sorted ${count} tokens in ${subdir}/${file}`);
+      totalFiles++;
+    }
+  }
+
+  // Sort generated files in token-list/
   const files = yield* fs.readDirectory(TOKENS_DIR);
   const jsonFiles = files.filter((f) => f.endsWith(".json"));
-
-  yield* Console.log(`Found ${jsonFiles.length} token files to sort...\n`);
 
   for (const file of jsonFiles) {
     const filePath = join(TOKENS_DIR, file);
     const isSolana = file.includes("solana");
-    const count = yield* sortTokenFile(filePath, isSolana);
+    const count = yield* sortGeneratedFile(filePath, isSolana);
     yield* Console.log(`✓ Sorted ${count} tokens in ${file}`);
+    totalFiles++;
   }
 
-  yield* Console.log(`\n✓ All ${jsonFiles.length} files sorted successfully`);
+  yield* Console.log(`\n✓ All ${totalFiles} files sorted successfully`);
 }).pipe(Effect.provide(TokenFileSystem.Default));
 
 NodeRuntime.runMain(program);

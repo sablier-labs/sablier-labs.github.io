@@ -248,6 +248,14 @@
     "symbol": "BZRX"
   },
   {
+    "address": "0xBe9895146f7AF43049ca1c1AE358B0541Ea49704",
+    "chainId": 1,
+    "decimals": 18,
+    "logoURI": "https://ethereum-optimism.github.io/data/cbETH/logo.svg",
+    "name": "Coinbase Wrapped Staked ETH",
+    "symbol": "cbETH"
+  },
+  {
     "address": "0x5d3a536E4D6DbD6114cc1Ead35777bAB948E3643",
     "chainId": 1,
     "decimals": 8,
@@ -302,14 +310,6 @@
     "logoURI": "https://files.sablier.com/tokens/COMBO.png",
     "name": "Furucombo",
     "symbol": "COMBO"
-  },
-  {
-    "address": "0xBe9895146f7AF43049ca1c1AE358B0541Ea49704",
-    "chainId": 1,
-    "decimals": 18,
-    "logoURI": "https://ethereum-optimism.github.io/data/cbETH/logo.svg",
-    "name": "Coinbase Wrapped Staked ETH",
-    "symbol": "cbETH"
   },
   {
     "address": "0xc00e94Cb662C3520282E6f5717214004A7f26888",
@@ -526,6 +526,14 @@
     "logoURI": "https://files.sablier.com/tokens/DYAD.png",
     "name": "DYAD Stable",
     "symbol": "DYAD"
+  },
+  {
+    "address": "0x474eD38C256A7FA0f3B8c48496CE1102ab0eA91E",
+    "chainId": 1,
+    "decimals": 18,
+    "logoURI": "https://files.sablier.com/tokens/EAGLE.png",
+    "name": "Eagle",
+    "symbol": "EAGLE"
   },
   {
     "address": "0x974D796E0Bea47038f39C3F98b1aA2c5240b5495",
@@ -1464,6 +1472,14 @@
     "symbol": "PAPER"
   },
   {
+    "address": "0x38778E6d4d0dbE9bEceF3aE8B938570209efa48B",
+    "chainId": 1,
+    "decimals": 18,
+    "logoURI": "https://files.sablier.com/tokens/PAST.png",
+    "name": "Punk Auction Strategy Token",
+    "symbol": "PAST"
+  },
+  {
     "address": "0x60bE1e1fE41c1370ADaF5d8e66f07Cf1C2Df2268",
     "chainId": 1,
     "decimals": 18,
@@ -1688,6 +1704,14 @@
     "symbol": "RFKJ"
   },
   {
+    "address": "0xdA7AD9dea9397cffdDAE2F8a052B82f1484252B3",
+    "chainId": 1,
+    "decimals": 18,
+    "logoURI": "https://files.sablier.com/tokens/RIVER.png",
+    "name": "River",
+    "symbol": "RIVER"
+  },
+  {
     "address": "0x60e254E35Dd712394b3AbA7A1D19114732e143dD",
     "chainId": 1,
     "decimals": 18,
@@ -1750,14 +1774,6 @@
     "logoURI": "https://files.sablier.com/tokens/RVST.png",
     "name": "Revest",
     "symbol": "RVST"
-  },
-  {
-    "address": "0xdA7AD9dea9397cffdDAE2F8a052B82f1484252B3",
-    "chainId": 1,
-    "decimals": 18,
-    "logoURI": "https://files.sablier.com/tokens/RIVER.png",
-    "name": "River",
-    "symbol": "RIVER"
   },
   {
     "address": "0x44e3ae622c1570Dc6E492aDB8DE92d01cA923d26",
@@ -1854,6 +1870,14 @@
     "logoURI": "https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/0xEd0439EACf4c4965AE4613D77a5C2Efe10e5f183/logo.png",
     "name": "Shroom.Finance",
     "symbol": "SHROOM"
+  },
+  {
+    "address": "0xe485E2f1bab389C08721B291f6b59780feC83Fd7",
+    "chainId": 1,
+    "decimals": 18,
+    "logoURI": "https://files.sablier.com/tokens/SHU.png",
+    "name": "Shutter Token",
+    "symbol": "SHU"
   },
   {
     "address": "0xDb82c0d91E057E05600C8F8dc836bEb41da6df14",
@@ -2534,29 +2558,5 @@
     "logoURI": "https://files.sablier.com/tokens/ZRS.png",
     "name": "Zaros Finance",
     "symbol": "ZRS"
-  },
-  {
-    "address": "0x38778E6d4d0dbE9bEceF3aE8B938570209efa48B",
-    "chainId": 1,
-    "decimals": 18,
-    "logoURI": "https://files.sablier.com/tokens/PAST.png",
-    "name": "Punk Auction Strategy Token",
-    "symbol": "PAST"
-  },
-  {
-    "address": "0x474eD38C256A7FA0f3B8c48496CE1102ab0eA91E",
-    "chainId": 1,
-    "decimals": 18,
-    "logoURI": "https://files.sablier.com/tokens/EAGLE.png",
-    "name": "Eagle",
-    "symbol": "EAGLE"
-  },
-  {
-    "address": "0xe485E2f1bab389C08721B291f6b59780feC83Fd7",
-    "chainId": 1,
-    "decimals": 18,
-    "logoURI": "https://files.sablier.com/tokens/SHU.png",
-    "name": "Shutter Token",
-    "symbol": "SHU"
   }
 ]
