@@ -17,6 +17,14 @@ File new token listing requests through the
 [dedicated issue templates](https://github.com/sablier-labs/sablier-labs.github.io/issues/new/choose) in this
 repository.
 
+For maintainers using [Claude Code](https://github.com/anthropics/claude-code), tokens can be listed via:
+
+```bash
+/list-token <chain-or-cluster> <address>
+```
+
+See [CHAINS.md](CHAINS.md) for supported networks.
+
 ### EVM
 
 The canonical EVM token list is available at:
