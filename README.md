@@ -109,14 +109,35 @@ Located in `tokens/`, referenced in the token list via the `logoURI` field.
 
 ## Templates
 
-CSV templates for creating streams are available in `templates/`:
+CSV templates for creating vesting streams are available in two locations:
 
-- **Duration-based**: linear, exponential, cliff, stepper, timelock, etc.
-- **Range-based**: linear, exponential, monthly, etc.
-- **Airdrops**: Standard and Solana formats
-- **Airstreams**: Merkle airdrop streaming
+### `template/v1.0.0/` (Canonical)
 
-Organized by year for historical tracking.
+Versioned templates with timing-first directory structure:
+
+```
+template/v1.0.0/{timing}/{shape}.csv
+```
+
+**URL pattern**: `https://files.sablier.com/template/v1.0.0/{timing}/{shape}.csv`
+
+**Examples:**
+
+- `template/v1.0.0/duration/linear.csv`
+- `template/v1.0.0/range/cliff-exponential.csv`
+
+**Available shapes**: backweighted, cliff, cliff-exponential, double-unlock, exponential, linear, monthly, stepper,
+timelock, unlock-cliff, unlock-linear
+
+**Timing types**: `duration/` and `range/`
+
+**Versioning**: Bump the version (e.g., `v1.1.0`, `v2.0.0`) when CSV schema changes. Previous versions remain available
+for backward compatibility.
+
+### `templates/` (Legacy)
+
+Historical templates with varying naming conventions. Kept for backward compatibility with existing integrations.
+Contains airdrops, airstreams, and legacy vesting templates organized by year.
 
 ## Domain
 
