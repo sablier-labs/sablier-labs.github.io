@@ -6,5 +6,13 @@
     "logoURI": "https://files.sablier.com/tokens/USDC.png",
     "name": "USDC",
     "symbol": "USDC"
+  },
+  {
+    "address": "0x5b8CaD9E5050B6933337f559CFEAEd1ad173808d",
+    "chainId": 369369,
+    "decimals": 18,
+    "logoURI": "https://files.sablier.com/tokens/WATT.png",
+    "name": "Wrapped WATT",
+    "symbol": "wWATT"
   }
 ]
