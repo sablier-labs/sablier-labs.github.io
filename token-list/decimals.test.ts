@@ -59,6 +59,14 @@ const validateChainTokens = (file: string) =>
 
     const chain = sablier.chains.get(chainId);
 
+    if (chainId === 369369) {
+      yield* Effect.log("Routemesh endpoint not set for chain, skipping");
+      //TODO
+      // The system relies on all chains having a routemesh configuration. Chains like denergy don't.
+      // Until this is handled here and in the SDK, we're skipping denergy.
+      return;
+    }
+
     if (!chain || !chain.rpc?.routemesh) {
       return yield* Effect.fail(
         new ChainNotSupportedError({
