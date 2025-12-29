@@ -1,6 +1,5 @@
 {
   "lockfileVersion": 1,
-  "configVersion": 0,
   "workspaces": {
     "": {
       "name": "@sablier/files",
@@ -21,7 +20,7 @@
         "ajv": "^8.17.1",
         "ajv-formats": "^3.0.1",
         "prettier": "^3.7.4",
-        "sablier": "1.7.0",
+        "sablier": "1.8.0-beta.8",
         "tsx": "^4.21.0",
         "typescript": "^5.9.3",
         "vitest": "^3.2.4",
@@ -509,7 +508,7 @@
 
     "rpc-websockets": ["rpc-websockets@9.3.1", "", { "dependencies": { "@swc/helpers": "^0.5.11", "@types/uuid": "^8.3.4", "@types/ws": "^8.2.2", "buffer": "^6.0.3", "eventemitter3": "^5.0.1", "uuid": "^8.3.2", "ws": "^8.5.0" }, "optionalDependencies": { "bufferutil": "^4.0.1", "utf-8-validate": "^5.0.2" } }, "sha512-bY6a+i/lEtBJ/mUxwsCTgevoV1P0foXTVA7UoThzaIWbM+3NDqorf8NBWs5DmqKTFeA1IoNzgvkWjFCPgnzUiQ=="],
 
-    "sablier": ["sablier@1.7.0", "", { "dependencies": { "@coral-xyz/anchor": "^0.32.1", "@solana/web3.js": "^1.98.4", "lodash": "^4.17.21", "viem": "^2.39.3" } }, "sha512-OjoKjk2W+cGWiGjqzRoT5QeS2xzM6NDeKs+NGyR/D1dI8oO+npsxfq54O4d3+5S+/+ILLQE2WDCVtPvRJS8pKQ=="],
+    "sablier": ["sablier@1.8.0-beta.8", "", { "dependencies": { "@coral-xyz/anchor": "^0.32.1", "@solana/web3.js": "^1.98.4", "lodash": "^4.17.21", "viem": "^2.39.3" } }, "sha512-T8uYbZkOS4btXOdhBcumOKFEQHZBHxxmmAfvNQS7+rO/8p/2cJaablaVQ8Alwy7+VxB29WZTtSldqaMUO0MpVw=="],
 
     "safe-buffer": ["safe-buffer@5.2.1", "", {}, "sha512-rp3So07KcdmmKbGvgaNxQSJr7bGVSVk5S9Eq1F+ppbRo70+YeaDxkw5Dd8NPN+GD6bjnYm2VuPuCXmpuYvmCXQ=="],
 
