@@ -8,11 +8,11 @@
     "symbol": "USDC"
   },
   {
-    "address": "0x5b8CaD9E5050B6933337f559CFEAEd1ad173808d",
+    "address": "0x87fFB2d57f78d5A8E17db78F3290A367299b5B07",
     "chainId": 369369,
     "decimals": 18,
     "logoURI": "https://files.sablier.com/tokens/WATT.png",
-    "name": "Wrapped WATT",
-    "symbol": "wWATT"
+    "name": "Wrapped Watt",
+    "symbol": "WWATT"
   }
 ]
