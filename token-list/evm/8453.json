@@ -590,5 +590,13 @@
     "logoURI": "https://files.sablier.com/tokens/cbLTC.png",
     "name": "Coinbase Wrapped LTC",
     "symbol": "cbLTC"
+  },
+  {
+    "address": "0x29cC30f9D113B356Ce408667aa6433589CeCBDcA",
+    "chainId": 8453,
+    "decimals": 18,
+    "logoURI": "https://files.sablier.com/tokens/ELSA.png",
+    "name": "Elsa",
+    "symbol": "ELSA"
   }
 ]
