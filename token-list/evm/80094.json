@@ -8,6 +8,14 @@
     "symbol": "BURR"
   },
   {
+    "address": "0x549943e04f40284185054145c6e4e9568c1d3241",
+    "chainId": 80094,
+    "decimals": 6,
+    "logoURI": "https://files.sablier.com/tokens/USDC.png",
+    "name": "Bridged USD Coin",
+    "symbol": "USDC.e"
+  },
+  {
     "address": "0x7DCC39B4d1C53CB31e1aBc0e358b43987FEF80f7",
     "chainId": 80094,
     "decimals": 18,

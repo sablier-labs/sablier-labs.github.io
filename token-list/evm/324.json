@@ -1,11 +1,27 @@
 [
   {
+    "address": "0x4B9eb6c0b6ea15176BBF62841C6B2A8a398cb656",
+    "chainId": 324,
+    "decimals": 18,
+    "logoURI": "https://files.sablier.com/tokens/DAI.png",
+    "name": "Dai Stablecoin",
+    "symbol": "DAI"
+  },
+  {
+    "address": "0x1d17CBcF0D6D143135aE902365D2E5e2A16538D4",
+    "chainId": 324,
+    "decimals": 6,
+    "logoURI": "https://files.sablier.com/tokens/USDC.png",
+    "name": "USD Coin",
+    "symbol": "USDC"
+  },
+  {
     "address": "0x3355df6D4c9C3035724Fd0e3914dE96A5a83aaf4",
     "chainId": 324,
     "decimals": 6,
     "logoURI": "https://files.sablier.com/tokens/USDC.png",
-    "name": "Bridged USDC",
-    "symbol": "USDC"
+    "name": "Bridged USD Coin",
+    "symbol": "USDC.e"
   },
   {
     "address": "0xBBeB516fb02a01611cBBE0453Fe3c580D7281011",
