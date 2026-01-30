@@ -8,6 +8,14 @@
     "symbol": "BNRY"
   },
   {
+    "address": "0xadDb6A0412DE1BA0F936DCaeb8Aaa24578dcF3B2",
+    "chainId": 10,
+    "decimals": 18,
+    "logoURI": "https://ethereum-optimism.github.io/data/cbETH/logo.svg",
+    "name": "Coinbase Wrapped Staked ETH",
+    "symbol": "cbETH"
+  },
+  {
     "address": "0xDA10009cBd5D07dd0CeCc66161FC93D7c9000da1",
     "chainId": 10,
     "decimals": 18,
