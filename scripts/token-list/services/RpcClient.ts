@@ -48,9 +48,13 @@ export class RpcClient extends Effect.Service<RpcClient>()("RpcClient", {
           );
         }
 
-        if (!response.result) {
+        if (!response.result || response.result === "0x") {
           return yield* Effect.fail(
-            new RpcError({ address, cause: "No result from RPC", method: "decimals" }),
+            new RpcError({
+              address,
+              cause: "Empty RPC response (rate limit or invalid contract)",
+              method: "decimals",
+            }),
           );
         }
 

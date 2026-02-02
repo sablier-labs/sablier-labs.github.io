@@ -80,7 +80,7 @@ const validateChainTokens = (file: string) =>
 
     // Parallel token validation
     yield* Effect.forEach(tokens, (token) => checkTokenDecimals(token, rpcUrl), {
-      concurrency: "unbounded",
+      concurrency: 10,
     });
   });
 
