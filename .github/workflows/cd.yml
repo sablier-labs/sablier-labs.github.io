@@ -24,6 +24,7 @@ jobs:
 
   # Run all CI validation tests
   ci:
+    name: "1 · CI"
     uses: ./.github/workflows/ci.yml
     secrets: inherit
 
@@ -32,7 +33,7 @@ jobs:
   # ---------------------------------------------------------------------------- #
 
   deploy:
-    name: Deploy Token List
+    name: "2 · Deploy Site"
     needs: [ci]
     runs-on: ubuntu-latest
     environment:
@@ -45,7 +46,9 @@ jobs:
       # ---------------------------------------------------------------------------- #
 
       - uses: actions/checkout@v5
-      - uses: sablier-labs/devkit/actions/setup@main
+      - uses: sablier-labs/devkit/actions/setup@v1
+        with:
+          install-python: false
 
       - name: Restore build cache
         id: build-cache
@@ -103,7 +106,7 @@ jobs:
   # ---------------------------------------------------------------------------- #
 
   deploy-evm:
-    name: Deploy EVM Token List
+    name: "3 · Deploy EVM token list"
     needs: [ci, deploy]
     runs-on: ubuntu-latest
 
@@ -148,7 +151,7 @@ jobs:
   # ---------------------------------------------------------------------------- #
 
   deploy-solana:
-    name: Deploy Solana Token List
+    name: "4 · Deploy Solana token list"
     needs: [ci, deploy]
     runs-on: ubuntu-latest
 
