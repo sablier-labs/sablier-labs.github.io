@@ -45,7 +45,6 @@ jobs:
       #                                 SETUP & BUILD                                #
       # ---------------------------------------------------------------------------- #
 
-      - uses: actions/checkout@v5
       - uses: sablier-labs/devkit/actions/setup@v1
         with:
           install-python: false

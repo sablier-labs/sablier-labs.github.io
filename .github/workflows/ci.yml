@@ -18,7 +18,6 @@ jobs:
     name: "1 · Checks"
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
       - uses: sablier-labs/devkit/actions/setup@v1
         with:
           install-python: false
@@ -40,7 +39,6 @@ jobs:
     needs: checks
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
       - uses: sablier-labs/devkit/actions/setup@v1
 
       - name: Restore build cache
