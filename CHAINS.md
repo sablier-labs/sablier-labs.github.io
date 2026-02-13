@@ -40,4 +40,4 @@
 | Cluster      | Chain ID  |
 | ------------ | --------- |
 | mainnet-beta | 900000010 |
-| devnet       | 900000000 |
+| devnet       | 900000020 |
