@@ -34,10 +34,12 @@ Add tokens to the Sablier token list by fetching metadata and inserting entries 
   "decimals": 6,
   "logoURI": "https://files.sablier.com/tokens/{SYMBOL}.png",
   "name": "Token Name",
-  "program": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA", // Token-2022: TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb
+  "program": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
   "symbol": "SYMBOL"
 }
 ```
+
+Note: For Token-2022 program tokens, use `TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb` instead.
 
 ## Network-Specific Paths
 
@@ -48,9 +50,9 @@ Add tokens to the Sablier token list by fetching metadata and inserting entries 
 
 ## Workflow
 
-1. **Check duplicates**: Search for address in the appropriate directory
-   - EVM: `grep -i "$ADDRESS" token-list/evm/*.json`
-   - Solana: `grep -i "$ADDRESS" token-list/solana/*.json`
+1. **Check duplicates**: Search for address in the target chain/cluster file only
+   - EVM: `grep -i "$ADDRESS" token-list/evm/$CHAIN_ID.json`
+   - Solana: `grep "$ADDRESS" token-list/solana/$CLUSTER.json`
 
    If found, report "Token already listed in {file}" and **STOP**
 
@@ -86,4 +88,5 @@ Add tokens to the Sablier token list by fetching metadata and inserting entries 
 
 11. **Validate**: Run `just test` to verify token entry is valid
 
-12. **Commit** (skip gitignored files): `list ${SYMBOL}` or `list ${SYMBOL} (closes #N)`
+12. **Commit** (skip gitignored files): `feat(token-list): list ${SYMBOL}` or
+    `feat(token-list): list ${SYMBOL} (closes #N)`

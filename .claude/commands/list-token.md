@@ -11,7 +11,7 @@ description: List a new token in the Sablier token list
 
 ## Your Task
 
-Add a new token to the Sablier token list using the `list-token` skill.
+Add a new token to the Sablier token list using the `token-listing` skill.
 
 ### Syntax
 
@@ -36,6 +36,7 @@ Auto-detect network from address format:
 
 - **EVM**: Address starts with `0x` → lookup chain ID in CHAINS.md
 - **Solana**: Base58 address (no `0x` prefix) → lookup cluster ID in CHAINS.md
+  - Accept `solana` as an alias for `mainnet-beta`
 
 If chain/cluster name is not found, report error with available options from CHAINS.md.
 
