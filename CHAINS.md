@@ -1,5 +1,7 @@
 # Chain ID Mapping
 
+## EVM
+
 | Chain ID | Chain Name    |
 | -------- | ------------- |
 | 1        | Ethereum      |
@@ -32,3 +34,10 @@
 | 88888    | Chiliz        |
 | 534352   | Scroll        |
 | 11155111 | Sepolia       |
+
+## Solana
+
+| Cluster      | Chain ID  |
+| ------------ | --------- |
+| mainnet-beta | 900000010 |
+| devnet       | 900000020 |
