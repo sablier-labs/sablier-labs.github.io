@@ -1,15 +1,5 @@
 [
   {
-    "address": "6SNumpJmqb1CAKsxxiVqXxjTUXe1TxPbUi9jd7wG4a1P",
-    "chainId": 900000020,
-    "cluster": "devnet",
-    "decimals": 6,
-    "logoURI": "https://files.sablier.com/tokens/USDC.png",
-    "name": "USDC Dev",
-    "program": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
-    "symbol": "USDCD"
-  },
-  {
     "address": "So11111111111111111111111111111111111111112",
     "chainId": 900000020,
     "cluster": "devnet",
@@ -18,5 +8,15 @@
     "name": "Wrapped SOL",
     "program": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
     "symbol": "SOL"
+  },
+  {
+    "address": "6SNumpJmqb1CAKsxxiVqXxjTUXe1TxPbUi9jd7wG4a1P",
+    "chainId": 900000020,
+    "cluster": "devnet",
+    "decimals": 6,
+    "logoURI": "https://files.sablier.com/tokens/USDC.png",
+    "name": "USDC Dev",
+    "program": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+    "symbol": "USDCD"
   }
 ]

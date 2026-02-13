@@ -1,5 +1,25 @@
 [
   {
+    "address": "2zMMhcVQEXDtdE6vsFS7S7D5oUodfJHE8vd1gnBouauv",
+    "chainId": 900000010,
+    "cluster": "mainnet-beta",
+    "decimals": 6,
+    "logoURI": "https://files.sablier.com/tokens/PENGU.png",
+    "name": "Pudgy Penguins",
+    "program": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+    "symbol": "PENGU"
+  },
+  {
+    "address": "pSo1f9nQXWgXibFtKf7NWYxb5enAM4qfP6UJSiXRQfL",
+    "chainId": 900000010,
+    "cluster": "mainnet-beta",
+    "decimals": 9,
+    "logoURI": "https://files.sablier.com/tokens/PSOL.png",
+    "name": "Phantom Staked SOL",
+    "program": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+    "symbol": "PSOL"
+  },
+  {
     "address": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
     "chainId": 900000010,
     "cluster": "mainnet-beta",
@@ -28,25 +48,5 @@
     "name": "Wrapped SOL",
     "program": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
     "symbol": "WSOL"
-  },
-  {
-    "address": "2zMMhcVQEXDtdE6vsFS7S7D5oUodfJHE8vd1gnBouauv",
-    "chainId": 900000010,
-    "cluster": "mainnet-beta",
-    "decimals": 6,
-    "logoURI": "https://files.sablier.com/tokens/PENGU.png",
-    "name": "Pudgy Penguins",
-    "program": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
-    "symbol": "PENGU"
-  },
-  {
-    "address": "pSo1f9nQXWgXibFtKf7NWYxb5enAM4qfP6UJSiXRQfL",
-    "chainId": 900000010,
-    "cluster": "mainnet-beta",
-    "decimals": 9,
-    "logoURI": "https://files.sablier.com/tokens/PSOL.png",
-    "name": "Phantom Staked SOL",
-    "program": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
-    "symbol": "PSOL"
   }
 ]
