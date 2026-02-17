@@ -7,9 +7,9 @@ description: List a new token in the Sablier token list
 
 - Working directory: !`pwd`
 - Arguments: $ARGUMENTS
-- See CHAINS.md for supported chains and clusters
+- Chain mappings: see `CHAINS.md` at repo root
 
-## Your Task
+## Task
 
 Add a new token to the Sablier token list using the `token-listing` skill.
 
@@ -26,18 +26,17 @@ Add a new token to the Sablier token list using the `token-listing` skill.
 /list-token base 0xcb17C9Db87B595717C857a08468793f5bAb6445F
 /list-token arbitrum 0x912CE59144191C1204E64559FE8253a0e49E6548
 
-# Solana
+# Solana ("solana" is an alias for "mainnet-beta")
 /list-token solana EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v
 ```
 
-### Network Detection
+### Argument Validation
 
-Auto-detect network from address format:
+Require exactly 2 arguments. If fewer or more are provided, report usage and **stop**:
 
-- **EVM**: Address starts with `0x` → lookup chain ID in CHAINS.md
-- **Solana**: Base58 address (no `0x` prefix) → lookup cluster ID in CHAINS.md
-  - Accept `solana` as an alias for `mainnet-beta`
+```
+Usage: /list-token <chain-or-cluster> <address>
+```
 
-If chain/cluster name is not found, report error with available options from CHAINS.md.
-
-Follow the workflow defined in the `token-listing` skill.
+Parse arg1 as the chain or cluster name and arg2 as the token address. Follow the input resolution and workflow defined
+in the `token-listing` skill.
