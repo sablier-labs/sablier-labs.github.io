@@ -104,6 +104,14 @@
     "symbol": "ATA"
   },
   {
+    "address": "0x9d56c29e820Dd13b0580B185d0e0Dc301d27581d",
+    "chainId": 8453,
+    "decimals": 18,
+    "logoURI": "https://files.sablier.com/tokens/AUBRAI.png",
+    "name": "Aubrai by Bio",
+    "symbol": "AUBRAI"
+  },
+  {
     "address": "0x80f6bcedd3d4fa1035285affa30e38f464db3895",
     "chainId": 8453,
     "decimals": 18,
@@ -168,6 +176,14 @@
     "symbol": "cbETH"
   },
   {
+    "address": "0xcb17C9Db87B595717C857a08468793f5bAb6445F",
+    "chainId": 8453,
+    "decimals": 8,
+    "logoURI": "https://files.sablier.com/tokens/cbLTC.png",
+    "name": "Coinbase Wrapped LTC",
+    "symbol": "cbLTC"
+  },
+  {
     "address": "0xD2237D9fE0c36721220e4bD88aa85b55ffDA0E84",
     "chainId": 8453,
     "decimals": 8,
@@ -206,6 +222,30 @@
     "logoURI": "https://files.sablier.com/tokens/DPHN.png",
     "name": "Dolphin",
     "symbol": "DPHN"
+  },
+  {
+    "address": "0x29cC30f9D113B356Ce408667aa6433589CeCBDcA",
+    "chainId": 8453,
+    "decimals": 18,
+    "logoURI": "https://files.sablier.com/tokens/ELSA.png",
+    "name": "Elsa",
+    "symbol": "ELSA"
+  },
+  {
+    "address": "0xc7c154A93127ad933844FE21b20358397edC0e8C",
+    "chainId": 8453,
+    "decimals": 18,
+    "logoURI": "https://files.sablier.com/tokens/EMMA.png",
+    "name": "Dr Emma Sage by Virtuals",
+    "symbol": "EMMA"
+  },
+  {
+    "address": "0xC44141a684f6AA4E36cD9264ab55550B03C88643",
+    "chainId": 8453,
+    "decimals": 18,
+    "logoURI": "https://files.sablier.com/tokens/ETHY.png",
+    "name": "Ethy AI by Virtuals",
+    "symbol": "ETHY"
   },
   {
     "address": "0x9A86980D3625b4A6E69D8a4606D51cbc019e2002",
@@ -294,6 +334,14 @@
     "logoURI": "https://files.sablier.com/tokens/KAITO.png",
     "name": "KAITO",
     "symbol": "KAITO"
+  },
+  {
+    "address": "0x9EadbE35F3Ee3bF3e28180070C429298a1b02F93",
+    "chainId": 8453,
+    "decimals": 18,
+    "logoURI": "https://files.sablier.com/tokens/LMTS.png",
+    "name": "Limitless",
+    "symbol": "LMTS"
   },
   {
     "address": "0xFD55f09328d7DcCc1C596dc981496546250d8804",
@@ -550,53 +598,5 @@
     "logoURI": "https://files.sablier.com/tokens/ZEN.png",
     "name": "Horizen",
     "symbol": "ZEN"
-  },
-  {
-    "address": "0xC44141a684f6AA4E36cD9264ab55550B03C88643",
-    "chainId": 8453,
-    "decimals": 18,
-    "logoURI": "https://files.sablier.com/tokens/ETHY.png",
-    "name": "Ethy AI by Virtuals",
-    "symbol": "ETHY"
-  },
-  {
-    "address": "0xc7c154A93127ad933844FE21b20358397edC0e8C",
-    "chainId": 8453,
-    "decimals": 18,
-    "logoURI": "https://files.sablier.com/tokens/EMMA.png",
-    "name": "Dr Emma Sage by Virtuals",
-    "symbol": "EMMA"
-  },
-  {
-    "address": "0x9d56c29e820Dd13b0580B185d0e0Dc301d27581d",
-    "chainId": 8453,
-    "decimals": 18,
-    "logoURI": "https://files.sablier.com/tokens/AUBRAI.png",
-    "name": "Aubrai by Bio",
-    "symbol": "AUBRAI"
-  },
-  {
-    "address": "0x9EadbE35F3Ee3bF3e28180070C429298a1b02F93",
-    "chainId": 8453,
-    "decimals": 18,
-    "logoURI": "https://files.sablier.com/tokens/LMTS.png",
-    "name": "Limitless",
-    "symbol": "LMTS"
-  },
-  {
-    "address": "0xcb17C9Db87B595717C857a08468793f5bAb6445F",
-    "chainId": 8453,
-    "decimals": 8,
-    "logoURI": "https://files.sablier.com/tokens/cbLTC.png",
-    "name": "Coinbase Wrapped LTC",
-    "symbol": "cbLTC"
-  },
-  {
-    "address": "0x29cC30f9D113B356Ce408667aa6433589CeCBDcA",
-    "chainId": 8453,
-    "decimals": 18,
-    "logoURI": "https://files.sablier.com/tokens/ELSA.png",
-    "name": "Elsa",
-    "symbol": "ELSA"
   }
 ]
