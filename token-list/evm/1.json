@@ -1,13 +1,5 @@
 [
   {
-    "address": "0x00000000000007C8612bA63Df8DdEfD9E6077c97",
-    "chainId": 1,
-    "decimals": 18,
-    "logoURI": "https://files.sablier.com/tokens/NANI.png",
-    "name": "NANI",
-    "symbol": "⌘"
-  },
-  {
     "address": "0xB6eD7644C69416d67B522e20bC294A9a9B405B31",
     "chainId": 1,
     "decimals": 8,
@@ -2558,5 +2550,13 @@
     "logoURI": "https://files.sablier.com/tokens/ZRS.png",
     "name": "Zaros Finance",
     "symbol": "ZRS"
+  },
+  {
+    "address": "0x00000000000007C8612bA63Df8DdEfD9E6077c97",
+    "chainId": 1,
+    "decimals": 18,
+    "logoURI": "https://files.sablier.com/tokens/NANI.png",
+    "name": "NANI",
+    "symbol": "⌘"
   }
 ]
