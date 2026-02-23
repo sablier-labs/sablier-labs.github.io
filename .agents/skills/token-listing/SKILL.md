@@ -89,7 +89,12 @@ found, report "Token already listed in {file}" and **stop**.
 Also check for **symbol and name collisions** on the same chain or cluster. The EVM test suite
 (`token-list/evm.test.ts`) rejects duplicate symbols and names per chain, with exceptions listed in
 `approvedDuplicateSymbols` or `approvedDuplicateNames`. Solana tests do **not** enforce symbol/name uniqueness — check
-manually with jq. If a collision is found, warn the user and ask how to proceed.
+manually with jq.
+
+- If an EVM symbol/name collision is found and the value is not already allowlisted, report the blocker and **stop**. Do
+  not insert the token entry because `just test` will fail.
+- If a Solana symbol/name collision is found, treat it as a policy blocker, report the conflict, and **stop** pending
+  maintainer approval.
 
 ### 2. Search GitHub Issues
 
@@ -118,26 +123,43 @@ issue for metadata.
   newer open issue supersedes the rejection, use the open issue instead. If closed without rejection, proceed normally.
 - **Open issue matching address + network** → extract metadata from the issue body (follows templates in
   `.github/ISSUE_TEMPLATE/`). Store issue number for step 8 (commit). If all metadata fields (name, symbol, decimals,
-  logo) are present, skip step 3. For Solana, also extract the token program if specified — confirmation happens in step
-  6 regardless.
+  logo) are present, skip step 3. For Solana, also extract the token program if specified — RPC verification in step 3
+  still determines the final value.
 
 ### 3. Fetch Metadata
 
 If no issue found or metadata incomplete, use the `coingecko-api` skill to fetch missing schema fields. Look up the
-token by contract address on the appropriate platform to retrieve name, symbol, decimals, and logo URL. If the
-`coingecko-api` skill is unavailable, ask the user for the missing fields.
+token by contract address on the appropriate platform to retrieve name, symbol, decimals, and logo URL.
+
+If the `coingecko-api` skill is unavailable, **stop execution immediately** and recommend installing it:
+
+```bash
+npx skills add sablier-labs/agent-skills --skill coingecko-api
+```
 
 For **Solana tokens**, also determine the token program. The `program` field is optional in the TypeScript type
 (`program?: string` in `scripts/token-list/types.ts`) — if omitted, it will be absent from the generated output.
 **Always include it explicitly** in the JSON entry for correctness and consistency with existing entries:
 
-1. If the GitHub issue or CoinGecko data explicitly specifies Token-2022, use
-   `TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb`.
-2. Otherwise, default to SPL Token: `TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA`.
+1. Resolve RPC URL from the requested cluster:
+   - `mainnet-beta` → `https://api.mainnet-beta.solana.com`
+   - `devnet` → `https://api.devnet.solana.com`
+2. Query the mint account owner using `getAccountInfo`:
 
-There is no deterministic way to verify the program without an RPC call, and the build system does not validate it.
+   ```bash
+   curl -sS "$RPC_URL" \
+     -H 'content-type: application/json' \
+     -d "{\"jsonrpc\":\"2.0\",\"id\":1,\"method\":\"getAccountInfo\",\"params\":[\"$ADDRESS\",{\"encoding\":\"jsonParsed\"}]}" \
+   | jq -r '.result.value.owner'
+   ```
 
-See `./references/schemas.md` for the full program table. Do not improvise with RPC calls.
+3. Map owner to program:
+   - `TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA` → SPL Token
+   - `TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb` → Token-2022
+4. If RPC returns `null`/error or any other owner, report the owner value and **stop**.
+5. Use issue/CoinGecko data only as a hint. If it conflicts with RPC owner, treat as mismatch and **stop**.
+
+See `./references/schemas.md` for the full program table.
 
 As a last resort, ask the user for any remaining missing fields.
 
@@ -177,9 +199,9 @@ and `assertIsAddress()` for Solana.
 ### 6. Generate and Insert Entry
 
 Create a JSON entry matching the appropriate schema from `./references/schemas.md`. For Solana entries, look up the
-`chainId` from the Solana section of `CHAINS.md` using the resolved cluster name. **Before generating a Solana entry,
-confirm the token program with the user** — an incorrect program value will pass all tests silently. Append the entry to
-the target chain/cluster file's array — `just sort-tokens` in the next step handles ordering.
+`chainId` from the Solana section of `CHAINS.md` using the resolved cluster name. For Solana entries, use the program
+resolved via RPC in step 3. If the program is unresolved, **stop**. Append the entry to the target chain/cluster file's
+array — `just sort-tokens` in the next step handles ordering.
 
 ### 7. Build and Validate
 
@@ -211,3 +233,4 @@ Skip gitignored files. Use one of:
 - **`CHAINS.md`** (repo root) — chain ID and cluster mappings for all supported networks
 - **CLI tools** — `jq`, `gh` (GitHub CLI), `curl`, `file`; optional: `sips` (macOS) or `magick` (ImageMagick) for logo
   conversion
+- **Solana RPC access** — required to resolve mint program owner deterministically
