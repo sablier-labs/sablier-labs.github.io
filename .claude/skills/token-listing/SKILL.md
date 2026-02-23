@@ -1,5 +1,6 @@
 ---
 name: token-listing
+argument-hint: "<chain-or-cluster> <address>"
 description:
   This skill should be used when the user asks to "list a token", "add a token", "list ERC-20 token", "add ERC-20
   token", "list SPL token", "add SPL token", "list token on Sablier", "add token to token list", "add token to Sablier",
@@ -15,6 +16,8 @@ user input, then inserting validated entries into chain-specific JSON files.
 
 ## File Structure
 
+All paths in the table are relative to the root of the repository.
+
 | Component          | Path                               |
 | ------------------ | ---------------------------------- |
 | EVM source data    | `token-list/evm/{chainId}.json`    |
@@ -26,7 +29,13 @@ user input, then inserting validated entries into chain-specific JSON files.
 
 ## Input Resolution
 
-Resolve two inputs before proceeding: a **chain or cluster name** and a **token address**.
+Resolve two inputs before proceeding: a **chain or cluster name** (arg1) and a **token address** (arg2).
+
+Require exactly 2 arguments. If fewer or more are provided, report usage and **stop**:
+
+```
+Usage: /token-listing <chain-or-cluster> <address>
+```
 
 ### Chain/Cluster (arg1 — authoritative)
 
@@ -45,9 +54,9 @@ Arg1 is a **single word** (no spaces). Match it against `CHAINS.md` using these 
 
 If no match is found, report the error with available options from `CHAINS.md`.
 
-### Address Family Validation
+### Address (arg2)
 
-After resolving arg1, validate that the address format matches the network family:
+After resolving arg1, validate that arg2's address format matches the network family:
 
 - **EVM chains** require a `0x`-prefixed hex address (42 characters)
 - **Solana clusters** require a Base58 address (no `0x` prefix)
