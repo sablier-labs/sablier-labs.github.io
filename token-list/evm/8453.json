@@ -184,6 +184,14 @@
     "symbol": "cbLTC"
   },
   {
+    "address": "0x963e83082e0500ce5Da98c78E79A49C09084Bb07",
+    "chainId": 8453,
+    "decimals": 18,
+    "logoURI": "https://files.sablier.com/tokens/CLAWDVINE.png",
+    "name": "ClawdVine",
+    "symbol": "CLAWDVINE"
+  },
+  {
     "address": "0xD2237D9fE0c36721220e4bD88aa85b55ffDA0E84",
     "chainId": 8453,
     "decimals": 8,
