@@ -496,6 +496,14 @@
     "symbol": "superOETHb"
   },
   {
+    "address": "0xa3C285b49Fdc0a5498fdDb629F975cb40AecAbD4",
+    "chainId": 8453,
+    "decimals": 18,
+    "logoURI": "https://files.sablier.com/tokens/TAGAI.png",
+    "name": "TAGAI",
+    "symbol": "TAGAI"
+  },
+  {
     "address": "0x9a33406165f562E16C3abD82fd1185482E01b49a",
     "chainId": 8453,
     "decimals": 18,
