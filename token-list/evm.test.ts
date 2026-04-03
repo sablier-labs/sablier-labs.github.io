@@ -10,6 +10,8 @@ import type { FormatsPlugin } from "ajv-formats";
 import * as addFormatsModule from "ajv-formats";
 import packageJson from "../package.json" with { type: "json" };
 
+const FILES_TOKEN_LOGO_BASE_URL = "https://files.sablier.com/tokens/";
+
 // Handle CommonJS default export for ajv-formats
 const addFormats: FormatsPlugin = (addFormatsModule as unknown as { default: FormatsPlugin })
   .default;
@@ -108,5 +110,18 @@ describe("buildList", () => {
     for (const token of defaultTokenList.tokens) {
       expect(getAddress(token.address).toLowerCase()).toBe(token.address.toLowerCase());
     }
+  });
+
+  it("includes the locally hosted VITARNA logo", () => {
+    const vitarnaToken = defaultTokenList.tokens.find(
+      (token) => token.chainId === 1 && token.symbol === "VITARNA",
+    );
+
+    expect(vitarnaToken?.logoURI).toBe(`${FILES_TOKEN_LOGO_BASE_URL}VITARNA.png`);
+
+    const localLogoPath = path.join(__dirname, "../tokens/VITARNA.png");
+    expect(fs.existsSync(localLogoPath), "Missing token logo for VITARNA (1): VITARNA.png").toBe(
+      true,
+    );
   });
 });
