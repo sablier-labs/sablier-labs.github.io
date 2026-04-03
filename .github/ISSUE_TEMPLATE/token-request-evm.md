@@ -6,19 +6,20 @@ labels: ""
 assignees: maxdesalle
 ---
 
-<!-- Please provide the following information for your EVM token. -->
+<!--
 
-## Important Notes
+Please provide the following information for your EVM token.
+
+Important Notes:
 
 **Native tokens** (e.g., ETH, MATIC, AVAX) are not supported. You must use a **wrapped ERC-20 version** (e.g., WETH,
 WMATIC, WAVAX).
 
-Tokens with **custom mechanics** — like dynamic balances like Aave aTokens or fee-on-transfer tokens) — are not
-recommended.
+Tokens with **custom mechanics** — like dynamic balances (e.g., Aave aTokens) or fee-on-transfer tokens — are not
+supported.
 
 ---
-
-## Required Information
+-->
 
 - **Chain**: (e.g., Ethereum Mainnet, Polygon, Arbitrum, Optimism, Base, BSC, Avalanche, Gnosis)
 

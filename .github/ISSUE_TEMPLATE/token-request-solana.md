@@ -6,15 +6,15 @@ labels: ""
 assignees: maxdesalle
 ---
 
-<!-- Please provide the following information for your Solana token. -->
+<!--
 
-## Important Note
+Please provide the following information for your Solana token.
+
+Important Note:
 
 **Native SOL** is not supported. You must use **wrapped SOL (WSOL)** or another SPL token.
 
----
-
-## Required Information
+-->
 
 - **Cluster**: (e.g., Solana Mainnet, Devnet, Testnet)
 
