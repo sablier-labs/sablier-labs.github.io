@@ -416,6 +416,14 @@
     "symbol": "NFI"
   },
   {
+    "address": "0xFbC2051AE2265686a469421b2C5A2D5462FbF5eB",
+    "chainId": 8453,
+    "decimals": 18,
+    "logoURI": "https://files.sablier.com/tokens/OPG.png",
+    "name": "OpenGradient",
+    "symbol": "OPG"
+  },
+  {
     "address": "0x25e1c298F100d7C600E9e44d46788C1Ebbd4f69B",
     "chainId": 8453,
     "decimals": 18,
