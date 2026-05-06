@@ -376,6 +376,14 @@
     "symbol": "MAMO"
   },
   {
+    "address": "0xe1bfA25468AF64e366ddAFC9D91bCc6c97439A14",
+    "chainId": 8453,
+    "decimals": 18,
+    "logoURI": "https://files.sablier.com/tokens/MIRROR.png",
+    "name": "Black Mirror",
+    "symbol": "MIRROR"
+  },
+  {
     "address": "0x66E535e8D2ebf13F49F3D49e5c50395a97C137b1",
     "chainId": 8453,
     "decimals": 18,
