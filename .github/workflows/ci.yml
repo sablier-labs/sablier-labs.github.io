@@ -20,7 +20,6 @@ jobs:
     steps:
       - uses: sablier-labs/devkit/actions/setup@v1
         with:
-          install-python: false
           save-cache: true
 
       - name: Run full code checks
@@ -56,8 +55,6 @@ jobs:
 
       - uses: sablier-labs/devkit/actions/setup@v1
         if: steps.token-list-cache.outputs.cache-hit != 'true'
-        with:
-          install-python: false
 
       - name: Build token list
         if: steps.token-list-cache.outputs.cache-hit != 'true'

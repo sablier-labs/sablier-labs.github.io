@@ -60,7 +60,6 @@ jobs:
       - uses: sablier-labs/devkit/actions/setup@v1
         if: steps.token-list-cache.outputs.cache-hit != 'true'
         with:
-          install-python: false
           save-cache: true
 
       - name: Build token lists
