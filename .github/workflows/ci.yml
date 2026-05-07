@@ -21,6 +21,7 @@ jobs:
       - uses: sablier-labs/devkit/actions/setup@v1
         with:
           install-python: false
+          save-cache: true
 
       - name: Run full code checks
         run: just full-check
@@ -39,26 +40,46 @@ jobs:
     needs: checks
     runs-on: ubuntu-latest
     steps:
-      - uses: sablier-labs/devkit/actions/setup@v1
+      - name: Check out the repo
+        uses: actions/checkout@v6
 
       - name: Restore build cache
-        id: build-cache
-        uses: actions/cache@v4
+        id: token-list-cache
+        uses: actions/cache/restore@v5
         with:
-          path: token-list/evm.json
-          key: tokenlist-${{ hashFiles('scripts/token-list/**', 'token-list/evm/**/*.json', 'package.json') }}
-          restore-keys: |
-            tokenlist-
+          path: |
+            token-list/evm.json
+            token-list/solana.json
+          key: token-lists-${{ runner.os }}-${{ hashFiles('bun.lock', 'package.json',
+            'scripts/token-list/**', 'token-list/evm/**/*.json',
+            'token-list/solana/**/*.json') }}
+
+      - uses: sablier-labs/devkit/actions/setup@v1
+        if: steps.token-list-cache.outputs.cache-hit != 'true'
+        with:
+          install-python: false
 
       - name: Build token list
-        if: steps.build-cache.outputs.cache-hit != 'true'
+        if: steps.token-list-cache.outputs.cache-hit != 'true'
         run: just build
+
+      - name: Save build cache
+        if: steps.token-list-cache.outputs.cache-hit != 'true'
+        uses: actions/cache/save@v5
+        with:
+          path: |
+            token-list/evm.json
+            token-list/solana.json
+          key: ${{ steps.token-list-cache.outputs.cache-primary-key }}
 
       - name: Upload build artifact
         uses: actions/upload-artifact@v4
         with:
           name: tokenlist
-          path: token-list/evm.json
+          path: |
+            token-list/evm.json
+            token-list/solana.json
+          if-no-files-found: error
           retention-days: 7
 
   # ---------------------------------------------------------------------------- #
