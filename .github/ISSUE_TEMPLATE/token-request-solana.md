@@ -3,7 +3,7 @@ name: Solana Token Request
 about: Request Solana token listing in the Sablier UI
 title: "Add {TOKEN_SYMBOL}: {TOKEN_NAME}"
 labels: ""
-assignees: maxdesalle
+assignees: ""
 ---
 
 <!--

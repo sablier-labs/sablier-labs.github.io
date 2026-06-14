@@ -3,7 +3,7 @@ name: EVM Token Request
 about: Request EVM token listing in the Sablier UI
 title: "Add {TOKEN_SYMBOL}: {TOKEN_NAME}"
 labels: ""
-assignees: maxdesalle
+assignees: ""
 ---
 
 <!--
