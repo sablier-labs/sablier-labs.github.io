@@ -232,6 +232,14 @@
     "symbol": "DPHN"
   },
   {
+    "address": "0xfb31f85a8367210b2e4ed2360d2da9dc2d2ccc95",
+    "chainId": 8453,
+    "decimals": 18,
+    "logoURI": "https://files.sablier.com/tokens/EDEL.png",
+    "name": "Edel",
+    "symbol": "EDEL"
+  },
+  {
     "address": "0x29cC30f9D113B356Ce408667aa6433589CeCBDcA",
     "chainId": 8453,
     "decimals": 18,
