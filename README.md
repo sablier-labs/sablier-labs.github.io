@@ -14,8 +14,7 @@ This repository serves as Sablier's static asset distribution hub and token list
 ## Token Lists
 
 File new token listing requests through the
-[dedicated issue templates](https://github.com/sablier-labs/sablier-labs.github.io/issues/new/choose) in this
-repository.
+[dedicated issue template](https://github.com/sablier-labs/sablier-labs.github.io/issues/new/choose) in this repository.
 
 For maintainers using [Claude Code](https://github.com/anthropics/claude-code), tokens can be listed via:
 
