@@ -512,6 +512,14 @@
     "symbol": "SOCIAL"
   },
   {
+    "address": "0x4a927f52bc32c298B2848549e2734aC2D5181fE1",
+    "chainId": 8453,
+    "decimals": 18,
+    "logoURI": "https://files.sablier.com/tokens/SPWR.png",
+    "name": "SuperWorld",
+    "symbol": "SPWR"
+  },
+  {
     "address": "0xDBFeFD2e8460a6Ee4955A68582F85708BAEA60A3",
     "chainId": 8453,
     "decimals": 18,
