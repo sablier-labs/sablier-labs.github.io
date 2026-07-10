@@ -67,6 +67,16 @@ const validateChainTokens = (file: string) =>
       return;
     }
 
+    if (chainId === 5845) {
+      yield* Effect.log("Routemesh endpoint broken for Tangle, skipping");
+      //TODO
+      // The RouteMesh endpoint for Tangle (backed by thirdweb) consistently returns
+      // "We are not able to process your request at this time" for eth_call.
+      // Remove this skip once thirdweb/RouteMesh support is fixed upstream, or once
+      // the SDK opts Tangle out via `rpc.routemesh = false`.
+      return;
+    }
+
     if (!chain || !chain.rpc?.routemesh) {
       return yield* Effect.fail(
         new ChainNotSupportedError({
