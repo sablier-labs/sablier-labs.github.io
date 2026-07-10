@@ -19,7 +19,7 @@ File new token listing requests through the
 For maintainers using [Claude Code](https://github.com/anthropics/claude-code), tokens can be listed via:
 
 ```bash
-/token-listing <chain-or-cluster> <address>
+/list-token <chain-or-cluster> <address>
 ```
 
 See [CHAINS.md](CHAINS.md) for supported networks.

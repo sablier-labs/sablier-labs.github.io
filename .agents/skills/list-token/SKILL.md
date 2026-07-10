@@ -1,5 +1,5 @@
 ---
-name: token-listing
+name: list-token
 argument-hint: "<chain-or-cluster> <address>"
 description:
   This skill should be used when the user asks to "list a token", "add a token", "list ERC-20 token", "add ERC-20
@@ -7,7 +7,7 @@ description:
   or needs to insert an EVM or Solana token entry into a chain-specific JSON file.
 ---
 
-# Token Listing
+# List Token
 
 ## Overview
 
@@ -34,7 +34,7 @@ Resolve two inputs before proceeding: a **chain or cluster name** (arg1) and a *
 Require exactly 2 arguments. If fewer or more are provided, report usage and **stop**:
 
 ```
-Usage: /token-listing <chain-or-cluster> <address>
+Usage: /list-token <chain-or-cluster> <address>
 ```
 
 ### Chain/Cluster (arg1 — authoritative)
