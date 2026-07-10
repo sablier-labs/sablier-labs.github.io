@@ -128,13 +128,13 @@ issue for metadata.
 
 ### 3. Fetch Metadata
 
-If no issue found or metadata incomplete, use the `coingecko-api` skill to fetch missing schema fields. Look up the
+If no issue found or metadata incomplete, use the `coingecko-cli` skill to fetch missing schema fields. Look up the
 token by contract address on the appropriate platform to retrieve name, symbol, decimals, and logo URL.
 
-If the `coingecko-api` skill is unavailable, **stop execution immediately** and recommend installing it:
+If the `coingecko-cli` skill is unavailable, **stop execution immediately** and recommend installing it:
 
 ```bash
-npx skills add sablier-labs/agent-skills --skill coingecko-api
+bunx skills add sablier-labs/agent-skills --skill coingecko-cli
 ```
 
 For **Solana tokens**, also determine the token program. The `program` field is optional in the TypeScript type
@@ -229,7 +229,7 @@ Skip gitignored files. Use one of:
 
 ## Dependencies
 
-- **`coingecko-api` skill** — fetch token metadata and logos when GitHub issue data is insufficient
+- **`coingecko-cli` skill** — fetch token metadata and logos when GitHub issue data is insufficient
 - **`CHAINS.md`** (repo root) — chain ID and cluster mappings for all supported networks
 - **CLI tools** — `jq`, `gh` (GitHub CLI), `curl`, `file`; optional: `sips` (macOS) or `magick` (ImageMagick) for logo
   conversion
