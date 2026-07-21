@@ -77,6 +77,15 @@ const validateChainTokens = (file: string) =>
       return;
     }
 
+    if (chainId === 4663) {
+      yield* Effect.log("Routemesh endpoint not set for Robinhood Chain, skipping");
+      //TODO
+      // The Sablier SDK defines Robinhood Chain (4663) with only an Alchemy RPC and no
+      // RouteMesh endpoint, so on-chain decimals cannot be validated via RouteMesh yet.
+      // Remove this skip once the SDK adds `rpc.routemesh` for Robinhood.
+      return;
+    }
+
     if (!chain || !chain.rpc?.routemesh) {
       return yield* Effect.fail(
         new ChainNotSupportedError({
