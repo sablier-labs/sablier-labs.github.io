@@ -14,5 +14,13 @@
     "logoURI": "https://files.sablier.com/tokens/USDG.png",
     "name": "Global Dollar",
     "symbol": "USDG"
+  },
+  {
+    "address": "0xA80eb66b3E0CF66ccB46f8b8C9e7ff5803eEb820",
+    "chainId": 4663,
+    "decimals": 18,
+    "logoURI": "https://files.sablier.com/tokens/WEN.png",
+    "name": "Wen Lambo",
+    "symbol": "WEN"
   }
 ]
