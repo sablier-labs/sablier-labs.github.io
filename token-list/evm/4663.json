@@ -1,5 +1,13 @@
 [
   {
+    "address": "0x86E5aC7eC60EEec0a8989F1F1D617AE18c15FA0c",
+    "chainId": 4663,
+    "decimals": 18,
+    "logoURI": "https://files.sablier.com/tokens/BUTTON.png",
+    "name": "button",
+    "symbol": "BUTTON"
+  },
+  {
     "address": "0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34",
     "chainId": 4663,
     "decimals": 18,
