@@ -3,5 +3,6 @@
 node_modules/
 
 # files
+.DS_Store
 token-list/evm.json
 token-list/solana.json
