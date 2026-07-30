@@ -171,7 +171,7 @@
     "address": "0x2d94AA3e47d9D5024503Ca8491fcE9A2fB4DA198",
     "chainId": 1,
     "decimals": 18,
-    "logoURI": "https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/0x2d94AA3e47d9D5024503Ca8491fcE9A2fB4DA198/logo.png",
+    "logoURI": "https://files.sablier.com/tokens/BANK.png",
     "name": "Bankless DAO",
     "symbol": "BANK"
   },
@@ -179,7 +179,7 @@
     "address": "0x24A6A37576377F63f194Caa5F518a60f45b42921",
     "chainId": 1,
     "decimals": 18,
-    "logoURI": "https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/0x24A6A37576377F63f194Caa5F518a60f45b42921/logo.png",
+    "logoURI": "https://files.sablier.com/tokens/BANK-1.png",
     "name": "Float Protocol",
     "symbol": "BANK"
   },
@@ -2032,14 +2032,6 @@
     "symbol": "THEOS"
   },
   {
-    "address": "0x869d1b8610c038A6C4F37bD757135d4C29ae8917",
-    "chainId": 1,
-    "decimals": 18,
-    "logoURI": "https://files.sablier.com/tokens/TIME.png",
-    "name": "Technological Instantiation Meta Env",
-    "symbol": "TIME"
-  },
-  {
     "address": "0x7CdBfC86A0BFa20F133748B0CF5cEa5b787b182c",
     "chainId": 1,
     "decimals": 18,
@@ -2187,7 +2179,7 @@
     "address": "0x96F6eF951840721AdBF46Ac996b59E0235CB985C",
     "chainId": 1,
     "decimals": 18,
-    "logoURI": "https://files.sablier.com/tokens/OUSY.png",
+    "logoURI": "https://files.sablier.com/tokens/USDY.png",
     "name": "Ondo U.S. Dollar Yield",
     "symbol": "USDY"
   },
