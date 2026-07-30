@@ -93,6 +93,35 @@ just prettier-write  # Auto-fix Markdown/YAML formatting
 just tsc-check       # TypeScript type validation
 ```
 
+## Token Logos
+
+Logos live flat in `tokens/`, are referenced as `https://files.sablier.com/tokens/{FILENAME}.png`, and are served from a
+public CDN. `token-list/logos.test.ts` enforces the rules below, so `just test` catches violations before they ship.
+
+| Rule                                                                      | Enforcement                                           |
+| ------------------------------------------------------------------------- | ----------------------------------------------------- |
+| Every `files.sablier.com` `logoURI` resolves to a file in `tokens/`       | Hard failure, no exceptions                           |
+| Every file named `*.png` really is a PNG (checked by signature, not name) | Hard failure, no exceptions                           |
+| No logo exceeds 150 KB                                                    | `approvedOversizedLogos` allowlist for legacy entries |
+
+Adding a logo, in order of what matters:
+
+1. **The file must exist.** A `logoURI` with no matching file is a live 404 for every client that renders the list. This
+   is the failure that recurs, and it is invisible in review because the JSON looks fine on its own.
+2. **Real PNG, not just a `.png` name.** Browsers sniff content type and render a mislabeled WebP or JPEG anyway, so
+   this hides easily. Convert with `sips -s format png in.webp --out tokens/{FILENAME}.png`.
+3. **Keep the published artwork as-is.** There is deliberately **no** standard dimension — 200×200 is the most common of
+   many, and the repo also holds 32×32 through 512×512. Do not resize to match neighbouring entries. Downscale only
+   genuine outliers above 512×512, with `sips -s format png -Z 256`.
+4. **Square is preferred but not enforced.** Consumers render logos in square frames, so a lopsided source distorts.
+
+Do not delete unreferenced logos in `tokens/`. This repository is a public CDN and third parties hotlink these files
+directly, so removing one is a breaking change rather than cleanup.
+
+To source a logo, use the `list-token` skill (`.agents/skills/list-token/`). When aggregators have nothing — routine for
+recently launched tokens — its `references/onchain-logos.md` covers recovering the official image from the token's
+creation calldata.
+
 ## Repository Structure
 
 - **token-list/**: Token data and generated lists
@@ -101,7 +130,7 @@ just tsc-check       # TypeScript type validation
   - **evm.json**: Generated EVM token list
   - **solana.json**: Generated Solana token list
 - **scripts/**: Build and validation scripts
-- **tokens/**: Token logos
+- **tokens/**: Token logos (see [Token Logos](#token-logos))
 - **chains/**: Chain icons
 - **templates/**: CSV templates for streams
 - **banners/**: Branding assets
