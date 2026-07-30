@@ -118,6 +118,12 @@ Adding a logo, in order of what matters:
 Do not delete unreferenced logos in `tokens/`. This repository is a public CDN and third parties hotlink these files
 directly, so removing one is a breaking change rather than cleanup.
 
+Do not infer that a logo is unreferenced by grepping for its filename. `new-ui` constructs CDN paths at runtime from
+`core/isomorphic/tokens/images/known.ts`'s `KNOWN_TOKEN_LOGOS_BY_SYMBOL`,
+`landing/app/(solutions)/_shared/configs/brand-logos.ts`'s `BRAND_LOGO_IDS`, and the exported entries in
+`core/isomorphic/chains/registry.ts`. Run `new-ui/core/isomorphic/tokens/images/cdn-assets.test.ts` against this
+checkout before deleting an asset.
+
 To source a logo, use the `list-token` skill (`.agents/skills/list-token/`). When aggregators have nothing — routine for
 recently launched tokens — its `references/onchain-logos.md` covers recovering the official image from the token's
 creation calldata.

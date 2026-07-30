@@ -3,6 +3,11 @@ import path from "node:path";
 import { describe, expect, it } from "@effect/vitest";
 import type { TokenInfo } from "@uniswap/token-lists";
 
+/**
+ * This suite validates token-list references into `tokens/`. The reciprocal
+ * `new-ui/core/isomorphic/tokens/images/cdn-assets.test.ts` suite validates URLs constructed by
+ * application code against this repository.
+ */
 const FILES_TOKEN_LOGO_BASE_URL = "https://files.sablier.com/tokens/";
 const TOKENS_DIR = path.join(__dirname, "../tokens");
 const SOURCE_DIRS = [path.join(__dirname, "evm"), path.join(__dirname, "solana")];
