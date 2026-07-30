@@ -172,13 +172,26 @@ precedent.
 If `tokens/{FILENAME}.png` already exists, verify it belongs to the same token (different projects can share a symbol).
 If it matches, reuse it. If it belongs to a different token, ask the user how to resolve the conflict before proceeding.
 
-Otherwise, use first available source: GitHub issue image → CoinGecko logo → ask user.
+Otherwise, use first available source: GitHub issue image → CoinGecko logo → **on-chain metadata** → issuer site → ask
+user.
+
+Do not stop at CoinGecko. Aggregators only index tokens with trading volume or a manual submission, so a recently
+launched token is routinely absent from every off-chain source while its artwork has been on-chain since creation.
+Launchpad-minted tokens (often EIP-1167 proxies) carry a metadata URI in their creation calldata that resolves to the
+official image. See [references/onchain-logos.md](./references/onchain-logos.md) for the extraction recipe, the metadata
+view-function fallback, and the verification checks.
+
+Whatever the source, confirm the image belongs to **this exact contract address** — a same-symbol token on another chain
+is worse than no logo. Never generate, draw, or substitute a placeholder: reporting that no logo was found is an
+acceptable outcome, inventing one is not.
 
 - Store all logos flat in `tokens/` (not in chain-specific subdirectories)
 - Download with `curl -L` to a temp file, verify format with `file`
 - **Must be PNG** — if not PNG, convert with `sips -s format png input --out tokens/{FILENAME}.png` (macOS) or
   `magick input tokens/{FILENAME}.png` (ImageMagick). If neither tool is available, ask the user to provide a PNG.
 - Save as `tokens/{FILENAME}.png`
+- The repo has **no** standard logo size (200×200 is the most common of many). Keep the published artwork as-is unless
+  it is larger than 512×512, and say so in your report if you resize.
 
 Set logoURI to `https://files.sablier.com/tokens/{FILENAME}.png` for all new entries, even if the same token on another
 chain uses a legacy external URI.
@@ -226,6 +239,8 @@ Skip gitignored files. Use one of:
 ## Reference Files
 
 - **`./references/schemas.md`** — Complete EVM and Solana token JSON schemas with field descriptions
+- **`./references/onchain-logos.md`** — Recover a logo from creation calldata or metadata view functions when off-chain
+  sources are empty, plus the checks that tie an image to a specific contract
 
 ## Dependencies
 
@@ -234,3 +249,7 @@ Skip gitignored files. Use one of:
 - **CLI tools** — `jq`, `gh` (GitHub CLI), `curl`, `file`; optional: `sips` (macOS) or `magick` (ImageMagick) for logo
   conversion
 - **Solana RPC access** — required to resolve mint program owner deterministically
+- **Block explorer API** — Blockscout `/api/v2` endpoints for creation-transaction and calldata lookups during on-chain
+  logo recovery
+- **`chrome-devtools` MCP** — optional; needed to read launchpad or issuer token pages, which are usually JS-only and
+  return an empty shell to plain fetches
