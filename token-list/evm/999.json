@@ -8,6 +8,14 @@
     "symbol": "ENA"
   },
   {
+    "address": "0x0E01e3aFd147C7f079eA19d0EcA166Ad3A22e79D",
+    "chainId": 999,
+    "decimals": 18,
+    "logoURI": "https://files.sablier.com/tokens/HWAVE.png",
+    "name": "Hyperwave",
+    "symbol": "HWAVE"
+  },
+  {
     "address": "0x03832767BDf9A8EF007449942125Ad605aCfADb8",
     "chainId": 999,
     "decimals": 18,
