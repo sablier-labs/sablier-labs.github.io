@@ -1,5 +1,13 @@
 [
   {
+    "address": "0x62177377c361bf76F12612aA153a9b405bef9FF2",
+    "chainId": 4663,
+    "decimals": 18,
+    "logoURI": "https://files.sablier.com/tokens/2DEEP.png",
+    "name": "Deepstate 2",
+    "symbol": "2DEEP"
+  },
+  {
     "address": "0x86E5aC7eC60EEec0a8989F1F1D617AE18c15FA0c",
     "chainId": 4663,
     "decimals": 18,
