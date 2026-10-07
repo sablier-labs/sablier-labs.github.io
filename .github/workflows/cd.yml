@@ -57,7 +57,7 @@ jobs:
             token-list/solana.json
           key: token-lists-${{ runner.os }}-${{ hashFiles('bun.lock', 'package.json', 'scripts/token-list/**', 'token-list/evm/**/*.json', 'token-list/solana/**/*.json') }}
 
-      - uses: sablier-labs/devkit/actions/setup@v1
+      - uses: PaulRBerg/devkit/actions/setup@v1
         if: steps.token-list-cache.outputs.cache-hit != 'true'
         with:
           save-cache: true

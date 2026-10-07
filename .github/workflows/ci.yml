@@ -18,7 +18,7 @@ jobs:
     name: "1 · Checks"
     runs-on: ubuntu-latest
     steps:
-      - uses: sablier-labs/devkit/actions/setup@v1
+      - uses: PaulRBerg/devkit/actions/setup@v1
         with:
           save-cache: true
 
@@ -53,7 +53,7 @@ jobs:
             'scripts/token-list/**', 'token-list/evm/**/*.json',
             'token-list/solana/**/*.json') }}
 
-      - uses: sablier-labs/devkit/actions/setup@v1
+      - uses: PaulRBerg/devkit/actions/setup@v1
         if: steps.token-list-cache.outputs.cache-hit != 'true'
 
       - name: Build token list
