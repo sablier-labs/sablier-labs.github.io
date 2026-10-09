@@ -35,7 +35,7 @@ jobs:
   deploy:
     name: "2 · Deploy Site"
     needs: [ci]
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     environment:
       name: production
       url: ${{ steps.pages-deployment.outputs.page_url }}
@@ -122,7 +122,7 @@ jobs:
   deploy-evm:
     name: "3 · Deploy EVM token list"
     needs: [ci, deploy]
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
 
     steps:
       - name: Download EVM token list artifact
@@ -167,7 +167,7 @@ jobs:
   deploy-solana:
     name: "4 · Deploy Solana token list"
     needs: [ci, deploy]
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
 
     steps:
       - name: Download Solana token list artifact

@@ -16,7 +16,7 @@ jobs:
 
   checks:
     name: "1 · Checks"
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - uses: PaulRBerg/devkit/actions/setup@v1
         with:
@@ -37,7 +37,7 @@ jobs:
   build:
     name: "2 · Build"
     needs: checks
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - name: Check out the repo
         uses: actions/checkout@v6
@@ -85,7 +85,7 @@ jobs:
 
   summary:
     name: "3 · Summary"
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     needs: [checks, build]
     if: always()
     steps:
