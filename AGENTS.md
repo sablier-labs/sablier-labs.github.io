@@ -55,7 +55,7 @@ If any command fails, analyze the errors and fix them before continuing.
 ## Tech Stack
 
 - **Language**: TypeScript (strict mode)
-- **Package Manager**: pnpm (via ni utility)
+- **Package Manager**: Bun (via ni utility)
 - **Task Runner**: just (casey/just)
 - **Linter and Formatter for TypeScript and JSON**: Biome (not Prettier)
 - **Formatter for Markdown and YAML**: Prettier

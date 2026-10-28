@@ -10,11 +10,11 @@
     "effect": "^3.12.0"
   },
   "devDependencies": {
-    "@biomejs/biome": "^2.5.14",
+    "@biomejs/biome": "^2.6.2",
     "@effect/vitest": "^0.15.0",
     "@ethersproject/address": "^5.8.0",
+    "@prb/devkit": "^1.2.0",
     "@prettier/plugin-xml": "^3.4.2",
-    "@prb/devkit": "^1.0.4",
     "@solana/kit": "^5.1.0",
     "@types/node": "^25.0.3",
     "@uniswap/token-lists": "^1.0.0-beta.34",
