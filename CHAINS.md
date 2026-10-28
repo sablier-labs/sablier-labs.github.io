@@ -23,7 +23,6 @@
 | 2818     | Morph           |
 | 4663     | Robinhood Chain |
 | 4689     | IoTeX           |
-| 5330     | Superseed       |
 | 5845     | Tangle          |
 | 8453     | Base            |
 | 34443    | Mode            |
