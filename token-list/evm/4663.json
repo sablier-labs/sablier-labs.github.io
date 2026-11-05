@@ -16,6 +16,14 @@
     "symbol": "BUTTON"
   },
   {
+    "address": "0x325Ed5a3617B1EaAB6ebeEfCc2Af084beEf49ecE",
+    "chainId": 4663,
+    "decimals": 18,
+    "logoURI": "https://files.sablier.com/tokens/RAPH.png",
+    "name": "Raphael",
+    "symbol": "RAPH"
+  },
+  {
     "address": "0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34",
     "chainId": 4663,
     "decimals": 18,
